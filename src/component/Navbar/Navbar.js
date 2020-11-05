@@ -11,7 +11,7 @@ const Rwdul = styled.ul`
   justify-content: space-between;
   background-color: darkgray;
   padding-inline-start: 0px;
-  text-align: left;
+
   li {
     padding: 13px 24px;
     /* color: black; */
@@ -62,6 +62,7 @@ const BurgerBtn = styled.button`
 `;
 const Nav = styled.nav`
   border-bottom: 1px solid silver;
+  text-align: left;
 `;
 const Navbar = ({ isAuth }) => {
   const [open, setOpen] = useState(false); //控制side navbar開關
