@@ -1,0 +1,44 @@
+.stockcard {
+  margin: 10px;
+  padding: 20px;
+  border-top: 1px solid lightgray;
+  display: flex;
+  justify-content: center;
+}
+.blur {
+  filter: blur(5px);
+}
+.stockcard-title {
+  width: 20%;
+  font-size: 24px;
+}
+.stockcard div.todaypricediv {
+  width: 30%;
+}
+.stockcard ul.todayprice {
+  list-style: none;
+}
+.stockcard div.costpricediv {
+  width: 30%;
+}
+.stockcard ul.costprice {
+  list-style: none;
+  margin-bottom: 0px;
+}
+.stockcard ul.costprice li {
+  height: 50%;
+}
+.stockcard ul.costprice li:nth-child(1) {
+  border-bottom: 1px solid black;
+}
+.stockcard button.historybtn {
+  padding: 5px 8px;
+  color: darkblue;
+  border: none;
+  background-color: #fff;
+  /* 增加button右邊space */
+  margin-right: auto;
+}
+.revenue {
+  width: 20%;
+}

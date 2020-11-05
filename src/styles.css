@@ -1,0 +1,9 @@
+body {
+  font-family: "Noto Sans TC", sans-serif !important;
+  text-align: center;
+  height: 100vh;
+}
+.App {
+  background-color: #eee;
+  /* height: 100vh; */
+}

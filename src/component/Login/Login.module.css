@@ -1,0 +1,62 @@
+.Login {
+  text-align: center;
+}
+.Login input {
+  display: block;
+  /* text-align: center; */
+  margin: 20px auto;
+  padding: 10px 10px;
+  width: 50%;
+  border: none;
+  background-color: #eee;
+}
+
+.Login button {
+  display: block;
+  background-color: #4caf50;
+  outline: none;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 10px 10px;
+  margin: 20px auto;
+  color: #eee;
+  width: 50%;
+  text-transform: uppercase;
+}
+.Login label {
+  font-size: 16px;
+  /* transform: translateX(-100px); */
+}
+.Login p {
+  background-color: rgb(240, 159, 172);
+  color: red;
+  width: 80%;
+  margin: 10px auto;
+}
+.Login span {
+  text-transform: uppercase;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.Login ul {
+  display: block;
+  list-style: none;
+  display: flex;
+  /* border: 1px solid black; */
+  background-color: #ddd;
+  padding: 0;
+  width: 80%;
+  margin: auto;
+}
+.Login ul li {
+  flex-grow: 1;
+
+  height: 35px;
+  line-height: 35px;
+}
+.Login ul li.active {
+  background-color: #1ab188;
+  color: #fff;
+}
