@@ -20,14 +20,14 @@ const Login = (props) => {
     const logindata = {
       email: email,
       password: password,
-      returnSecureToken: true
+      returnSecureToken: true,
     };
     fetch(
-      "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCMxH3deIFe8RlLRUi4mPHZd_T4flPctOM",
+      `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.REACT_APP_SIGNIN_KEY}`,
       {
         body: JSON.stringify(logindata),
         method: "POST",
-        contentType: "application/json"
+        contentType: "application/json",
       }
     )
       .then((res) => res.json())
@@ -62,10 +62,10 @@ const Login = (props) => {
     // console.log("submit");
     const signupdata = {
       email: email,
-      password: password
+      password: password,
     };
     fetch(
-      "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCMxH3deIFe8RlLRUi4mPHZd_T4flPctOM",
+      `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${process.env.REACT_APP_SIGNIN_KEY}`,
       { body: JSON.stringify(signupdata), method: "POST" }
     )
       .then((res) => res.json())
