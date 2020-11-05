@@ -10,7 +10,8 @@ const Rwdul = styled.ul`
   margin-bottom: 0;
   justify-content: space-between;
   background-color: darkgray;
-padding-inline-start:0px;
+  padding-inline-start: 0px;
+  text-align: left;
   li {
     padding: 13px 24px;
     /* color: black; */
@@ -25,16 +26,15 @@ padding-inline-start:0px;
     flex-flow: column nowrap;
     background-color: #0d2538;
     position: fixed;
-   
+
     /* transform: ${({ open }) =>
       open ? "translateX(0)" : "translateX(100%)"}; */
-    
 
     top: 0;
     right: 0;
     height: 100vh;
     width: ${({ open }) => (open ? "300px" : "0px")};
-    overflow:hidden;
+    overflow: hidden;
     padding-top: 3.5rem;
     /* padding-left:20px; */
     transition: all 0.3s ease-in-out;
