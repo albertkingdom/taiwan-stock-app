@@ -6,12 +6,13 @@ import Home from "./component/Home";
 import Navbar from "./component/Navbar/Navbar";
 import Login from "./component/Login/Login";
 import Logout from "./component/Logout/Logut";
+import Kplot from "./component/kplot/Kplot";
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Link,
-  NavLink
+  NavLink,
 } from "react-router-dom";
 const usePreviousValue = (value) => {
   const ref = useRef();
@@ -26,32 +27,32 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(false);
   // console.log("isLOading", isLoading);
   const [stocklist, setStocklist] = useState({
-    "2330": [
+    2330: [
       {
         date: "2020-05-01",
         price: "300",
         amount: "1000",
-        buyorsell: "buy"
+        buyorsell: "buy",
       },
       {
         date: "2020-05-01",
         price: "350",
         amount: "1000",
-        buyorsell: "buy"
-      }
+        buyorsell: "buy",
+      },
     ],
-    "2880": [
+    2880: [
       {
         date: "2020-04-10",
         price: "20",
         amount: "1000",
-        buyorsell: "buy"
-      }
-    ]
+        buyorsell: "buy",
+      },
+    ],
   }); //完整的股票清單
   const [stockprice, setStockprice] = useState({
     2330: "",
-    2880: ""
+    2880: "",
   });
   // const [stockprice, setStockprice] = useState({});
   const [historyRecords, setHistoryRecords] = useState([]); //歷史紀錄for modal
@@ -83,7 +84,9 @@ export default function App() {
         str += "tse_" + i + ".tw|";
       }
 
-      const proxyurl = "https://cors-anywhere.herokuapp.com/";
+      // const proxyurl = "https://cors-anywhere.herokuapp.com/";
+      const proxyurl = "https://taiwan-stock-app-backend.herokuapp.com/";
+
       fetch(
         proxyurl +
           "https://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=" +
@@ -131,13 +134,13 @@ export default function App() {
             date: buydate,
             price: newIndexPrice,
             amount: newIndexAmount,
-            buyorsell: buyorsell
-          }
+            buyorsell: buyorsell,
+          },
         ];
 
         setStocklist((prevState) => ({
           ...prevState,
-          [stockNo]: newStockArray
+          [stockNo]: newStockArray,
         }));
         // setNewStockNo(""); //設定新加入股票代碼
       } else {
@@ -148,12 +151,12 @@ export default function App() {
           date: buydate,
           price: newIndexPrice,
           amount: newIndexAmount,
-          buyorsell: buyorsell
+          buyorsell: buyorsell,
         });
         // console.log("newstockarr", newStockArray);
         setStocklist((prevState) => ({
           ...prevState,
-          [stockNo]: newStockArray
+          [stockNo]: newStockArray,
         }));
       }
 
@@ -219,6 +222,10 @@ export default function App() {
                 saveLoginEmail={saveLoginEmail}
               />
             )}
+          ></Route>
+          <Route
+            path="/kplot/:stockNo"
+            render={(props) => <Kplot {...props} isAuth={isAuthHandler} />}
           ></Route>
         </Switch>
       </Router>

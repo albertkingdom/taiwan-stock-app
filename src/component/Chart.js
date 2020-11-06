@@ -53,7 +53,7 @@ const Chart = ({ stocklist, stockprice, isLoading }) => {
       // return total;
     };
     if (!isLoading) {
-      console.log(isLoading);
+      // console.log(isLoading);
       calTotalCost();
       calTotalValue();
     }

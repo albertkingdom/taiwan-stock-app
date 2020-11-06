@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from "react";
 // import "bootstrap/dist/css/bootstrap.min.css";
-import Stockcard from "./stockcard";
+import Stockcard from "./Stockcard/stockcard";
 
 import AddNewStock from "./addNewRecord";
 import Chart from "./Chart";
 import Loading from "./Loading";
 import "./Home.css";
 import styled from "styled-components";
-import Historybox from "./Historybox";
+import Historybox from "./Historybox/Historybox";
 import SaveRecord from "./SaveRecord/SaveRecord";
+
+import Kplot from "./kplot/Kplot";
+
 // styled component
 const RemindLoginHint = styled.div`
   position: absolute;

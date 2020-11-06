@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import styles from "./stockcard.module.css";
 const Stockcard = ({ name, info, price, show, openModal, isAuth }) => {
   // console.log("stockcard", stocklist);
@@ -58,7 +59,7 @@ const Stockcard = ({ name, info, price, show, openModal, isAuth }) => {
             </button>
             <div className={styles.stockcardTitle}>
               <p>{name}</p>
-              <p></p>
+              <Link to={`/kplot/${name}`}>看k線圖</Link>
             </div>
             <div className={styles.todaypricediv}>
               <ul className={styles.todayprice}>
