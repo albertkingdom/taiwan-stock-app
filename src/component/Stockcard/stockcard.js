@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./stockcard.module.css";
 const Stockcard = ({ name, info, price, show, openModal, isAuth }) => {
@@ -9,6 +9,9 @@ const Stockcard = ({ name, info, price, show, openModal, isAuth }) => {
   // console.log("stockcard price", price);
 
   // console.log("stockcard openModal", openModal);
+  const [amount, setAmount] = useState(0);
+  const [avgCost, setAvgCost] = useState(0);
+  const [revenue, setRevenue] = useState(0);
 
   const calAvgCost = () => {
     //計算每支股票平均成本
@@ -27,18 +30,30 @@ const Stockcard = ({ name, info, price, show, openModal, isAuth }) => {
         : (totalamount -= Number(item.amount))
     );
     // console.log(totalprice,totalamount)
+
     return totalprice / totalamount;
   };
   const calReveneue = () => {
     //計算損益
-    const result = ((Number(price) - calAvgCost()) / calAvgCost()) * 100;
-    return result.toString().substring(0, 4);
+    const result = ((Number(price) - avgCost) / avgCost) * 100;
+    return result.toString().substring(0, 5);
   };
-  // console.log("stockcard", show);
-  // useEffect(() => {
-  //   // calAvgCost();
-  //   console.log(calAvgCost());
-  // }, []);
+
+  const calAmount = () => {
+    let totalamount = 0;
+    info.forEach((item) =>
+      item.buyorsell === "buy"
+        ? (totalamount += Number(item.amount))
+        : (totalamount -= Number(item.amount))
+    );
+    return totalamount;
+  };
+
+  useEffect(() => {
+    setAvgCost(calAvgCost());
+    setRevenue(calReveneue());
+    setAmount(calAmount());
+  }, [avgCost]);
   return (
     <>
       {show ? (
@@ -63,23 +78,33 @@ const Stockcard = ({ name, info, price, show, openModal, isAuth }) => {
             </div>
             <div className={styles.todaypricediv}>
               <ul className={styles.todayprice}>
-                <li>
-                  <p>最近一日收盤價</p>
+                <li>最近一日收盤價</li>
+                <li className="mt-3">
                   <p>{price.toString().substring(0, 5)}</p>
                 </li>
               </ul>
             </div>
             <div className={styles.costpricediv}>
               <ul className={styles.costprice}>
+                <li>持有股數</li>
+                <li className="mt-3">{amount.toLocaleString()}</li>
+              </ul>
+            </div>
+            <div className={styles.costpricediv}>
+              <ul className={styles.costprice}>
                 <li>平均成本</li>
-                <li className="mt-3">{calAvgCost()}</li>
+                <li className="mt-3">{avgCost}</li>
               </ul>
             </div>
             <div className={styles.revenue}>
-              <h5>損益</h5>
-              <p className={calReveneue() > 0 ? "text-danger" : "text-success"}>
-                {calReveneue()}%
-              </p>
+              <ul>
+                <li>損益</li>
+                <li className="mt-3">
+                  <p className={revenue > 0 ? "text-danger" : "text-success"}>
+                    {revenue}%
+                  </p>
+                </li>
+              </ul>
             </div>
           </div>
         </>

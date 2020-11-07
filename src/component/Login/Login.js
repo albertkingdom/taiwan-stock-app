@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import Modal from "../Modal/Modal";
 import styles from "./Login.module.css";
+import Swal from "sweetalert2";
+
 const Login = (props) => {
   const [modalshow, setModalshow] = useState(true);
   const [email, setEmail] = useState("");
@@ -45,10 +47,19 @@ const Login = (props) => {
           localStorage.setItem("token", data.idToken);
           localStorage.setItem("expire", expirationDate);
           props.saveLoginEmail(data.email);
-          alert("成功登入");
+          // alert("成功登入");
+          Swal.fire({
+            title: "成功登入!",
+            icon: "success",
+            confirmButtonText: "ok",
+          });
         } else {
           //錯誤訊息
-
+          Swal.fire({
+            title: "登入失敗!",
+            icon: "error",
+            confirmButtonText: "ok",
+          });
           setErrorMsg(data.error.message);
         }
 
@@ -74,13 +85,22 @@ const Login = (props) => {
         if (!data.error) {
           // this.setState({ ...this.state, token: data.idToken });
           setToken(data.idToken);
-          alert("成功註冊");
+          // alert("成功註冊");
+          Swal.fire({
+            title: "成功註冊!",
+            icon: "success",
+            confirmButtonText: "ok",
+          });
         } else {
           //錯誤訊息
           // this.setState({ ...this.state, errorMsg: data.error.message });
           setErrorMsg(data.error.message);
-
-          alert("失敗註冊");
+          Swal.fire({
+            title: "註冊失敗!",
+            icon: "error",
+            confirmButtonText: "ok",
+          });
+          // alert("失敗註冊");
         }
         //導回首頁
         props.location.replace("/");
