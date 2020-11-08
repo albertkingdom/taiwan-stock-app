@@ -2,4 +2,15 @@
   background: #fff;
   min-height: 100vh;
   padding-top: 20px;
+  position: fixed;
+  top: 51px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.dashboard {
+  /* max-height: 50vh; */
+}
+.stock-list {
+  overflow: auto;
+  height: 50vh;
 }

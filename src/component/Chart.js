@@ -60,12 +60,23 @@ const Chart = ({ stocklist, stockprice, isLoading }) => {
   }, [stocklist, stockprice, isLoading]);
   return (
     <div className="row align-items-center">
-      <div className="col-lg-6 col-12">
-        <Doughnut data={data} />
+      <div className="col-8 col-md-6">
+        <Doughnut
+          data={data}
+          height={200}
+          options={{
+            responsive: true,
+            maintainAspectRatio: false,
+          }}
+        />
       </div>
-      <div className="col-lg-6 col-12 mt-3">
-        <p>總市值:NT${totalValue.toLocaleString()}</p>
-        <p>總成本:NT${totalCost.toLocaleString()}</p>
+      <div className="col-4 col-md-6 mt-3">
+        <p>
+          總市值:<span>NT${totalValue.toLocaleString()}</span>
+        </p>
+        <p>
+          總成本:<span>NT${totalCost.toLocaleString()}</span>
+        </p>
       </div>
     </div>
   );

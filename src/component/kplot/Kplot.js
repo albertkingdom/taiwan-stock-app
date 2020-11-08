@@ -5,6 +5,7 @@ import anychart from "anychart";
 
 import { GetData } from "./GetData";
 import Modal from "../Modal/Modal";
+import Loading from "../Loading";
 
 //open, high, low , close
 // const data = [
@@ -79,6 +80,15 @@ export default function Kplot(props) {
   }, []);
 
   const chart = createPlot(data, props.match.params.stockNo);
+  if (data.length === 0) {
+    return (
+      <Modal show={modalshow} toClose={showModal}>
+        <div className="text-center" style={{ height: "600px" }}>
+          <Loading />
+        </div>
+      </Modal>
+    );
+  }
   return (
     <Modal show={modalshow} toClose={showModal}>
       <div className="">

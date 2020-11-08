@@ -9,7 +9,7 @@ import "./Home.css";
 import styled from "styled-components";
 import Historybox from "./Historybox/Historybox";
 import SaveRecord from "./SaveRecord/SaveRecord";
-
+import Filter from "./Filter/Filter";
 import Kplot from "./kplot/Kplot";
 
 // styled component
@@ -47,7 +47,7 @@ const Home = ({
 }) => {
   // useEffect(() => {}, []);
   // console.log("Home", historyRecords, openModal);
-  const [filterStockCard, setFilterStockCard] = useState("");
+  const [filterStockNo, setFilterStockNo] = useState("");
   const saveToLocalStorage = () => {
     //按鍵功能：存入localstorage
     localStorage.setItem("stocklist", JSON.stringify(stocklist));
@@ -106,51 +106,37 @@ const Home = ({
       })
       .catch((err) => console.log(err));
   };
+  const toFilter = (stockNo) => {
+    setFilterStockNo(stockNo);
+  };
   useEffect(() => {
     if (isAuth) {
       readFromFirebase();
     }
   }, [isAuth]);
   return (
-    <div className="container text-center position-relative home">
-      <h1>台股持股損益表</h1>
-      <p>
-        <i>不計入手續費、股市交易稅</i>
-      </p>
-      <Chart
-        stocklist={stocklist}
-        stockprice={stockprice}
-        isLoading={isLoading}
-      />
-      <div className="row justify-content-center m-3">
-        <div className="filterStock input-group col-5">
-          <input
-            className="form-control filterStock"
-            type="text"
-            placeholder="從庫存篩選股票代號"
-            onChange={(e) => setFilterStockCard(e.target.value)}
-            value={filterStockCard}
-          />
-          <div className="input-group-append">
-            <button
-              className="btn btn-outline-secondary"
-              type="button"
-              id="button-addon2"
-            >
-              <i className="fas fa-search"></i>
-            </button>
-          </div>
-        </div>
+    <div className="container text-center home">
+      <div className="dashboard">
+        <h1>台股持股損益表</h1>
+        <p>
+          <i>不計入手續費、股市交易稅</i>
+        </p>
+        <Chart
+          stocklist={stocklist}
+          stockprice={stockprice}
+          isLoading={isLoading}
+        />
+        <Filter filterStockNo={filterStockNo} toFilter={toFilter} />
+        <SaveRecord
+          saveToFirebase={saveToFirebase}
+          readFromFirebase={readFromFirebase}
+          saveToLocalStorage={saveToLocalStorage}
+          readFromLocalStorage={readFromLocalStorage}
+          isAuth={isAuth}
+        />
+        <AddNewStock stocklist={stocklist} addNewIndexFunc={addNewIndexFunc} />
       </div>
-      <SaveRecord
-        saveToFirebase={saveToFirebase}
-        readFromFirebase={readFromFirebase}
-        saveToLocalStorage={saveToLocalStorage}
-        readFromLocalStorage={readFromLocalStorage}
-        isAuth={isAuth}
-      />
-      <AddNewStock stocklist={stocklist} addNewIndexFunc={addNewIndexFunc} />
-      <div className="position-relative">
+      <div className="position-relative stock-list">
         {isLoading ? (
           // <h5>Loading</h5>
           <Loading />
@@ -162,8 +148,7 @@ const Home = ({
               info={stocklist[item]}
               price={stockprice[item]}
               show={
-                filterStockCard.length === 0 ||
-                item.indexOf(filterStockCard) > -1
+                filterStockNo.length === 0 || item.indexOf(filterStockNo) > -1
               }
               openModal={openModal}
               isAuth={isAuth}

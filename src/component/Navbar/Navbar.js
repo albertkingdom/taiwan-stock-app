@@ -63,6 +63,8 @@ const BurgerBtn = styled.button`
 const Nav = styled.nav`
   border-bottom: 1px solid silver;
   text-align: left;
+  position: fixed;
+  width: 100vw;
 `;
 const Navbar = ({ isAuth }) => {
   const [open, setOpen] = useState(false); //控制side navbar開關
