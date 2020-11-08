@@ -11,7 +11,7 @@ import Historybox from "./Historybox/Historybox";
 import SaveRecord from "./SaveRecord/SaveRecord";
 import Filter from "./Filter/Filter";
 import Kplot from "./kplot/Kplot";
-
+import TitleBar from "./TitleBar/TitleBar";
 // styled component
 const RemindLoginHint = styled.div`
   position: absolute;
@@ -137,6 +137,7 @@ const Home = ({
         <AddNewStock stocklist={stocklist} addNewIndexFunc={addNewIndexFunc} />
       </div>
       <div className="position-relative stock-list">
+        <TitleBar />
         {isLoading ? (
           // <h5>Loading</h5>
           <Loading />

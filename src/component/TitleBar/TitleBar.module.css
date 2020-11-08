@@ -1,0 +1,14 @@
+.titleBar ul {
+  list-style: none;
+  display: flex;
+  padding: 20px;
+  margin: 10px;
+}
+.titleBar li {
+  /* flex-grow: 1; */
+  flex-basis: 20%;
+}
+.titleBar li:first-child {
+  /* flex-grow: 0.5; */
+  flex-basis: 10%;
+}

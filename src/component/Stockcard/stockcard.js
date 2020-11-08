@@ -58,55 +58,36 @@ const Stockcard = ({ name, info, price, show, openModal, isAuth }) => {
     <>
       {show ? (
         <>
-          <div
+          <ul
             className={[styles.stockcard, isAuth ? null : styles.blur].join(
               " "
             )}
           >
-            <button
-              type="button"
-              data-toggle="modal"
-              data-target="#exampleModalCenter"
-              className={styles.historybtn}
-              onClick={() => openModal(name)}
-            >
-              <i className="far fa-clipboard"></i>
-            </button>
-            <div className={styles.stockcardTitle}>
+            <li>
+              <button
+                type="button"
+                data-toggle="modal"
+                data-target="#exampleModalCenter"
+                className={styles.historybtn}
+                onClick={() => openModal(name)}
+              >
+                <i className="far fa-clipboard"></i>
+              </button>
+            </li>
+
+            <li>
               <p>{name}</p>
               <Link to={`/kplot/${name}`}>看k線圖</Link>
-            </div>
-            <div className={styles.todaypricediv}>
-              <ul className={styles.todayprice}>
-                <li>最近一日收盤價</li>
-                <li className="mt-3">
-                  <p>{price.toString().substring(0, 5)}</p>
-                </li>
-              </ul>
-            </div>
-            <div className={styles.costpricediv}>
-              <ul className={styles.costprice}>
-                <li>持有股數</li>
-                <li className="mt-3">{amount.toLocaleString()}</li>
-              </ul>
-            </div>
-            <div className={styles.costpricediv}>
-              <ul className={styles.costprice}>
-                <li>平均成本</li>
-                <li className="mt-3">{avgCost}</li>
-              </ul>
-            </div>
-            <div className={styles.revenue}>
-              <ul>
-                <li>損益</li>
-                <li className="mt-3">
-                  <p className={revenue > 0 ? "text-danger" : "text-success"}>
-                    {revenue}%
-                  </p>
-                </li>
-              </ul>
-            </div>
-          </div>
+            </li>
+            <li>{price.toString().substring(0, 5)}</li>
+            <li>{amount.toLocaleString()}</li>
+            <li>{avgCost}</li>
+            <li>
+              <p className={revenue > 0 ? "text-danger" : "text-success"}>
+                {revenue}%
+              </p>
+            </li>
+          </ul>
         </>
       ) : null}
     </>
