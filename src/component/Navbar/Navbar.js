@@ -22,7 +22,6 @@ const Rwdul = styled.ul`
   }
   /* width:0px; */
   @media (max-width: 768px) {
-    z-index: 200;
     flex-flow: column nowrap;
     background-color: #0d2538;
     position: fixed;
@@ -65,6 +64,7 @@ const Nav = styled.nav`
   text-align: left;
   position: fixed;
   width: 100vw;
+  z-index: 200;
 `;
 const Navbar = ({ isAuth }) => {
   const [open, setOpen] = useState(false); //控制side navbar開關

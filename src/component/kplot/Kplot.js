@@ -116,8 +116,8 @@ export default function Kplot(props) {
           instance={chart}
           title="stock candlestick chart"
           width={"100%"}
-          height={600}
-          left="10px"
+          height="750px"
+          left="30"
         />
       </div>
     </Modal>
