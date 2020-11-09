@@ -24,6 +24,8 @@ import Loading from "../Loading";
 function createPlot(data, stockNo) {
   //define the chart type
   var chart = anychart.stock();
+  anychart.format.inputLocale("zh-tw");
+  anychart.format.outputLocale("zh-tw");
 
   var msftDataTable = anychart.data.table();
   msftDataTable.addData(data);
@@ -47,17 +49,35 @@ function createPlot(data, stockNo) {
   firstPlotSeries.normal().risingFill("red", 0.8);
   firstPlotSeries.normal().risingStroke("red", 0.8);
 
+  // configure the format of the legend title
+  // chart
+  //   .plot(0)
+  //   .legend()
+  //   .titleFormat(function () {
+  //     var date = anychart.format.dateTime(
+  //       this.value,
+  //       "yyy-MM-dd",
+  //       -500,
+  //       "zh-tw"
+  //     );
+
+  //     return date;
+  //   });
+
   // set the series 2: mma5
   const mmaMapping = msftDataTable.mapAs({ value: 4 });
   var mmaplot = chart.plot(0).mma(mmaMapping, 5).series();
   mmaplot.stroke("black");
+
+  const volumeMapping = msftDataTable.mapAs({ value: 2 });
+  var volumePlot = chart.plot(2).column(volumeMapping).name("volume");
   return chart;
 }
 
 export default function Kplot(props) {
   const [data, setData] = useState([]); //股票成交價array
   const [modalshow, setModalshow] = useState(true);
-
+  // console.log(data);
   const showModal = () => {
     setModalshow((prevState) => !prevState); //close modal
     props.history.goBack();
@@ -97,6 +117,7 @@ export default function Kplot(props) {
           title="stock candlestick chart"
           width={"100%"}
           height={600}
+          left="10px"
         />
       </div>
     </Modal>

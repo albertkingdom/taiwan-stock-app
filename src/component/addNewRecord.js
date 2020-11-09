@@ -38,7 +38,7 @@ const AddNewRecord = ({ stocklist, addNewIndexFunc }) => {
         className="form-control"
         placeholder="價格"
         // style={{ width: "100px" }}
-        value={newIndexPrice}
+        value={newIndexPrice.toLocaleString()}
         onChange={(e) => setNewIndexPrice(e.target.value)}
       />
 
@@ -57,12 +57,6 @@ const AddNewRecord = ({ stocklist, addNewIndexFunc }) => {
         onChange={(e) => datepickfunc(e.target.value)}
       />
       <div id="datepickerdiv">
-        {/* <DatePicker
-          dateFormat="yyyy/MM/dd"
-          selected={startDate}
-          onChange={handleDateChange}
-        /> */}
-
         <button
           className="btn btn-outline-info"
           id="addRecordBtn"
