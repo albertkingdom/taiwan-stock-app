@@ -12,6 +12,8 @@ import SaveRecord from "./SaveRecord/SaveRecord";
 import Filter from "./Filter/Filter";
 import Kplot from "./kplot/Kplot";
 import TitleBar from "./TitleBar/TitleBar";
+import Swal from "sweetalert2";
+
 // styled component
 const RemindLoginHint = styled.div`
   position: absolute;
@@ -45,9 +47,9 @@ const Home = ({
   isAuth,
   loginEmail,
 }) => {
-  // useEffect(() => {}, []);
-  // console.log("Home", historyRecords, openModal);
   const [filterStockNo, setFilterStockNo] = useState("");
+  const [stocklistDisplay, setStocklistDisplay] = useState([]);
+  const [sortMethod, setSortMethod] = useState("");
   const saveToLocalStorage = () => {
     //按鍵功能：存入localstorage
     localStorage.setItem("stocklist", JSON.stringify(stocklist));
@@ -82,8 +84,16 @@ const Home = ({
         body: JSON.stringify(stocklist),
         method: "PUT",
       }
-    ).then((res) => res.json());
-    // .then((data) => console.log("firebase ", data));
+    )
+      .then((res) => res.json())
+      .then((data) =>
+        Swal.fire({
+          title: "儲存成功!",
+          icon: "success",
+          confirmButtonText: "ok",
+        })
+      )
+      .catch((error) => console.log(error));
   };
   const readFromFirebase = () => {
     const token = localStorage.getItem("token");
@@ -109,11 +119,49 @@ const Home = ({
   const toFilter = (stockNo) => {
     setFilterStockNo(stockNo);
   };
+  const sort = () => {
+    let newOrderedArray;
+    switch (sortMethod) {
+      case "stockNoAsc":
+        newOrderedArray = Object.keys(stocklist).sort((a, b) => a - b);
+        break;
+      case "stockNoDesc":
+        newOrderedArray = Object.keys(stocklist).sort((a, b) => b - a);
+        break;
+      case "stockPriceAsc":
+        newOrderedArray = Object.keys(stockprice).sort(
+          (a, b) => stockprice[a] - stockprice[b]
+        );
+        break;
+      case "stockPriceDesc":
+        newOrderedArray = Object.keys(stockprice).sort(
+          (a, b) => stockprice[b] - stockprice[a]
+        );
+        break;
+      default:
+        newOrderedArray = Object.keys(stocklist);
+    }
+
+    // console.log(newOrderedArray);
+
+    setStocklistDisplay(newOrderedArray);
+  };
+  const toSetSortMethod = (method) => {
+    setSortMethod(method);
+  };
   useEffect(() => {
+    //登入就從firebase讀資料
     if (isAuth) {
       readFromFirebase();
     }
   }, [isAuth]);
+  useEffect(() => {
+    if (!sortMethod) {
+      setStocklistDisplay(Object.keys(stocklist));
+    } else {
+      sort();
+    }
+  }, [sortMethod, stocklist]);
   return (
     <div className="container text-center home">
       <div className="dashboard">
@@ -137,12 +185,12 @@ const Home = ({
         <AddNewStock stocklist={stocklist} addNewIndexFunc={addNewIndexFunc} />
       </div>
       <div className="position-relative stock-list">
-        <TitleBar />
+        <TitleBar sortMethod={sortMethod} toSetSortMethod={toSetSortMethod} />
         {isLoading ? (
           // <h5>Loading</h5>
           <Loading />
         ) : (
-          Object.keys(stocklist).map((item) => (
+          stocklistDisplay.map((item) => (
             <Stockcard
               key={item}
               name={item}

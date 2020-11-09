@@ -12,3 +12,9 @@
   /* flex-grow: 0.5; */
   flex-basis: 10%;
 }
+.titleBar button {
+  outline: none;
+  border: none;
+  margin: 3px;
+  background-color: #fff;
+}
