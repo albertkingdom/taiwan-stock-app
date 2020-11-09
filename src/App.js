@@ -14,15 +14,8 @@ import {
   Link,
   NavLink,
 } from "react-router-dom";
-const usePreviousValue = (value) => {
-  const ref = useRef();
-  // useEffect(() => {
-  //   ref.current = value;
-  // });
-  ref.current = value;
-  // console.log(ref.current);
-  return ref.current;
-};
+import Swal from "sweetalert2";
+
 export default function App() {
   const [isLoading, setIsLoading] = useState(false);
   // console.log("isLOading", isLoading);
@@ -72,7 +65,6 @@ export default function App() {
     setModalShow(false);
     setHistoryRecords([]);
   };
-  const prevStockList = usePreviousValue(stocklist);
 
   useEffect(() => {
     const getStockPrice = () => {
@@ -119,6 +111,15 @@ export default function App() {
   }, [stocklist]);
   const addNewIndexFunc = useCallback(
     (newIndexNo, newIndexPrice, newIndexAmount, buyorsell, buydate) => {
+      if (!isAuth) {
+        //check if not auth, then exit
+        Swal.fire({
+          title: "請登入!",
+          icon: "info",
+          confirmButtonText: "ok",
+        });
+        return;
+      }
       //新增一筆股票購買紀錄
       setIsLoading(true);
       setNewStockNo(newIndexNo); //設定新加入股票代碼

@@ -25,6 +25,7 @@ const AddNewRecord = ({ stocklist, addNewIndexFunc }) => {
       <select
         className="custom-select"
         onChange={(e) => setBuyorsell(e.target.value)}
+        value={buyorsell}
       >
         <option value="" defaultValue>
           買/賣
@@ -74,9 +75,11 @@ const AddNewRecord = ({ stocklist, addNewIndexFunc }) => {
               buyorsell,
               buydate
             );
-            // setBuydate("");
-            // setNewIndexPrice("");
-            // setNewIndexAmount("");
+            setNewIndexNo("");
+            setBuydate("");
+            setNewIndexPrice("");
+            setNewIndexAmount("");
+            setBuyorsell("");
           }}
         >
           <i className="fas fa-plus-circle"></i>
