@@ -13,7 +13,7 @@ import Filter from "./Filter/Filter";
 import Kplot from "./kplot/Kplot";
 import TitleBar from "./TitleBar/TitleBar";
 import Swal from "sweetalert2";
-
+import StockIndex from "./StockIndex/StockIndex";
 // styled component
 const RemindLoginHint = styled.div`
   position: absolute;
@@ -164,26 +164,33 @@ const Home = ({
   }, [sortMethod, stocklist]);
   return (
     <div className="container text-center home">
-      <div className="dashboard">
+      <div className="dashboard row justify-content-around align-items-center">
+        <div className="col-4">
+          <StockIndex />
+        </div>
+
         {/* <h1>台股持股損益表</h1>
         <p>
           <i>不計入手續費、股市交易稅</i>
         </p> */}
-        <Chart
-          stocklist={stocklist}
-          stockprice={stockprice}
-          isLoading={isLoading}
-        />
-        <Filter filterStockNo={filterStockNo} toFilter={toFilter} />
-        <SaveRecord
-          saveToFirebase={saveToFirebase}
-          readFromFirebase={readFromFirebase}
-          saveToLocalStorage={saveToLocalStorage}
-          readFromLocalStorage={readFromLocalStorage}
-          isAuth={isAuth}
-        />
-        <AddNewStock stocklist={stocklist} addNewIndexFunc={addNewIndexFunc} />
+        <div className="col-8">
+          <Chart
+            stocklist={stocklist}
+            stockprice={stockprice}
+            isLoading={isLoading}
+          />
+        </div>
       </div>
+      <Filter filterStockNo={filterStockNo} toFilter={toFilter} />
+      <SaveRecord
+        saveToFirebase={saveToFirebase}
+        readFromFirebase={readFromFirebase}
+        saveToLocalStorage={saveToLocalStorage}
+        readFromLocalStorage={readFromLocalStorage}
+        isAuth={isAuth}
+      />
+      <AddNewStock stocklist={stocklist} addNewIndexFunc={addNewIndexFunc} />
+
       <div className="position-relative stock-list">
         <TitleBar sortMethod={sortMethod} toSetSortMethod={toSetSortMethod} />
         {isLoading ? (
