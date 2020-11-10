@@ -7,7 +7,7 @@ export default function TitleBar({ sortMethod, toSetSortMethod }) {
       <ul>
         <li></li>
         <li>
-          股票代號
+          股票
           {sortMethod === "" || !sortMethod.includes("No") ? (
             <button onClick={() => toSetSortMethod("stockNoAsc")}>
               <i class="fas fa-sort"></i>

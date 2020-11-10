@@ -165,10 +165,10 @@ const Home = ({
   return (
     <div className="container text-center home">
       <div className="dashboard">
-        <h1>台股持股損益表</h1>
+        {/* <h1>台股持股損益表</h1>
         <p>
           <i>不計入手續費、股市交易稅</i>
-        </p>
+        </p> */}
         <Chart
           stocklist={stocklist}
           stockprice={stockprice}
@@ -216,6 +216,10 @@ const Home = ({
         historyRecords={historyRecords}
         closeModal={closeModal}
       />
+      <div className="disclaimer">
+        <i className="fas fa-info-circle"></i>
+        <span className="tooltiptext">不計入手續費、股市交易稅</span>
+      </div>
     </div>
   );
 };

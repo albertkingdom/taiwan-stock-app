@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 // import styles from "./Navbar.module.css";
 import styled from "styled-components";
@@ -9,11 +9,11 @@ const Rwdul = styled.ul`
   flex-direction: row;
   margin-bottom: 0;
   justify-content: space-between;
-  background-color: darkgray;
+  /* background-color: darkgray; */
   padding-inline-start: 0px;
 
   li {
-    padding: 13px 24px;
+    padding: 10px 24px;
     /* color: black; */
   }
   a {
@@ -60,41 +60,52 @@ const BurgerBtn = styled.button`
   }
 `;
 const Nav = styled.nav`
+  font-family: "Goldman", cursive;
   border-bottom: 1px solid silver;
   text-align: left;
   position: fixed;
   width: 100vw;
   z-index: 200;
+  h4 {
+    margin-bottom: 0;
+  }
 `;
 const Navbar = ({ isAuth }) => {
   const [open, setOpen] = useState(false); //控制side navbar開關
   // const lists = useRef();
-
+  useEffect(() => {
+    setOpen(false);
+  }, []);
   return (
     <Nav>
-      <Rwdul open={open}>
-        <li>
-          <Link to="/" onClick={() => setOpen(!open)}>
-            <i className="fas fa-home"></i>
-          </Link>
-        </li>
-
-        <li>
-          {isAuth ? (
-            <Link to="/logout">
-              Logout <i className="fas fa-user-circle"></i>
+      <div className="container">
+        <Rwdul open={open}>
+          <li>
+            <Link to="/" onClick={() => setOpen(!open)}>
+              <i className="fas fa-home"></i>
             </Link>
-          ) : (
-            <Link to="/login" onClick={() => setOpen(!open)}>
-              Login <i className="fas fa-sign-in-alt"></i>
-            </Link>
-          )}
-        </li>
-      </Rwdul>
+          </li>
+          <li>
+            <h4>My Taiwan Stock</h4>
+          </li>
 
-      <BurgerBtn onClick={() => setOpen(!open)}>
-        <i className="fas fa-bars"></i>
-      </BurgerBtn>
+          <li>
+            {isAuth ? (
+              <Link to="/logout">
+                Logout <i className="fas fa-user-circle"></i>
+              </Link>
+            ) : (
+              <Link to="/login" onClick={() => setOpen(!open)}>
+                Login <i className="fas fa-sign-in-alt"></i>
+              </Link>
+            )}
+          </li>
+        </Rwdul>
+
+        <BurgerBtn onClick={() => setOpen(!open)}>
+          <i className="fas fa-bars"></i>
+        </BurgerBtn>
+      </div>
     </Nav>
   );
 };
