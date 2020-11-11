@@ -65,12 +65,22 @@ function createPlot(data, stockNo) {
   //   });
 
   // set the series 2: mma5
-  const mmaMapping = msftDataTable.mapAs({ value: 4 });
+  const mmaMapping = msftDataTable.mapAs({ value: 6 });
   var mmaplot = chart.plot(0).mma(mmaMapping, 5).series();
   mmaplot.stroke("black");
-
-  const volumeMapping = msftDataTable.mapAs({ value: 2 });
-  var volumePlot = chart.plot(2).column(volumeMapping).name("volume");
+  //成交量
+  const volumeMapping = msftDataTable.mapAs({ value: 1 });
+  var volumePlot = chart.plot(1).column(volumeMapping).name("成交股數");
+  //調整y軸數字顯示，數字/1000
+  chart
+    .plot(1)
+    .yAxis()
+    .labels()
+    .format(function () {
+      var value = this.value;
+      value = value / 1000;
+      return value + "k";
+    });
   return chart;
 }
 
@@ -83,8 +93,8 @@ export default function Kplot(props) {
     props.history.goBack();
   };
   useEffect(() => {
-    const getstockdata = async (stockNo, date) => {
-      const response = await GetData(stockNo, date);
+    const getstockdata = async (stockNo, date1, date2) => {
+      const response = await GetData(stockNo, date1, date2);
       //   console.log(response);
       setData(response);
     };
@@ -93,10 +103,16 @@ export default function Kplot(props) {
       const thisMonth = new Date().getMonth() + 1;
       const thisDate = new Date().getDate();
 
+      const currentMonth = `${thisYear}${thisMonth}${thisDate}`;
+      const lastMonth = `${thisYear}${thisMonth - 1}${thisDate}`;
       // console.log(`${thisYear}${thisMonth}${thisDate}`);
-      return `${thisYear}${thisMonth}${thisDate}`;
+      return [currentMonth, lastMonth];
     };
-    getstockdata(props.match.params.stockNo, getDateString());
+    getstockdata(
+      props.match.params.stockNo,
+      getDateString()[0],
+      getDateString()[1]
+    );
   }, []);
 
   const chart = createPlot(data, props.match.params.stockNo);

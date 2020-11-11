@@ -1,18 +1,24 @@
-export const GetData = async (stockNo, date) => {
+export const GetData = async (stockNo, date1, date2) => {
   // const corsproxy = "http://localhost:8080/";
   const corsproxy = "https://taiwan-stock-app-backend.herokuapp.com/";
 
-  const url = `https://www.twse.com.tw/exchangeReport/STOCK_DAY?response=json&date=${date}&stockNo=${stockNo}`;
+  //近兩個月的每日交易資訊
+  const url1 = `https://www.twse.com.tw/exchangeReport/STOCK_DAY?response=json&date=${date1}&stockNo=${stockNo}`;
+  const url2 = `https://www.twse.com.tw/exchangeReport/STOCK_DAY?response=json&date=${date2}&stockNo=${stockNo}`;
 
   try {
-    const response = await fetch(corsproxy + url, {
-      headers: new Headers({
-        Origin: "null",
-      }),
-    });
-    const data = await response.json();
-    // console.log("getdata response", data);
-    const modifydata = data.data.slice();
+    function getStockInfo(target) {
+      return fetch(corsproxy + target, {
+        headers: new Headers({
+          Origin: "null",
+        }),
+      }).then((resp) => resp.json());
+    }
+    const response = Promise.all([getStockInfo(url1), getStockInfo(url2)]);
+    const [{ data: data1 }, { data: data2 }] = await response;
+    // console.log("getdata response", data1, data2);
+    // const modifydata = data1.data.concat(data2.data).slice();
+    const modifydata = data1.concat(data2).slice();
 
     modifydata.forEach((day) => {
       day[0] = day[0].replace("109", "2020").replace(/\//g, "-");

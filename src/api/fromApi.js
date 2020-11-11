@@ -4,7 +4,7 @@ export const getStockIndex = async (date) => {
   // const response = await fetch(`${url}`)
 
   const data = await response.json();
-  const indexInfo = {index:data.data1[1],date:data.params.date}
-  console.log(indexInfo)
+  const indexInfo = { index: data.data1[1], date: data.params.date };
+  // console.log(indexInfo)
   return indexInfo;
 };
