@@ -165,7 +165,7 @@ const Home = ({
   return (
     <div className="container text-center home">
       <div className="dashboard row justify-content-around align-items-center">
-        <div className="col-4">
+        <div className="col-12 col-md-4">
           <StockIndex />
         </div>
 
@@ -173,11 +173,12 @@ const Home = ({
         <p>
           <i>不計入手續費、股市交易稅</i>
         </p> */}
-        <div className="col-8">
+        <div className="col-12 col-md-8">
           <Chart
             stocklist={stocklist}
             stockprice={stockprice}
             isLoading={isLoading}
+            isAuth={isAuth}
           />
         </div>
       </div>

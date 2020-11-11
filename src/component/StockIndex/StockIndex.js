@@ -29,7 +29,7 @@ export default function StockIndex() {
 
   return (
     <div
-      className="align-items-center justify-content-center"
+      className="row align-items-center justify-content-center"
       style={{ height: "100%" }}
     >
       {/* <p className="my-0 px-5 text-left ">{new Date().toLocaleDateString()}</p> */}
@@ -37,7 +37,7 @@ export default function StockIndex() {
       <h1
         className={[
           indexColor.includes("red") ? "text-danger" : "text-success",
-          "mx-3",
+          "mx-3","col-md-12 col-5"
         ].join(" ")}
       >
         {stockIndex[0]}

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Doughnut } from "react-chartjs-2";
 
-const Chart = ({ stocklist, stockprice, isLoading }) => {
+const Chart = ({ stocklist, stockprice, isLoading,isAuth }) => {
   const [totalCost, setTotalCost] = useState(0);
   const [totalValue, setTotalValue] = useState(0);
 
@@ -60,7 +60,7 @@ const Chart = ({ stocklist, stockprice, isLoading }) => {
   }, [stocklist, stockprice, isLoading]);
   return (
     <div className="row align-items-center">
-      <div className="col-8 col-md-6">
+      <div className="col-7 col-md-6">
         <Doughnut
           data={data}
           height={200}
@@ -70,12 +70,12 @@ const Chart = ({ stocklist, stockprice, isLoading }) => {
           }}
         />
       </div>
-      <div className="col-4 col-md-6 mt-3">
+      <div className="col-5 col-md-6 mt-3">
         <p>
-          總市值:<span>NT${totalValue.toLocaleString()}</span>
+          總市值:<span>NT${isAuth?totalValue.toLocaleString():'XXXXXX'}</span>
         </p>
         <p>
-          總成本:<span>NT${totalCost.toLocaleString()}</span>
+          總成本:<span>NT${isAuth?totalCost.toLocaleString():'XXXXXX'}</span>
         </p>
       </div>
     </div>

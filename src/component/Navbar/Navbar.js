@@ -55,6 +55,7 @@ const BurgerBtn = styled.button`
   height: 50px;
   text-align: left;
   margin-left: 10px;
+  background-color: transparent;
   @media (min-width: 768px) {
     display: none;
   }
@@ -73,15 +74,13 @@ const Nav = styled.nav`
 const Navbar = ({ isAuth }) => {
   const [open, setOpen] = useState(false); //控制side navbar開關
   // const lists = useRef();
-  useEffect(() => {
-    setOpen(false);
-  }, []);
+ 
   return (
     <Nav>
       <div className="container">
         <Rwdul open={open}>
           <li>
-            <Link to="/" onClick={() => setOpen(!open)}>
+            <Link to="/">
               <i className="fas fa-home"></i>
             </Link>
           </li>
@@ -91,11 +90,11 @@ const Navbar = ({ isAuth }) => {
 
           <li>
             {isAuth ? (
-              <Link to="/logout">
+              <Link to="/logout" onClick={()=>setOpen(false)}>
                 Logout <i className="fas fa-user-circle"></i>
               </Link>
             ) : (
-              <Link to="/login" onClick={() => setOpen(!open)}>
+              <Link to="/login" onClick={()=>setOpen(false)}>
                 Login <i className="fas fa-sign-in-alt"></i>
               </Link>
             )}
