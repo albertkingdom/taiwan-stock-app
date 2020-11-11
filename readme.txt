@@ -1,6 +1,8 @@
+查單月個股的股價
 https://www.twse.com.tw/exchangeReport/STOCK_DAY?response=json&date=20201031&stockNo=2330
 
-以上網址可以查單月個股的股價
+每日收盤指數資訊
+https://www.twse.com.tw/exchangeReport/MI_INDEX?response=json&date=20201110&type=IND
 
 https://www.twse.com.tw/zh/page/trading/exchange/STOCK_DAY.html
 網頁

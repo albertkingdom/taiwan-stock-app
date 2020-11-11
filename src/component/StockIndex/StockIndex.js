@@ -7,9 +7,18 @@ export default function StockIndex() {
   const [indexColor, setIndexColor] = useState("");
   const [indexDate, setIndexDate] = useState("");
   useEffect(() => {
+    const getDate = () => {
+      //if today's info is not published,then get yesterday's info instead
+      if (new Date().getHours() > 15) {
+        return new Date().toLocaleDateString().replace(/\//g, "");
+      } else {
+        return new Date(Date.now() - 864e5)
+          .toLocaleDateString()
+          .replace(/\//g, "");
+      }
+    };
     const stockindex = async () => {
-      const today = new Date().toLocaleDateString().replace(/\//g, "");
-      const result = await getStockIndex(today);
+      const result = await getStockIndex(getDate());
 
       setStockIndex([result.index[1], result.index[3]]);
       setIndexDate(result.date);
