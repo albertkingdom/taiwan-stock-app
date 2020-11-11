@@ -29,6 +29,10 @@
     transform: translateY(0);
   }
 }
+.modalcontentForLogin {
+  @extend .modalcontent;
+  max-width: 500px;
+}
 /* The Close Button */
 .close {
   color: #aaa;

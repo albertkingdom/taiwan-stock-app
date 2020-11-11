@@ -2,14 +2,14 @@ import React, { useEffect, useState } from "react";
 import { getStockIndex } from "../../api/fromApi";
 // import styles from 'StockIndex.module.css'
 
-export default function StockIndex() {
+ const StockIndex= ()=> {
   const [stockIndex, setStockIndex] = useState([]); //[index, diff]
   const [indexColor, setIndexColor] = useState("");
   const [indexDate, setIndexDate] = useState("");
   useEffect(() => {
     const getDate = () => {
       //if today's info is not published,then get yesterday's info instead
-      if (new Date().getHours() > 15) {
+      if (new Date().getHours() >= 14) {
         return new Date().toLocaleDateString().replace(/\//g, "");
       } else {
         return new Date(Date.now() - 864e5)
@@ -37,12 +37,17 @@ export default function StockIndex() {
       <h1
         className={[
           indexColor.includes("red") ? "text-danger" : "text-success",
-          "mx-3","col-md-12 col-5"
+          "mx-3",
+          "col-md-12 col-5",
         ].join(" ")}
       >
         {stockIndex[0]}
       </h1>
-      <i className="fas fa-angle-down"></i>
+      {indexColor.includes("red") ? (
+        <i className="fas fa-angle-up"></i>
+      ) : (
+        <i className="fas fa-angle-down"></i>
+      )}
       <span
         className={indexColor.includes("red") ? "text-danger" : "text-success"}
       >
@@ -51,3 +56,4 @@ export default function StockIndex() {
     </div>
   );
 }
+export default StockIndex

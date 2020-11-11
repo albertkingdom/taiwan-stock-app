@@ -1,12 +1,20 @@
 .Login {
   text-align: center;
 }
+.Login form {
+  padding-top: 20px;
+}
+.Login section {
+  width: 50%;
+  margin: 0px auto;
+  position: relative;
+}
 .Login input {
   display: block;
   /* text-align: center; */
-  margin: 20px auto;
+  margin: 5px auto 20px auto;
   padding: 10px 10px;
-  width: 50%;
+  width: 90%;
   border: none;
   background-color: #eee;
 }
@@ -16,17 +24,22 @@
   background-color: #4caf50;
   outline: none;
   border: none;
+  border-radius: 20px;
   font-size: 14px;
   cursor: pointer;
   padding: 10px 10px;
-  margin: 20px auto;
+  margin: 50px auto;
   color: #eee;
-  width: 50%;
+  width: 125px;
   text-transform: uppercase;
 }
 .Login label {
   font-size: 16px;
-  /* transform: translateX(-100px); */
+  width: 90%;
+  position: relative;
+  left: 0;
+  text-align: left;
+  /* transform: translateX(-100%); */
 }
 .Login p {
   background-color: rgb(240, 159, 172);

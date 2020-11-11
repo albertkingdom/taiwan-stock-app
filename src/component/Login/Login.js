@@ -113,9 +113,8 @@ const Login = (props) => {
   };
   return (
     <>
-      <Modal show={modalshow} toClose={showModal}>
+      <Modal show={modalshow} toClose={showModal} forLogin={true}>
         <div className={styles.Login}>
-          {/* <h1>Login</h1> */}
           <ul>
             <li
               onClick={() => setFormNo(0)}
@@ -132,29 +131,34 @@ const Login = (props) => {
           </ul>
           <p>{errorMsg}</p>
           <form>
-            <input
-              type="text"
-              placeholder="test@gmail.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-
-            <input
-              type="password"
-              placeholder="test123456"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-            {formNo === 1 ? (
+            <section>
+              <label>Email:</label>
+              <input
+                type="text"
+                placeholder="test@gmail.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </section>
+            <section>
+              <label>Password:</label>
               <input
                 type="password"
-                placeholder="請再輸入一次密碼"
-                value={passwordcheck}
-                onChange={(e) => setPasswordcheck(e.target.value)}
+                placeholder="test123456"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 required
               />
-            ) : null}
+              {formNo === 1 ? (
+                <input
+                  type="password"
+                  placeholder="請再輸入一次密碼"
+                  value={passwordcheck}
+                  onChange={(e) => setPasswordcheck(e.target.value)}
+                  required
+                />
+              ) : null}
+            </section>
 
             {formNo === 1 ? (
               <button onClick={signupHandler}>sign up</button>
