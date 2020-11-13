@@ -21,7 +21,7 @@ import Loading from "../Loading";
 //   ["2020-10-19", 30, 23.7, 22.69, 23.44]
 // ];
 
-function createPlot(data, stockNo) {
+function createPlot(data, stockNo, markersData) {
   //define the chart type
   var chart = anychart.stock();
   anychart.format.inputLocale("zh-tw");
@@ -81,6 +81,27 @@ function createPlot(data, stockNo) {
       value = value / 1000;
       return value + "k";
     });
+
+  // add event markers，標交易時間點
+
+  chart.plot(0).eventMarkers({
+    groups:
+      // {
+      //   format: "buy",
+      //   data: [
+      //     {
+      //       date: "2020-11-11",
+      //       description:
+      //         "Cisco announced the acquisition of Audium Corporation.",
+      //     },
+      //     {
+      //       date: "2008-04-27",
+      //       description: "Cisco announced its intent to acquire PostPath, Inc.",
+      //     },
+      //   ],
+      // },
+      markersData,
+  });
   return chart;
 }
 
@@ -115,7 +136,38 @@ export default function Kplot(props) {
     );
   }, []);
 
-  const chart = createPlot(data, props.match.params.stockNo);
+  //整理交易紀錄for anychart
+  const outputExchangeHistory = () => {
+    const exchangeHistory = props.stocklist[props.match.params.stockNo];
+    const dataBuy = exchangeHistory
+      .filter((item) => item.buyorsell === "buy")
+      .map((item) => {
+        return {
+          date: item.date,
+          description: `買在價位${item.price}共${item.amount}股`,
+        };
+      });
+    const dataSell = exchangeHistory
+      .filter((item) => item.buyorsell === "sell")
+      .map((item) => {
+        return {
+          date: item.date,
+          description: `賣在價位${item.price}共${item.amount}股`,
+        };
+      });
+    const output = [
+      { format: "買", data: dataBuy },
+      { format: "賣", data: dataSell },
+    ];
+    return output;
+  };
+  // console.log(outputExchangeHistory());
+
+  const chart = createPlot(
+    data,
+    props.match.params.stockNo,
+    outputExchangeHistory()
+  );
   if (data.length === 0) {
     return (
       <Modal show={modalshow} toClose={showModal}>

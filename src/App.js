@@ -249,7 +249,9 @@ export default function App() {
           ></Route>
           <Route
             path="/kplot/:stockNo"
-            render={(props) => <Kplot {...props} isAuth={isAuthHandler} />}
+            render={(props) => (
+              <Kplot {...props} isAuth={isAuthHandler} stocklist={stocklist} />
+            )}
           ></Route>
         </Switch>
       </Router>

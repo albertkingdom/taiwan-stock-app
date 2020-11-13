@@ -55,6 +55,7 @@ const AddNewRecord = ({ stocklist, addNewIndexFunc }) => {
         className="form-control"
         value={buydate}
         onChange={(e) => datepickfunc(e.target.value)}
+        max={new Date().toLocaleDateString().replace(/\//g, "-")}
       />
       <div id="datepickerdiv">
         <button
