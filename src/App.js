@@ -7,6 +7,8 @@ import Navbar from "./component/Navbar/Navbar";
 import Login from "./component/Login/Login";
 import Logout from "./component/Logout/Logut";
 import Kplot from "./component/kplot/Kplot";
+import { getStockIndex } from "./api/fromApi";
+
 import {
   BrowserRouter as Router,
   Switch,
@@ -53,6 +55,7 @@ export default function App() {
   const [newStockNo, setNewStockNo] = useState("");
   const [isAuth, setIsAuth] = useState(false); //登入狀態
   const [loginEmail, setLoginEmail] = useState(""); //存登入email
+  const [stockIndex, setStockIndex] = useState(); //[大盤index, diff]
   const toSetNewStockNoFunc = (No) => {
     setNewStockNo(No);
   };
@@ -180,7 +183,25 @@ export default function App() {
   const saveLoginEmail = (email) => {
     setLoginEmail(email);
   };
+  useEffect(() => {
+    //取得今日大盤指數，after 2pm
+    const getDate = () => {
+      //if today's info is not published,then get yesterday's info instead
+      if (new Date().getHours() >= 14) {
+        return new Date().toLocaleDateString().replace(/\//g, "");
+      } else {
+        return new Date(Date.now() - 864e5)
+          .toLocaleDateString()
+          .replace(/\//g, "");
+      }
+    };
+    const stockindex = async () => {
+      const result = await getStockIndex(getDate());
 
+      setStockIndex(result);
+    };
+    stockindex();
+  }, []);
   return (
     <div className="App">
       <Router>
@@ -201,6 +222,7 @@ export default function App() {
               toSetNewStockNoFunc={toSetNewStockNoFunc}
               isAuth={isAuth}
               loginEmail={loginEmail}
+              stockIndex={stockIndex}
             />
           </Route>
           <Route

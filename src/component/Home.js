@@ -46,6 +46,7 @@ const Home = ({
   toSetNewStockNoFunc,
   isAuth,
   loginEmail,
+  stockIndex,
 }) => {
   const [filterStockNo, setFilterStockNo] = useState("");
   const [stocklistDisplay, setStocklistDisplay] = useState([]);
@@ -166,7 +167,7 @@ const Home = ({
     <div className="container text-center home">
       <div className="dashboard row justify-content-around align-items-center">
         <div className="col-12 col-md-4">
-          <StockIndex />
+          <StockIndex stockIndex={stockIndex} />
         </div>
 
         {/* <h1>台股持股損益表</h1>
