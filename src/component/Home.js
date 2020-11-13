@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 // import "bootstrap/dist/css/bootstrap.min.css";
 import Stockcard from "./Stockcard/stockcard";
 
@@ -70,7 +70,7 @@ const Home = ({
     const copyEmail = loginEmail.slice();
     return copyEmail.split("@")[0];
   }
-  const saveToFirebase = () => {
+  const saveToFirebase = useCallback(() => {
     const token = localStorage.getItem("token");
     // console.log("token", token);
     //?auth=token, token是登入後取得的
@@ -94,8 +94,8 @@ const Home = ({
         })
       )
       .catch((error) => console.log(error));
-  };
-  const readFromFirebase = () => {
+  }, []);
+  const readFromFirebase = useCallback(() => {
     const token = localStorage.getItem("token");
     // console.log("token", token);
     fetch(
@@ -115,7 +115,7 @@ const Home = ({
         toSetStockListFunc(data);
       })
       .catch((err) => console.log(err));
-  };
+  }, []);
   const toFilter = (stockNo) => {
     setFilterStockNo(stockNo);
   };

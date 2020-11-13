@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Doughnut } from "react-chartjs-2";
 
-const Chart = ({ stocklist, stockprice, isLoading,isAuth }) => {
+const Chart = ({ stocklist, stockprice, isLoading, isAuth }) => {
   const [totalCost, setTotalCost] = useState(0);
   const [totalValue, setTotalValue] = useState(0);
 
@@ -72,14 +72,16 @@ const Chart = ({ stocklist, stockprice, isLoading,isAuth }) => {
       </div>
       <div className="col-5 col-md-6 mt-3">
         <p>
-          總市值:<span>NT${isAuth?totalValue.toLocaleString():'XXXXXX'}</span>
+          總市值:
+          <span>NT${isAuth ? totalValue.toLocaleString() : "XXXXXX"}</span>
         </p>
         <p>
-          總成本:<span>NT${isAuth?totalCost.toLocaleString():'XXXXXX'}</span>
+          總成本:
+          <span>NT${isAuth ? totalCost.toLocaleString() : "XXXXXX"}</span>
         </p>
       </div>
     </div>
   );
 };
 
-export default Chart;
+export default React.memo(Chart);

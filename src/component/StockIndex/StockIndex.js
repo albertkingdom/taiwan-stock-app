@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getStockIndex } from "../../api/fromApi";
 // import styles from 'StockIndex.module.css'
 
- const StockIndex= ()=> {
+const StockIndex = () => {
   const [stockIndex, setStockIndex] = useState([]); //[index, diff]
   const [indexColor, setIndexColor] = useState("");
   const [indexDate, setIndexDate] = useState("");
@@ -26,7 +26,6 @@ import { getStockIndex } from "../../api/fromApi";
     };
     stockindex();
   }, []);
-
   return (
     <div
       className="row align-items-center justify-content-center"
@@ -55,5 +54,5 @@ import { getStockIndex } from "../../api/fromApi";
       </span>
     </div>
   );
-}
-export default StockIndex
+};
+export default React.memo(StockIndex);

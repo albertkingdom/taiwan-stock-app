@@ -1,12 +1,6 @@
 import React from "react";
 
-export default function SaveRecord({
-  saveToLocalStorage,
-  readFromLocalStorage,
-  saveToFirebase,
-  readFromFirebase,
-  isAuth
-}) {
+function SaveRecord({ saveToFirebase, readFromFirebase, isAuth }) {
   return isAuth ? (
     <div className="storageFunction">
       {/* <button
@@ -40,3 +34,5 @@ export default function SaveRecord({
     </div>
   ) : null;
 }
+
+export default React.memo(SaveRecord);

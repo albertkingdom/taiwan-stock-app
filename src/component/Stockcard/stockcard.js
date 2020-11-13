@@ -94,4 +94,4 @@ const Stockcard = ({ name, info, price, show, openModal, isAuth }) => {
   );
 };
 
-export default Stockcard;
+export default React.memo(Stockcard);
