@@ -202,6 +202,41 @@ export default function App() {
     };
     stockindex();
   }, []);
+  function getAccount() {
+    //取出登入email的帳號部分
+    const copyEmail = loginEmail.slice();
+    return copyEmail.split("@")[0];
+  }
+  console.log(getAccount());
+
+  const readFromFirebase = () => {
+    const token = localStorage.getItem("token");
+    // console.log("token", token);
+    console.log(getAccount());
+    fetch(
+      "https://udemy-react-burgerbuilde-eda07.firebaseio.com/stocklist/" +
+        localStorage.getItem("uid") +
+        ".json?auth=" +
+        token
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        // console.log("firebase ", data);
+        // let agree = window.confirm("即將從資料庫讀取資料並覆寫?");
+
+        // if (agree) {
+        //   toSetStockListFunc(data);
+        // }
+        toSetStockListFunc(data);
+      })
+      .catch((err) => console.log(err));
+  };
+  useEffect(() => {
+    //登入就從firebase讀資料
+    if (isAuth) {
+      // readFromFirebase();
+    }
+  }, [isAuth]);
   return (
     <div className="App">
       <Router>
@@ -223,6 +258,7 @@ export default function App() {
               isAuth={isAuth}
               loginEmail={loginEmail}
               stockIndex={stockIndex}
+              readFromFirebase={readFromFirebase}
             />
           </Route>
           <Route

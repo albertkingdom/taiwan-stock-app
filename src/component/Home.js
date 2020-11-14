@@ -47,6 +47,7 @@ const Home = ({
   isAuth,
   loginEmail,
   stockIndex,
+  readFromFirebase,
 }) => {
   const [filterStockNo, setFilterStockNo] = useState("");
   const [stocklistDisplay, setStocklistDisplay] = useState([]);
@@ -78,7 +79,7 @@ const Home = ({
 
     fetch(
       "https://udemy-react-burgerbuilde-eda07.firebaseio.com/stocklist/" +
-        getAccount() +
+        localStorage.getItem("uid") +
         ".json?auth=" +
         token,
       {
@@ -96,27 +97,27 @@ const Home = ({
       )
       .catch((error) => console.log(error));
   }, []);
-  const readFromFirebase = useCallback(() => {
-    const token = localStorage.getItem("token");
-    // console.log("token", token);
-    fetch(
-      "https://udemy-react-burgerbuilde-eda07.firebaseio.com/stocklist/" +
-        getAccount() +
-        ".json?auth=" +
-        token
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        // console.log("firebase ", data);
-        // let agree = window.confirm("即將從資料庫讀取資料並覆寫?");
+  // const readFromFirebase = useCallback(() => {
+  //   const token = localStorage.getItem("token");
+  //   // console.log("token", token);
+  //   fetch(
+  //     "https://udemy-react-burgerbuilde-eda07.firebaseio.com/stocklist/" +
+  //       getAccount() +
+  //       ".json?auth=" +
+  //       token
+  //   )
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       // console.log("firebase ", data);
+  //       // let agree = window.confirm("即將從資料庫讀取資料並覆寫?");
 
-        // if (agree) {
-        //   toSetStockListFunc(data);
-        // }
-        toSetStockListFunc(data);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+  //       // if (agree) {
+  //       //   toSetStockListFunc(data);
+  //       // }
+  //       toSetStockListFunc(data);
+  //     })
+  //     .catch((err) => console.log(err));
+  // }, []);
   const toFilter = (stockNo) => {
     setFilterStockNo(stockNo);
   };
@@ -150,12 +151,7 @@ const Home = ({
   const toSetSortMethod = (method) => {
     setSortMethod(method);
   };
-  useEffect(() => {
-    //登入就從firebase讀資料
-    if (isAuth) {
-      readFromFirebase();
-    }
-  }, [isAuth]);
+
   useEffect(() => {
     if (!sortMethod) {
       setStocklistDisplay(Object.keys(stocklist));

@@ -46,6 +46,7 @@ const Login = (props) => {
           //登入狀態存入localstorage
           localStorage.setItem("token", data.idToken);
           localStorage.setItem("expire", expirationDate);
+          localStorage.setItem("uid", data.localId);
           props.saveLoginEmail(data.email);
           // alert("成功登入");
           Swal.fire({
