@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getStockIndex } from "../../api/fromApi";
+// import { getStockIndex } from "../../api/fromApi";
 // import styles from 'StockIndex.module.css'
 
 const StockIndex = ({ stockIndex }) => {

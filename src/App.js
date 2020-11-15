@@ -186,6 +186,16 @@ export default function App() {
   useEffect(() => {
     //取得今日大盤指數，after 2pm
     const getDate = () => {
+      //if Saturday or Sunday, get Friday info instead
+      if (new Date().getDay() === 6) {
+        return new Date(Date.now() - 864e5)
+          .toLocaleDateString()
+          .replace(/\//g, "");
+      } else if (new Date().getDay() === 0) {
+        return new Date(Date.now() - 2 * 864e5)
+          .toLocaleDateString()
+          .replace(/\//g, "");
+      }
       //if today's info is not published,then get yesterday's info instead
       if (new Date().getHours() >= 14) {
         return new Date().toLocaleDateString().replace(/\//g, "");
@@ -207,12 +217,11 @@ export default function App() {
     const copyEmail = loginEmail.slice();
     return copyEmail.split("@")[0];
   }
-  console.log(getAccount());
 
   const readFromFirebase = () => {
     const token = localStorage.getItem("token");
     // console.log("token", token);
-    console.log(getAccount());
+    // console.log(getAccount());
     fetch(
       "https://udemy-react-burgerbuilde-eda07.firebaseio.com/stocklist/" +
         localStorage.getItem("uid") +
