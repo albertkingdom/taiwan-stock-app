@@ -17,6 +17,7 @@ import {
   NavLink,
 } from "react-router-dom";
 import Swal from "sweetalert2";
+import produce from "immer";
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(false);
@@ -114,32 +115,31 @@ export default function App() {
       if (!stocklist[newIndexNo]) {
         // console.log("原本沒有這項目");
 
-        setStocklist((prevState) => ({
-          ...prevState,
-          [newIndexNo]: [
-            {
+        setStocklist(
+          produce((draft) => {
+            draft[newIndexNo] = [
+              {
+                date: buydate,
+                price: newIndexPrice,
+                amount: newIndexAmount,
+                buyorsell: buyorsell,
+              },
+            ];
+          })
+        );
+      } else {
+        // console.log("原本有這項目");
+
+        setStocklist(
+          produce((draft) => {
+            draft[newIndexNo].push({
               date: buydate,
               price: newIndexPrice,
               amount: newIndexAmount,
               buyorsell: buyorsell,
-            },
-          ],
-        }));
-      } else {
-        // console.log("原本有這項目");
-
-        newStockArray = stocklist[newIndexNo].slice();
-        newStockArray.push({
-          date: buydate,
-          price: newIndexPrice,
-          amount: newIndexAmount,
-          buyorsell: buyorsell,
-        });
-        // console.log("newstockarr", newStockArray);
-        setStocklist((prevState) => ({
-          ...prevState,
-          [newIndexNo]: newStockArray,
-        }));
+            });
+          })
+        );
       }
     },
     [stocklist]

@@ -137,8 +137,8 @@ const Home = ({
       <SaveRecord
         saveToFirebase={saveToFirebase}
         readFromFirebase={readFromFirebase}
-        saveToLocalStorage={saveToLocalStorage}
-        readFromLocalStorage={readFromLocalStorage}
+        // saveToLocalStorage={saveToLocalStorage}
+        // readFromLocalStorage={readFromLocalStorage}
         isAuth={isAuth}
       />
       <AddNewStock stocklist={stocklist} addNewIndexFunc={addNewIndexFunc} />
