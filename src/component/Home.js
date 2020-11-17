@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
-// import "bootstrap/dist/css/bootstrap.min.css";
-import Stockcard from "./Stockcard/stockcard";
 
+import Stockcard from "./Stockcard/stockcard";
 import AddNewStock from "./addNewRecord";
 import Chart from "./Chart";
 import Loading from "./Loading";
@@ -10,7 +9,6 @@ import styled from "styled-components";
 import Historybox from "./Historybox/Historybox";
 import SaveRecord from "./SaveRecord/SaveRecord";
 import Filter from "./Filter/Filter";
-import Kplot from "./kplot/Kplot";
 import TitleBar from "./TitleBar/TitleBar";
 import Swal from "sweetalert2";
 import StockIndex from "./StockIndex/StockIndex";
@@ -41,9 +39,8 @@ const Home = ({
   modalShow,
   closeModal,
   addNewIndexFunc,
-  toSetStockListFunc,
+  toOverWriteStockList,
   isLoading,
-  toSetNewStockNoFunc,
   isAuth,
   loginEmail,
   stockIndex,
@@ -52,26 +49,7 @@ const Home = ({
   const [filterStockNo, setFilterStockNo] = useState("");
   const [stocklistDisplay, setStocklistDisplay] = useState([]);
   const [sortMethod, setSortMethod] = useState("");
-  const saveToLocalStorage = () => {
-    //按鍵功能：存入localstorage
-    localStorage.setItem("stocklist", JSON.stringify(stocklist));
-  };
-  const readFromLocalStorage = () => {
-    //按鍵功能：讀取localstorage
-    if (localStorage.getItem("stocklist").length > 0) {
-      let agree = window.confirm("this will overwrite current stock list?");
-      if (agree) {
-        let newstocklist = JSON.parse(localStorage.getItem("stocklist"));
-        // console.log(this.stockObj);
-        toSetStockListFunc(newstocklist);
-      }
-    }
-  };
-  function getAccount() {
-    //取出登入email的帳號部分
-    const copyEmail = loginEmail.slice();
-    return copyEmail.split("@")[0];
-  }
+
   const saveToFirebase = useCallback(() => {
     const token = localStorage.getItem("token");
     // console.log("token", token);
@@ -97,27 +75,7 @@ const Home = ({
       )
       .catch((error) => console.log(error));
   }, []);
-  // const readFromFirebase = useCallback(() => {
-  //   const token = localStorage.getItem("token");
-  //   // console.log("token", token);
-  //   fetch(
-  //     "https://udemy-react-burgerbuilde-eda07.firebaseio.com/stocklist/" +
-  //       getAccount() +
-  //       ".json?auth=" +
-  //       token
-  //   )
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       // console.log("firebase ", data);
-  //       // let agree = window.confirm("即將從資料庫讀取資料並覆寫?");
 
-  //       // if (agree) {
-  //       //   toSetStockListFunc(data);
-  //       // }
-  //       toSetStockListFunc(data);
-  //     })
-  //     .catch((err) => console.log(err));
-  // }, []);
   const toFilter = (stockNo) => {
     setFilterStockNo(stockNo);
   };
@@ -166,10 +124,6 @@ const Home = ({
           <StockIndex stockIndex={stockIndex} />
         </div>
 
-        {/* <h1>台股持股損益表</h1>
-        <p>
-          <i>不計入手續費、股市交易稅</i>
-        </p> */}
         <div className="col-12 col-md-8">
           <Chart
             stocklist={stocklist}

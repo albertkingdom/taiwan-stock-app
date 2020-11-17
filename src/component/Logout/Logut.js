@@ -8,7 +8,7 @@ const Logout = (props) => {
     localStorage.removeItem("uid");
     localStorage.removeItem("expire");
     props.isAuth(); //{isAuth:false}
-    props.auth(""); //delete token in App.js
+    // props.auth(""); //delete token in App.js
     props.saveLoginEmail("");
   }, []);
   return <Redirect to="/" />;

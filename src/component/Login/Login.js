@@ -38,7 +38,7 @@ const Login = (props) => {
         if (!data.error) {
           //成功登入
           // this.setState({ ...this.state, token: data.idToken });
-          props.auth(data.idToken);
+          // props.auth(data.idToken);
           props.isAuth();
           const expirationDate = new Date(
             new Date().getTime() + data.expiresIn * 1000

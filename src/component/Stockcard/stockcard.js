@@ -81,7 +81,7 @@ const Stockcard = ({ name, info, price, show, openModal, isAuth }) => {
             </li>
             <li>{price.toString().substring(0, 5)}</li>
             <li>{amount.toLocaleString()}</li>
-            <li>{avgCost}</li>
+            <li>{avgCost.toString().substring(0, 5)}</li>
             <li>
               <p className={revenue > 0 ? "text-danger" : "text-success"}>
                 {revenue}%

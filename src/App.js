@@ -20,7 +20,6 @@ import Swal from "sweetalert2";
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(false);
-  // console.log("isLOading", isLoading);
   const [stocklist, setStocklist] = useState({
     2330: [
       {
@@ -49,16 +48,13 @@ export default function App() {
     2330: "",
     2880: "",
   });
-  // const [stockprice, setStockprice] = useState({});
   const [historyRecords, setHistoryRecords] = useState([]); //歷史紀錄for modal
   const [modalShow, setModalShow] = useState(false);
   const [newStockNo, setNewStockNo] = useState("");
   const [isAuth, setIsAuth] = useState(false); //登入狀態
   const [loginEmail, setLoginEmail] = useState(""); //存登入email
   const [stockIndex, setStockIndex] = useState(); //[大盤index, diff]
-  const toSetNewStockNoFunc = (No) => {
-    setNewStockNo(No);
-  };
+
   const setModal = (stockNo) => {
     // console.log("setModal Fun", stockNo);
     setModalShow(true);
@@ -74,44 +70,31 @@ export default function App() {
       //查詢股票價格
 
       setIsLoading(true);
+      //組成查詢股價的字串
       let str = "";
-      for (var i in stocklist) {
-        str += "tse_" + i + ".tw|";
-      }
-
-      // const proxyurl = "https://cors-anywhere.herokuapp.com/";
-      const proxyurl = "https://taiwan-stock-app-backend.herokuapp.com/";
+      Object.keys(stocklist).forEach((No) => (str += `tse_${No}.tw|`));
 
       fetch(
-        proxyurl +
+        process.env.REACT_APP_PROXYURL +
           "https://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=" +
           str +
           "&json=1&delay=0&_=" +
           Date.now()
       )
         .then((res) => res.json())
-        // .then(data=>console.log(data))
         .then((data) => {
-          // console.log("get price", data.msgArray);
-
           let newState = {};
           data.msgArray.map((item) => (newState[item.c] = item.y));
 
           setStockprice(newState);
         })
         .then(() => setIsLoading(false))
-
         .catch((err) => console.log(err));
     };
 
-    if (stockprice["2330"] === "") {
-      getStockPrice();
-    }
-    if (newStockNo === "") {
-      return;
-    }
     getStockPrice();
-  }, [stocklist]);
+  }, [newStockNo]);
+
   const addNewIndexFunc = useCallback(
     (newIndexNo, newIndexPrice, newIndexAmount, buyorsell, buydate) => {
       if (!isAuth) {
@@ -126,31 +109,26 @@ export default function App() {
       //新增一筆股票購買紀錄
       setIsLoading(true);
       setNewStockNo(newIndexNo); //設定新加入股票代碼
-      let stockNo = newIndexNo;
-      // console.log(stockNo);
-      // console.log("stocklist[stockNo]", stocklist[stockNo]);
 
       let newStockArray;
-      if (!stocklist[stockNo]) {
+      if (!stocklist[newIndexNo]) {
         // console.log("原本沒有這項目");
-        newStockArray = [
-          {
-            date: buydate,
-            price: newIndexPrice,
-            amount: newIndexAmount,
-            buyorsell: buyorsell,
-          },
-        ];
 
         setStocklist((prevState) => ({
           ...prevState,
-          [stockNo]: newStockArray,
+          [newIndexNo]: [
+            {
+              date: buydate,
+              price: newIndexPrice,
+              amount: newIndexAmount,
+              buyorsell: buyorsell,
+            },
+          ],
         }));
-        // setNewStockNo(""); //設定新加入股票代碼
       } else {
         // console.log("原本有這項目");
 
-        newStockArray = stocklist[stockNo].slice();
+        newStockArray = stocklist[newIndexNo].slice();
         newStockArray.push({
           date: buydate,
           price: newIndexPrice,
@@ -160,25 +138,22 @@ export default function App() {
         // console.log("newstockarr", newStockArray);
         setStocklist((prevState) => ({
           ...prevState,
-          [stockNo]: newStockArray,
+          [newIndexNo]: newStockArray,
         }));
       }
-
-      // console.log("stockprice", stockprice);
     },
     [stocklist]
   );
-  const toSetStockListFunc = (list) => {
+  const toOverWriteStockList = (list) => {
+    //從資料庫讀取覆蓋stocklist
     setIsLoading(true);
-    const newNo = Object.keys(list).filter((No) => No !== "2330");
-    // console.log("新增代號", newNo[newNo.length - 1]);
-    setNewStockNo(newNo[newNo.length - 1]); //將新增
+
+    setNewStockNo(Object.keys(list)); //觸發抓新增股票代號的股價
     setStocklist(list);
   };
-  const saveAuthInfo = () => {}; //將登入拿到的token存在state
+
   const isAuthHandler = () => {
     setIsAuth(!isAuth);
-    // window.alert("成功登入");
   };
   const saveLoginEmail = (email) => {
     setLoginEmail(email);
@@ -212,16 +187,10 @@ export default function App() {
     };
     stockindex();
   }, []);
-  function getAccount() {
-    //取出登入email的帳號部分
-    const copyEmail = loginEmail.slice();
-    return copyEmail.split("@")[0];
-  }
 
   const readFromFirebase = () => {
     const token = localStorage.getItem("token");
-    // console.log("token", token);
-    // console.log(getAccount());
+
     fetch(
       "https://udemy-react-burgerbuilde-eda07.firebaseio.com/stocklist/" +
         localStorage.getItem("uid") +
@@ -230,20 +199,14 @@ export default function App() {
     )
       .then((res) => res.json())
       .then((data) => {
-        // console.log("firebase ", data);
-        // let agree = window.confirm("即將從資料庫讀取資料並覆寫?");
-
-        // if (agree) {
-        //   toSetStockListFunc(data);
-        // }
-        toSetStockListFunc(data);
+        toOverWriteStockList(data);
       })
       .catch((err) => console.log(err));
   };
   useEffect(() => {
     //登入就從firebase讀資料
     if (isAuth) {
-      // readFromFirebase();
+      readFromFirebase();
     }
   }, [isAuth]);
   return (
@@ -261,9 +224,8 @@ export default function App() {
               modalShow={modalShow}
               closeModal={closeModal}
               addNewIndexFunc={addNewIndexFunc}
-              toSetStockListFunc={toSetStockListFunc}
+              toOverWriteStockList={toOverWriteStockList}
               isLoading={isLoading}
-              toSetNewStockNoFunc={toSetNewStockNoFunc}
               isAuth={isAuth}
               loginEmail={loginEmail}
               stockIndex={stockIndex}
@@ -275,7 +237,7 @@ export default function App() {
             render={(props) => (
               <Login
                 {...props}
-                auth={saveAuthInfo}
+                // auth={saveAuthInfo}
                 isAuth={isAuthHandler}
                 saveLoginEmail={saveLoginEmail}
               />
@@ -286,7 +248,7 @@ export default function App() {
             render={(props) => (
               <Logout
                 {...props}
-                auth={saveAuthInfo}
+                // auth={saveAuthInfo}
                 isAuth={isAuthHandler}
                 saveLoginEmail={saveLoginEmail}
               />

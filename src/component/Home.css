@@ -14,6 +14,11 @@
   overflow: auto;
   height: 47vh;
 }
+@media screen and (max-width: 766px) {
+  .stock-list {
+    height: 30vh;
+  }
+}
 /* info icon */
 .disclaimer {
   position: fixed;
