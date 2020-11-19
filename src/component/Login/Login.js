@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Modal from "../Modal/Modal";
 import styles from "./Login.module.css";
 import Swal from "sweetalert2";
+import PasswordInput from "./passwordInput";
 
 const Login = (props) => {
   const [modalshow, setModalshow] = useState(true);
@@ -12,12 +13,13 @@ const Login = (props) => {
   const [token, setToken] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [formNo, setFormNo] = useState(0);
+
   const showModal = () => {
     setModalshow((prevState) => !prevState); //close modal
     props.history.goBack(); //回到上一頁
   };
   const signinHandler = (event) => {
-    event.preventDefault();
+    event.preventDefault(); //in form, button onclick will act as submit
     // console.log("submit");
     const logindata = {
       email: email,
@@ -112,6 +114,9 @@ const Login = (props) => {
         props.history.replace("/");
       });
   };
+  const changePassword = (value) => {
+    setPassword(value);
+  };
   return (
     <>
       <Modal show={modalshow} toClose={showModal} forLogin={true}>
@@ -131,42 +136,40 @@ const Login = (props) => {
             </li>
           </ul>
           <p>{errorMsg}</p>
-          <form>
-            <section>
-              <label>Email:</label>
-              <input
-                type="text"
-                placeholder="test@gmail.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </section>
-            <section>
-              <label>Password:</label>
-              <input
-                type="password"
-                placeholder="test123456"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-              {formNo === 1 ? (
-                <input
-                  type="password"
-                  placeholder="請再輸入一次密碼"
-                  value={passwordcheck}
-                  onChange={(e) => setPasswordcheck(e.target.value)}
-                  required
-                />
-              ) : null}
-            </section>
+          {/* <form> */}
+          <section>
+            <label>Email:</label>
+            <input
+              type="text"
+              placeholder="test@gmail.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </section>
+          <section>
+            <label>Password:</label>
+            <PasswordInput
+              password={password}
+              changePassword={changePassword}
+            />
 
             {formNo === 1 ? (
-              <button onClick={signupHandler}>sign up</button>
-            ) : (
-              <button onClick={signinHandler}>sign in</button>
-            )}
-          </form>
+              <input
+                type="password"
+                placeholder="請再輸入一次密碼"
+                value={passwordcheck}
+                onChange={(e) => setPasswordcheck(e.target.value)}
+                required
+              />
+            ) : null}
+          </section>
+
+          {formNo === 1 ? (
+            <button onClick={signupHandler}>sign up</button>
+          ) : (
+            <button onClick={signinHandler}>sign in</button>
+          )}
+          {/* </form> */}
         </div>
       </Modal>
     </>
