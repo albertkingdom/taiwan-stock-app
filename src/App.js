@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useCallback } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import "./styles.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -9,13 +9,7 @@ import Logout from "./component/Logout/Logut";
 import Kplot from "./component/kplot/Kplot";
 import { getStockIndex } from "./api/fromApi";
 
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  NavLink,
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Swal from "sweetalert2";
 import produce from "immer";
 
@@ -94,7 +88,7 @@ export default function App() {
     };
 
     getStockPrice();
-  }, [newStockNo]);
+  }, [newStockNo, stocklist]);
 
   const addNewIndexFunc = useCallback(
     (newIndexNo, newIndexPrice, newIndexAmount, buyorsell, buydate) => {
@@ -111,7 +105,6 @@ export default function App() {
       setIsLoading(true);
       setNewStockNo(newIndexNo); //設定新加入股票代碼
 
-      let newStockArray;
       if (!stocklist[newIndexNo]) {
         // console.log("原本沒有這項目");
 
@@ -142,7 +135,7 @@ export default function App() {
         );
       }
     },
-    [stocklist]
+    [stocklist, isAuth]
   );
   const toOverWriteStockList = (list) => {
     //從資料庫讀取覆蓋stocklist
@@ -188,7 +181,7 @@ export default function App() {
     stockindex();
   }, []);
 
-  const readFromFirebase = () => {
+  const readFromFirebase = useCallback(() => {
     const token = localStorage.getItem("token");
 
     fetch(
@@ -202,13 +195,13 @@ export default function App() {
         toOverWriteStockList(data);
       })
       .catch((err) => console.log(err));
-  };
+  }, []);
   useEffect(() => {
     //登入就從firebase讀資料
     if (isAuth) {
       readFromFirebase();
     }
-  }, [isAuth]);
+  }, [isAuth, readFromFirebase]);
   return (
     <div className="App">
       <Router>
