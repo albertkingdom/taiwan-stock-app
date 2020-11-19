@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 // import styles from "./Navbar.module.css";
 import styled from "styled-components";
@@ -74,7 +74,7 @@ const Nav = styled.nav`
 const Navbar = ({ isAuth }) => {
   const [open, setOpen] = useState(false); //控制side navbar開關
   // const lists = useRef();
- 
+
   return (
     <Nav>
       <div className="container">
@@ -90,11 +90,11 @@ const Navbar = ({ isAuth }) => {
 
           <li>
             {isAuth ? (
-              <Link to="/logout" onClick={()=>setOpen(false)}>
+              <Link to="/logout" onClick={() => setOpen(false)}>
                 Logout <i className="fas fa-user-circle"></i>
               </Link>
             ) : (
-              <Link to="/login" onClick={()=>setOpen(false)}>
+              <Link to="/login" onClick={() => setOpen(false)}>
                 Login <i className="fas fa-sign-in-alt"></i>
               </Link>
             )}

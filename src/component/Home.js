@@ -74,49 +74,50 @@ const Home = ({
         })
       )
       .catch((error) => console.log(error));
-  }, []);
+  }, [stocklist]);
 
   const toFilter = (stockNo) => {
     setFilterStockNo(stockNo);
   };
-  const sort = () => {
-    let newOrderedArray;
-    switch (sortMethod) {
-      case "stockNoAsc":
-        newOrderedArray = Object.keys(stocklist).sort((a, b) => a - b);
-        break;
-      case "stockNoDesc":
-        newOrderedArray = Object.keys(stocklist).sort((a, b) => b - a);
-        break;
-      case "stockPriceAsc":
-        newOrderedArray = Object.keys(stockprice).sort(
-          (a, b) => stockprice[a] - stockprice[b]
-        );
-        break;
-      case "stockPriceDesc":
-        newOrderedArray = Object.keys(stockprice).sort(
-          (a, b) => stockprice[b] - stockprice[a]
-        );
-        break;
-      default:
-        newOrderedArray = Object.keys(stocklist);
-    }
 
-    // console.log(newOrderedArray);
-
-    setStocklistDisplay(newOrderedArray);
-  };
   const toSetSortMethod = (method) => {
     setSortMethod(method);
   };
 
   useEffect(() => {
+    const sort = () => {
+      let newOrderedArray;
+      switch (sortMethod) {
+        case "stockNoAsc":
+          newOrderedArray = Object.keys(stocklist).sort((a, b) => a - b);
+          break;
+        case "stockNoDesc":
+          newOrderedArray = Object.keys(stocklist).sort((a, b) => b - a);
+          break;
+        case "stockPriceAsc":
+          newOrderedArray = Object.keys(stockprice).sort(
+            (a, b) => stockprice[a] - stockprice[b]
+          );
+          break;
+        case "stockPriceDesc":
+          newOrderedArray = Object.keys(stockprice).sort(
+            (a, b) => stockprice[b] - stockprice[a]
+          );
+          break;
+        default:
+          newOrderedArray = Object.keys(stocklist);
+      }
+
+      // console.log(newOrderedArray);
+
+      setStocklistDisplay(newOrderedArray);
+    };
     if (!sortMethod) {
       setStocklistDisplay(Object.keys(stocklist));
     } else {
       sort();
     }
-  }, [sortMethod, stocklist]);
+  }, [sortMethod, stocklist, stockprice]);
   return (
     <div className="container text-center home">
       <div className="dashboard row justify-content-around align-items-center">
