@@ -1,8 +1,8 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import Modal from "../Modal/Modal";
 import styles from "./Login.module.css";
 import Swal from "sweetalert2";
-import PasswordInput from "./passwordInput";
+import PasswordInput from "./PasswordInput";
 
 const Login = (props) => {
   const [modalshow, setModalshow] = useState(true);

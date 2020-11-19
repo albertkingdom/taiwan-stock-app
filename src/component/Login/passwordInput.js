@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./Login.module.css";
 
-export default function passwordInput({ password, changePassword }) {
+export default function PasswordInput({ password, changePassword }) {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
@@ -19,9 +19,9 @@ export default function passwordInput({ password, changePassword }) {
         onClick={() => setShowPassword(!showPassword)}
       >
         {!showPassword ? (
-          <i class="fas fa-eye"></i>
+          <i className="fas fa-eye"></i>
         ) : (
-          <i class="fas fa-eye-slash"></i>
+          <i className="fas fa-eye-slash"></i>
         )}
       </button>
     </div>
