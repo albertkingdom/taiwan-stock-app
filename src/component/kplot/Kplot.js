@@ -134,7 +134,7 @@ export default function Kplot(props) {
       getDateString()[0],
       getDateString()[1]
     );
-  }, []);
+  }, [props.match.params.stockNo]);
 
   //整理交易紀錄for anychart
   const outputExchangeHistory = () => {
