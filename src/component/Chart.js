@@ -26,9 +26,7 @@ const Chart = ({ stocklist, stockprice, isLoading, isAuth }) => {
         total += stocklist[i]
           .map((item) => +item.price * +item.amount)
           .reduce((sum, a) => sum + a, 0);
-        // console.log(total);
       }
-      // console.log("totalcost", total);
 
       setTotalCost(total);
       // return total;
@@ -43,14 +41,11 @@ const Chart = ({ stocklist, stockprice, isLoading, isAuth }) => {
       // console.log(amountObj);
       let total = 0;
 
-      for (let i in stockprice) {
+      for (let i in amountObj) {
         total += +stockprice[i] * amountObj[i];
       }
-      // console.log("totalvalue", total);
 
-      // this.isChartDataOk = true
       setTotalValue(total);
-      // return total;
     };
     if (!isLoading) {
       // console.log(isLoading);
