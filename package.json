@@ -20,6 +20,8 @@
     "sweetalert2": "^10.9.0"
   },
   "devDependencies": {
+    "@testing-library/react": "^11.2.2",
+    "jest-canvas-mock": "^2.3.0",
     "typescript": "3.8.3"
   },
   "scripts": {
