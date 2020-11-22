@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from "react";
 
 import Stockcard from "./Stockcard/stockcard";
 import AddNewStock from "./addNewRecord";
-import Chart from "./Chart";
+import Chart from "./Chart/Chart";
 import Loading from "./Loading";
 import "./Home.css";
 import styled from "styled-components";
