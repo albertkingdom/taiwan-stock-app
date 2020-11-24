@@ -138,20 +138,24 @@ const Login = (props) => {
           <p>{errorMsg}</p>
           {/* <form> */}
           <section>
-            <label>Email:</label>
-            <input
-              type="text"
-              placeholder="test@gmail.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
+            <label>
+              Email:
+              <input
+                type="text"
+                placeholder="test@gmail.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </label>
           </section>
           <section>
-            <label>Password:</label>
-            <PasswordInput
-              password={password}
-              changePassword={changePassword}
-            />
+            <label>
+              Password:
+              <PasswordInput
+                password={password}
+                changePassword={changePassword}
+              />
+            </label>
 
             {formNo === 1 ? (
               <input

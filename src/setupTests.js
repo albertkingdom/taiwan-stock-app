@@ -1,5 +1,6 @@
 //for every .test.js file
 import React from "react";
+import "@testing-library/jest-dom";
 import "jest-canvas-mock";
 
 //fix chart js test error: Failed to create chart: can't acquire context from the given item
