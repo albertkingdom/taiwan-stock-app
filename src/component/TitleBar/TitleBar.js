@@ -6,6 +6,7 @@ function TitleBar({ sortMethod, toSetSortMethod }) {
     <div className={styles.titleBar}>
       <ul>
         <li></li>
+        <li></li>
         <li>
           股票
           {sortMethod === "" || !sortMethod.includes("No") ? (

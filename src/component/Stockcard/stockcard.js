@@ -1,7 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./stockcard.module.css";
-const Stockcard = ({ name, info, price, show, openModal, isAuth }) => {
+const Stockcard = ({
+  name,
+  info,
+  price,
+  show,
+  openModal,
+  isAuth,
+  toDeleteRecord,
+}) => {
   // console.log("stockcard", stocklist);
   // const name = stocklist.keys
   // console.log("stockcard name", name);
@@ -74,7 +82,14 @@ const Stockcard = ({ name, info, price, show, openModal, isAuth }) => {
                 <i className="far fa-clipboard"></i>
               </button>
             </li>
-
+            <li>
+              <button
+                onClick={() => toDeleteRecord(name)}
+                className={styles.historybtn}
+              >
+                <i className="far fa-trash-alt"></i>
+              </button>
+            </li>
             <li>
               <p>{name}</p>
               <Link to={`/kplot/${name}`}>看k線圖</Link>

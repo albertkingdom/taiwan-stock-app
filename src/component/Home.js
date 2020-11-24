@@ -45,9 +45,10 @@ const Home = ({
   loginEmail,
   stockIndex,
   readFromFirebase,
+  toDeleteRecord,
 }) => {
   const [filterStockNo, setFilterStockNo] = useState("");
-  const [stocklistDisplay, setStocklistDisplay] = useState([]);
+  const [stocklistDisplay, setStocklistDisplay] = useState([]); //[2330,2880...]
   const [sortMethod, setSortMethod] = useState("");
 
   const saveToFirebase = useCallback(() => {
@@ -147,7 +148,6 @@ const Home = ({
       <div className="position-relative stock-list">
         <TitleBar sortMethod={sortMethod} toSetSortMethod={toSetSortMethod} />
         {isLoading ? (
-          // <h5>Loading</h5>
           <Loading />
         ) : (
           stocklistDisplay.map((item) => (
@@ -161,6 +161,7 @@ const Home = ({
               }
               openModal={openModal}
               isAuth={isAuth}
+              toDeleteRecord={toDeleteRecord}
             />
           ))
         )}

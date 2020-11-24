@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import styles from "./Login.module.css";
 
-export default function PasswordInput({ password, changePassword }) {
+export default function PasswordInput({
+  password,
+  changePassword,
+  keyUphandler,
+}) {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
@@ -11,6 +15,7 @@ export default function PasswordInput({ password, changePassword }) {
         placeholder="test123456"
         value={password}
         onChange={(e) => changePassword(e.target.value)}
+        onKeyUp={keyUphandler}
         required
       />
 

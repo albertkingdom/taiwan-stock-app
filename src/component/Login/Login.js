@@ -18,6 +18,14 @@ const Login = (props) => {
     setModalshow((prevState) => !prevState); //close modal
     props.history.goBack(); //回到上一頁
   };
+  const keyUphandler = (event) => {
+    //click enter to signin
+    // keyCode 13 is Enter key
+    if (event.keyCode === 13) {
+      // console.log("enter");
+      signinHandler(event);
+    }
+  };
   const signinHandler = (event) => {
     event.preventDefault(); //in form, button onclick will act as submit
     // console.log("submit");
@@ -26,6 +34,7 @@ const Login = (props) => {
       password: password,
       returnSecureToken: true,
     };
+
     fetch(
       `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.REACT_APP_SIGNIN_KEY}`,
       {
@@ -154,6 +163,7 @@ const Login = (props) => {
               <PasswordInput
                 password={password}
                 changePassword={changePassword}
+                keyUphandler={keyUphandler}
               />
             </label>
 

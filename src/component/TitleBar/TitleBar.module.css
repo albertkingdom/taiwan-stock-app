@@ -8,7 +8,8 @@
   /* flex-grow: 1; */
   flex-basis: 20%;
 }
-.titleBar li:first-child {
+.titleBar li:first-child,
+.titleBar li:nth-child(2) {
   /* flex-grow: 0.5; */
   flex-basis: 10%;
 }

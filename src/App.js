@@ -86,8 +86,10 @@ export default function App() {
         .then(() => setIsLoading(false))
         .catch((err) => console.log(err));
     };
-
-    getStockPrice();
+    //沒有newstockNo就不需要查股價
+    if (newStockNo) {
+      getStockPrice();
+    }
   }, [newStockNo, stocklist]);
 
   const addNewIndexFunc = useCallback(
@@ -144,7 +146,28 @@ export default function App() {
     setNewStockNo(Object.keys(list)); //觸發抓新增股票代號的股價
     setStocklist(list);
   };
-
+  const toDeleteRecord = (No) => {
+    //刪除某隻股票的所有紀錄
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire("Deleted!", "Your record has been deleted.", "success");
+        setNewStockNo("");
+        setStocklist(
+          produce((draft) => {
+            delete draft[No];
+          })
+        );
+      }
+    });
+  };
   const isAuthHandler = () => {
     setIsAuth(!isAuth);
   };
@@ -223,6 +246,7 @@ export default function App() {
               loginEmail={loginEmail}
               stockIndex={stockIndex}
               readFromFirebase={readFromFirebase}
+              toDeleteRecord={toDeleteRecord}
             />
           </Route>
           <Route
