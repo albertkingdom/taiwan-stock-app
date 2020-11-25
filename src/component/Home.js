@@ -12,6 +12,7 @@ import Filter from "./Filter/Filter";
 import TitleBar from "./TitleBar/TitleBar";
 import Swal from "sweetalert2";
 import StockIndex from "./StockIndex/StockIndex";
+import { apiSaveToFirebase } from "../api/fromApi";
 // styled component
 const RemindLoginHint = styled.div`
   position: absolute;
@@ -56,18 +57,8 @@ const Home = ({
     // console.log("token", token);
     //?auth=token, token是登入後取得的
 
-    fetch(
-      "https://udemy-react-burgerbuilde-eda07.firebaseio.com/stocklist/" +
-        localStorage.getItem("uid") +
-        ".json?auth=" +
-        token,
-      {
-        body: JSON.stringify(stocklist),
-        method: "PUT",
-      }
-    )
-      .then((res) => res.json())
-      .then((data) =>
+    apiSaveToFirebase(token, stocklist)
+      .then((res) =>
         Swal.fire({
           title: "儲存成功!",
           icon: "success",

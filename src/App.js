@@ -12,6 +12,7 @@ import { getStockIndex } from "./api/fromApi";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Swal from "sweetalert2";
 import produce from "immer";
+import { apiGetStockprice, apiReadFirebase } from "./api/fromApi";
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(false);
@@ -69,17 +70,11 @@ export default function App() {
       let str = "";
       Object.keys(stocklist).forEach((No) => (str += `tse_${No}.tw|`));
 
-      fetch(
-        process.env.REACT_APP_PROXYURL +
-          "https://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=" +
-          str +
-          "&json=1&delay=0&_=" +
-          Date.now()
-      )
-        .then((res) => res.json())
-        .then((data) => {
+      apiGetStockprice(str)
+        .then((res) => {
+          // console.log(res);
           let newState = {};
-          data.msgArray.map((item) => (newState[item.c] = item.y));
+          res.data.msgArray.map((item) => (newState[item.c] = item.y));
 
           setStockprice(newState);
         })
@@ -207,15 +202,10 @@ export default function App() {
   const readFromFirebase = useCallback(() => {
     const token = localStorage.getItem("token");
 
-    fetch(
-      "https://udemy-react-burgerbuilde-eda07.firebaseio.com/stocklist/" +
-        localStorage.getItem("uid") +
-        ".json?auth=" +
-        token
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        toOverWriteStockList(data);
+    apiReadFirebase(token)
+      .then((res) => {
+        // console.log(res.data);
+        toOverWriteStockList(res.data);
       })
       .catch((err) => console.log(err));
   }, []);

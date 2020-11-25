@@ -3,6 +3,7 @@ import Modal from "../Modal/Modal";
 import styles from "./Login.module.css";
 import Swal from "sweetalert2";
 import PasswordInput from "./PasswordInput";
+import { apiUserLogin, apiUserSignup } from "../../api/fromApi";
 
 const Login = (props) => {
   const [modalshow, setModalshow] = useState(true);
@@ -35,15 +36,8 @@ const Login = (props) => {
       returnSecureToken: true,
     };
 
-    fetch(
-      `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.REACT_APP_SIGNIN_KEY}`,
-      {
-        body: JSON.stringify(logindata),
-        method: "POST",
-        contentType: "application/json",
-      }
-    )
-      .then((res) => res.json())
+    apiUserLogin(logindata)
+      .then((resp) => resp.data)
       .then((data) => {
         // console.log(data);
         if (!data.error) {
@@ -87,13 +81,11 @@ const Login = (props) => {
       email: email,
       password: password,
     };
-    fetch(
-      `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${process.env.REACT_APP_SIGNIN_KEY}`,
-      { body: JSON.stringify(signupdata), method: "POST" }
-    )
-      .then((res) => res.json())
+
+    apiUserSignup(signupdata)
+      .then((resp) => resp.data)
       .then((data) => {
-        // console.log(data);
+        console.log(data);
         if (!data.error) {
           // this.setState({ ...this.state, token: data.idToken });
           setToken(data.idToken);
@@ -115,7 +107,7 @@ const Login = (props) => {
           // alert("失敗註冊");
         }
         //導回首頁
-        props.location.replace("/");
+        props.history.replace("/");
       })
       .catch((error) => {
         console.log("error", error);
