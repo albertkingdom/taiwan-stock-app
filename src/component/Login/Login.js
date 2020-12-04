@@ -137,7 +137,7 @@ const Login = (props) => {
             </li>
           </ul>
           <p>{errorMsg}</p>
-          {/* <form> */}
+          <form>
           <section>
             <label>
               Email:
@@ -175,7 +175,7 @@ const Login = (props) => {
           ) : (
             <button onClick={signinHandler}>sign in</button>
           )}
-          {/* </form> */}
+          </form>
         </div>
       </Modal>
     </>

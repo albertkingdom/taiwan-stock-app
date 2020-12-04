@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import styles from "./stockcard.module.css";
 const Stockcard = ({
   name,
@@ -9,6 +9,7 @@ const Stockcard = ({
   openModal,
   isAuth,
   toDeleteRecord,
+  history,
 }) => {
   // console.log("stockcard", stocklist);
   // const name = stocklist.keys
@@ -77,7 +78,10 @@ const Stockcard = ({
                 data-toggle="modal"
                 data-target="#exampleModalCenter"
                 className={styles.historybtn}
-                onClick={() => openModal(name)}
+                onClick={() => {
+                  openModal(name);
+                  history.push(`/history/${name}`);
+                }}
               >
                 <i className="far fa-clipboard"></i>
               </button>
@@ -109,4 +113,4 @@ const Stockcard = ({
   );
 };
 
-export default React.memo(Stockcard);
+export default React.memo(withRouter(Stockcard));

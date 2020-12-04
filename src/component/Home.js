@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, useRef } from "react";
 
 import Stockcard from "./Stockcard/stockcard";
 import AddNewStock from "./addNewRecord";
@@ -6,7 +6,7 @@ import Chart from "./Chart/Chart";
 import Loading from "./Loading";
 import "./Home.css";
 import styled from "styled-components";
-import Historybox from "./Historybox/Historybox";
+
 import SaveRecord from "./SaveRecord/SaveRecord";
 import Filter from "./Filter/Filter";
 import TitleBar from "./TitleBar/TitleBar";
@@ -35,15 +35,10 @@ const RemindLoginHint = styled.div`
 const Home = ({
   stocklist,
   stockprice,
-  historyRecords,
   openModal,
-  modalShow,
-  closeModal,
   addNewIndexFunc,
-  toOverWriteStockList,
   isLoading,
   isAuth,
-  loginEmail,
   stockIndex,
   readFromFirebase,
   toDeleteRecord,
@@ -76,6 +71,8 @@ const Home = ({
     setSortMethod(method);
   };
 
+  const stocklistRef = useRef(null);
+  const upRef = useRef(null);
   useEffect(() => {
     const sort = () => {
       let newOrderedArray;
@@ -110,33 +107,40 @@ const Home = ({
       sort();
     }
   }, [sortMethod, stocklist, stockprice]);
+
+  useEffect(() => {
+    const stocklistH = stocklistRef.current.clientHeight;
+    // console.log("stocklist height", stocklistH);
+  }, []);
   return (
     <div className="container text-center home">
-      <div className="dashboard row justify-content-around align-items-center">
-        <div className="col-12 col-md-4">
-          <StockIndex stockIndex={stockIndex} />
-        </div>
+      <div className="up" ref={upRef}>
+        <div className="row justify-content-around align-items-center">
+          <div className="col-12 col-md-4">
+            <StockIndex stockIndex={stockIndex} />
+          </div>
 
-        <div className="col-12 col-md-8">
-          <Chart
-            stocklist={stocklist}
-            stockprice={stockprice}
-            isLoading={isLoading}
-            isAuth={isAuth}
-          />
+          <div className="col-12 col-md-8">
+            <Chart
+              stocklist={stocklist}
+              stockprice={stockprice}
+              isLoading={isLoading}
+              isAuth={isAuth}
+            />
+          </div>
         </div>
+        <Filter filterStockNo={filterStockNo} toFilter={toFilter} />
+        <SaveRecord
+          saveToFirebase={saveToFirebase}
+          readFromFirebase={readFromFirebase}
+          // saveToLocalStorage={saveToLocalStorage}
+          // readFromLocalStorage={readFromLocalStorage}
+          isAuth={isAuth}
+        />
+        <AddNewStock stocklist={stocklist} addNewIndexFunc={addNewIndexFunc} />
       </div>
-      <Filter filterStockNo={filterStockNo} toFilter={toFilter} />
-      <SaveRecord
-        saveToFirebase={saveToFirebase}
-        readFromFirebase={readFromFirebase}
-        // saveToLocalStorage={saveToLocalStorage}
-        // readFromLocalStorage={readFromLocalStorage}
-        isAuth={isAuth}
-      />
-      <AddNewStock stocklist={stocklist} addNewIndexFunc={addNewIndexFunc} />
 
-      <div className="position-relative stock-list">
+      <div className="position-relative stock-list" ref={stocklistRef}>
         <TitleBar sortMethod={sortMethod} toSetSortMethod={toSetSortMethod} />
         {isLoading ? (
           <Loading />
@@ -163,11 +167,7 @@ const Home = ({
           </RemindLoginHint>
         )}
       </div>
-      <Historybox
-        show={modalShow}
-        historyRecords={historyRecords}
-        closeModal={closeModal}
-      />
+     
       <div className="disclaimer">
         <i className="fas fa-info-circle"></i>
         <span className="tooltiptext">不計入手續費、股市交易稅</span>

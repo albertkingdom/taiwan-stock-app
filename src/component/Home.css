@@ -1,11 +1,13 @@
 .home {
   background: #fff;
-  min-height: 100vh;
+  /* min-height: 100vh; */
+  max-height: calc(100vh - 50px);
   padding-top: 20px;
   position: fixed;
   top: 51px;
   left: 50%;
   transform: translateX(-50%);
+  overflow: auto;
 }
 .dashboard {
   /* max-height: 50vh; */

@@ -17,11 +17,15 @@ export default function PasswordInput({
         onChange={(e) => changePassword(e.target.value)}
         onKeyUp={keyUphandler}
         required
+        autoComplete="true"
       />
 
       <button
         className={styles.showPwd}
-        onClick={() => setShowPassword(!showPassword)}
+        onClick={(e) => {
+          setShowPassword(!showPassword);
+          e.preventDefault();
+        }}
       >
         {!showPassword ? (
           <i className="fas fa-eye"></i>
