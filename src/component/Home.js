@@ -1,8 +1,14 @@
-import React, { useEffect, useState, useCallback, useRef } from "react";
+import React, {
+  useEffect,
+  useState,
+  useCallback,
+  useRef,
+  Suspense,
+} from "react";
 
 import Stockcard from "./Stockcard/stockcard";
 import AddNewStock from "./addNewRecord";
-import Chart from "./Chart/Chart";
+// import Chart from "./Chart/Chart";
 import Loading from "./Loading";
 import "./Home.css";
 import styled from "styled-components";
@@ -112,6 +118,8 @@ const Home = ({
     const stocklistH = stocklistRef.current.clientHeight;
     // console.log("stocklist height", stocklistH);
   }, []);
+
+  const LazyLoadChart = React.lazy(() => import("./Chart/Chart"));
   return (
     <div className="container-md text-center home">
       <div className="up" ref={upRef}>
@@ -121,12 +129,14 @@ const Home = ({
           </div>
 
           <div className="col-12 col-md-8">
-            <Chart
-              stocklist={stocklist}
-              stockprice={stockprice}
-              isLoading={isLoading}
-              isAuth={isAuth}
-            />
+            <Suspense fallback={<Loading />}>
+              <LazyLoadChart
+                stocklist={stocklist}
+                stockprice={stockprice}
+                isLoading={isLoading}
+                isAuth={isAuth}
+              />
+            </Suspense>
           </div>
         </div>
         <Filter filterStockNo={filterStockNo} toFilter={toFilter} />
