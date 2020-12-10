@@ -99,6 +99,7 @@ const Login = (props) => {
                   password={password}
                   changePassword={changePassword}
                   keyUphandler={keyUphandler}
+                  placeholder="test123456"
                 />
               </label>
             </section>

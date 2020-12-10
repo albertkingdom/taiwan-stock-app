@@ -3,7 +3,7 @@ import { Doughnut } from "react-chartjs-2";
 
 const Chart = ({ stocklist, stockprice, isLoading, isAuth }) => {
   const [totalCost, setTotalCost] = useState(0);
-  const [totalValue, setTotalValue] = useState(0);
+  const [totalValue, setTotalValue] = useState(100);
 
   const data = {
     labels: ["成本", "損益"],
@@ -11,7 +11,7 @@ const Chart = ({ stocklist, stockprice, isLoading, isAuth }) => {
       {
         label: "carbs",
         data: [totalCost, totalValue - totalCost],
-        backgroundColor: ["orange", "blue"],
+        backgroundColor: ["orange", "lightblue"],
       },
     ],
   };
@@ -33,6 +33,7 @@ const Chart = ({ stocklist, stockprice, isLoading, isAuth }) => {
     };
     const calTotalValue = () => {
       let amountObj = {}; //amountObj ={'2330':股數,}
+
       for (let i in stocklist) {
         amountObj[i] = stocklist[i]
           .map((item) => Number(item.amount))
@@ -47,8 +48,8 @@ const Chart = ({ stocklist, stockprice, isLoading, isAuth }) => {
 
       setTotalValue(total);
     };
-    if (!isLoading) {
-      // console.log(isLoading);
+    if (!isLoading && Object.keys(stocklist).length !== 0) {
+      // console.log("chart", !isLoading && !stocklist && !stockprice);
       calTotalCost();
       calTotalValue();
     }

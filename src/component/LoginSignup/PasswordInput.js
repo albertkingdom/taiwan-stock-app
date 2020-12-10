@@ -5,6 +5,7 @@ export default function PasswordInput({
   password,
   changePassword,
   keyUphandler,
+  placeholder,
 }) {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -12,7 +13,7 @@ export default function PasswordInput({
     <div className="position-relative">
       <input
         type={showPassword ? `text` : `password`}
-        placeholder="test123456"
+        placeholder={placeholder}
         value={password}
         onChange={(e) => changePassword(e.target.value)}
         onKeyUp={keyUphandler}

@@ -10,7 +10,8 @@ const Logout = (props) => {
     props.isAuth(); //{isAuth:false}
     // props.auth(""); //delete token in App.js
     props.saveLoginEmail("");
-  }, []);
+    props.toEmptyStockList();
+  }, [props]);
   return <Redirect to="/" />;
 };
 

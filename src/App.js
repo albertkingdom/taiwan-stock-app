@@ -6,7 +6,7 @@ import Home from "./component/Home";
 import Navbar from "./component/Navbar/Navbar";
 import Login from "./component/LoginSignup/Login";
 import Signup from "./component/LoginSignup/Signup";
-import Logout from "./component/Logout/Logut";
+import Logout from "./component/Logout/Logout";
 import Kplot from "./component/kplot/Kplot";
 import Historybox from "./component/Historybox/Historybox";
 
@@ -22,32 +22,32 @@ import {
 export default function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [stocklist, setStocklist] = useState({
-    2330: [
-      {
-        date: "2020-05-01",
-        price: "300",
-        amount: "1000",
-        buyorsell: "buy",
-      },
-      {
-        date: "2020-05-01",
-        price: "350",
-        amount: "1000",
-        buyorsell: "buy",
-      },
-    ],
-    2880: [
-      {
-        date: "2020-04-10",
-        price: "20",
-        amount: "1000",
-        buyorsell: "buy",
-      },
-    ],
+    // 2330: [
+    //   {
+    //     date: "2020-05-01",
+    //     price: "300",
+    //     amount: "1000",
+    //     buyorsell: "buy",
+    //   },
+    //   {
+    //     date: "2020-05-01",
+    //     price: "350",
+    //     amount: "1000",
+    //     buyorsell: "buy",
+    //   },
+    // ],
+    // 2880: [
+    //   {
+    //     date: "2020-04-10",
+    //     price: "20",
+    //     amount: "1000",
+    //     buyorsell: "buy",
+    //   },
+    // ],
   }); //完整的股票清單
   const [stockprice, setStockprice] = useState({
-    2330: "",
-    2880: "",
+    // 2330: "",
+    // 2880: "",
   });
   const [historyRecords, setHistoryRecords] = useState([]); //歷史紀錄for modal
   const [modalShow, setModalShow] = useState(false);
@@ -77,7 +77,7 @@ export default function App() {
 
       apiGetStockprice(str)
         .then((res) => {
-          // console.log(res);
+          // console.log("api get stock price", res);
           let newState = {};
           res.data.msgArray.map((item) => (newState[item.c] = item.y));
 
@@ -174,6 +174,11 @@ export default function App() {
   const saveLoginEmail = (email) => {
     setLoginEmail(email);
   };
+  const toEmptyStockList = () => {
+    setStocklist({});
+    setNewStockNo("");
+    setIsLoading(false);
+  };
   useEffect(() => {
     //取得今日大盤指數，after 2pm
     const getDate = () => {
@@ -209,7 +214,11 @@ export default function App() {
 
     apiReadFirebase(token)
       .then((res) => {
-        // console.log(res.data);
+        // console.log("read from firebase", res.data);
+        if (!res.data) {
+          // console.log("沒有資料");
+          return;
+        }
         toOverWriteStockList(res.data);
       })
       .catch((err) => console.log(err));
@@ -274,6 +283,7 @@ export default function App() {
                 // auth={saveAuthInfo}
                 isAuth={isAuthHandler}
                 saveLoginEmail={saveLoginEmail}
+                toEmptyStockList={toEmptyStockList}
               />
             )}
           ></Route>

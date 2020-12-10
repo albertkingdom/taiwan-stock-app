@@ -38,7 +38,7 @@ const Signup = (props) => {
     apiUserSignup(signupdata)
       .then((resp) => resp.data)
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         if (!data.error) {
           // this.setState({ ...this.state, token: data.idToken });
           setToken(data.idToken);
@@ -83,7 +83,7 @@ const Signup = (props) => {
                 Email:
                 <input
                   type="text"
-                  placeholder="test@gmail.com"
+                  placeholder=""
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
@@ -96,6 +96,7 @@ const Signup = (props) => {
                   password={password}
                   changePassword={changePassword}
                   keyUphandler={keyUphandler}
+                  placeholder=""
                 />
               </label>
 

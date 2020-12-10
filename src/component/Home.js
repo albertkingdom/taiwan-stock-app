@@ -19,10 +19,13 @@ import TitleBar from "./TitleBar/TitleBar";
 import Swal from "sweetalert2";
 import StockIndex from "./StockIndex/StockIndex";
 import { apiSaveToFirebase } from "../api/fromApi";
+import nothingherejpg from "./asset/theres-nothing-here.jpg";
+
 // styled component
 const RemindLoginHint = styled.div`
+  display: ${({ show }) => (show ? "block" : "none")};
   position: absolute;
-  top: 0%;
+  /* top: 0%; */
   left: 50%;
   transform: translateX(-50%);
   /* height: 50px; */
@@ -31,11 +34,11 @@ const RemindLoginHint = styled.div`
   z-index: 200;
 
   p {
-    font-size: 28px;
-    height: 100%;
-    line-height: 200px;
+    font-size: 24px;
+    /* height: 100%; */
+    /* line-height: 200px; */
     /* background-color: none; */
-    margin-bottom: 0px;
+    margin: 10px auto;
   }
 `;
 const Home = ({
@@ -171,11 +174,10 @@ const Home = ({
           ))
         )}
 
-        {isAuth ? null : (
-          <RemindLoginHint>
-            <p>Please login!</p>
-          </RemindLoginHint>
-        )}
+        <RemindLoginHint show={!isAuth || !Object.keys(stocklist).length}>
+          <img src={nothingherejpg} alt="nothing here!" />
+          <p>Please login and add your first record!</p>
+        </RemindLoginHint>
       </div>
 
       <div className="disclaimer">
