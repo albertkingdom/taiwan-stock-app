@@ -1,6 +1,7 @@
 .home {
   background: #fff;
   /* min-height: 100vh; */
+  height: 100%;
   max-height: calc(100vh - 50px);
   padding-top: 20px;
   position: fixed;

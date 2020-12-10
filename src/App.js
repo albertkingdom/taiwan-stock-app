@@ -4,7 +4,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import Home from "./component/Home";
 import Navbar from "./component/Navbar/Navbar";
-import Login from "./component/Login/Login";
+import Login from "./component/LoginSignup/Login";
+import Signup from "./component/LoginSignup/Signup";
 import Logout from "./component/Logout/Logut";
 import Kplot from "./component/kplot/Kplot";
 import Historybox from "./component/Historybox/Historybox";
@@ -12,8 +13,11 @@ import Historybox from "./component/Historybox/Historybox";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Swal from "sweetalert2";
 import produce from "immer";
-import { apiGetStockprice, apiReadFirebase,getStockIndex } from "./api/fromApi";
-
+import {
+  apiGetStockprice,
+  apiReadFirebase,
+  getStockIndex,
+} from "./api/fromApi";
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(false);
@@ -252,6 +256,17 @@ export default function App() {
             )}
           />
           <Route
+            path="/signup"
+            render={(props) => (
+              <Signup
+                {...props}
+                // auth={saveAuthInfo}
+                isAuth={isAuthHandler}
+                saveLoginEmail={saveLoginEmail}
+              />
+            )}
+          />
+          <Route
             path="/logout"
             render={(props) => (
               <Logout
@@ -268,10 +283,14 @@ export default function App() {
               <Kplot {...props} isAuth={isAuthHandler} stocklist={stocklist} />
             )}
           ></Route>
-           <Route
+          <Route
             path="/history/:stockNo"
             render={(props) => (
-              <Historybox  {...props} isAuth={isAuthHandler} historyRecords={historyRecords}/>
+              <Historybox
+                {...props}
+                isAuth={isAuthHandler}
+                historyRecords={historyRecords}
+              />
             )}
           ></Route>
         </Switch>

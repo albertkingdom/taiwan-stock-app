@@ -113,7 +113,7 @@ const Home = ({
     // console.log("stocklist height", stocklistH);
   }, []);
   return (
-    <div className="container text-center home">
+    <div className="container-md text-center home">
       <div className="up" ref={upRef}>
         <div className="row justify-content-around align-items-center">
           <div className="col-12 col-md-4">
@@ -167,7 +167,7 @@ const Home = ({
           </RemindLoginHint>
         )}
       </div>
-     
+
       <div className="disclaimer">
         <i className="fas fa-info-circle"></i>
         <span className="tooltiptext">不計入手續費、股市交易稅</span>

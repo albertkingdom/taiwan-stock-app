@@ -5,7 +5,7 @@
   padding-top: 20px;
 }
 .Login section {
-  width: 50%;
+  /* width: 50%; */
   margin: 0px auto;
   position: relative;
 }
@@ -14,7 +14,7 @@
   /* text-align: center; */
   margin: 5px auto 20px auto;
   padding: 10px 10px;
-  width: 90%;
+  width: 100%;
   border: none;
   background-color: #eee;
 }
@@ -24,18 +24,18 @@
   background-color: #4caf50;
   outline: none;
   border: none;
-  border-radius: 20px;
+  border-radius: 8px;
   font-size: 14px;
   cursor: pointer;
   padding: 10px 10px;
   margin: 50px auto;
   color: #eee;
-  width: 125px;
+  width: 60%;
   text-transform: uppercase;
 }
 .Login label {
   font-size: 16px;
-  width: 90%;
+  width: 300px;
   position: relative;
   left: 0;
   text-align: left;
