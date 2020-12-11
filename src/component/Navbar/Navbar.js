@@ -62,6 +62,7 @@ const Nav = styled.nav`
   position: fixed;
   width: 100vw;
   z-index: 200;
+  background-color: #fff;
   h4 {
     margin-bottom: 0;
   }
@@ -84,9 +85,13 @@ const RWDNav = styled.nav`
   transition: all 0.3s ease-in-out;
   justify-content: start;
   z-index: 200;
+  ul {
+    padding-left: 0px;
+  }
   li {
     flex-basis: auto;
     height: 50px;
+    padding-left: 20px;
   }
   a {
     color: #fff;
@@ -141,7 +146,7 @@ const Navbar = ({ isAuth }) => {
       <RWDNav open={open}>
         <ul>
           <li>
-            <Link to="/">
+            <Link to="/" onClick={() => setOpen(false)}>
               <i className="fas fa-home"></i>
             </Link>
           </li>

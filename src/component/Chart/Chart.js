@@ -43,7 +43,7 @@ const Chart = ({ stocklist, stockprice, isLoading, isAuth }) => {
       let total = 0;
 
       for (let i in amountObj) {
-        total += +stockprice[i] * amountObj[i];
+        total += +stockprice[i][0] * amountObj[i];
       }
 
       setTotalValue(total);

@@ -44,7 +44,7 @@ function TitleBar({ sortMethod, toSetSortMethod }) {
           ) : null}
         </li>
         <li>股數</li>
-        <li>平均成本</li>
+        <li>成本</li>
         <li>損益</li>
       </ul>
     </div>

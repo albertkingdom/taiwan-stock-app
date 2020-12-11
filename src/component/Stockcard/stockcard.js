@@ -10,11 +10,12 @@ const Stockcard = ({
   isAuth,
   toDeleteRecord,
   history,
+  chinesename,
+  showDeleteButton,
 }) => {
   const [amount, setAmount] = useState(0);
   const [avgCost, setAvgCost] = useState(0);
   const [revenue, setRevenue] = useState(0);
-
   const calAvgCost = useCallback(() => {
     //計算每支股票平均成本
     let totalprice = 0;
@@ -52,15 +53,30 @@ const Stockcard = ({
   }, [info]);
 
   useEffect(() => {
+    if (!info) {
+      return;
+    }
     setAvgCost(calAvgCost());
     setRevenue(calReveneue());
     setAmount(calAmount());
-  }, [avgCost, calAmount, calAvgCost, calReveneue]);
+  }, [avgCost, calAmount, calAvgCost, calReveneue, info]);
+
+  if (!info) {
+    return null;
+  }
   return (
     <>
       {show ? (
         <>
           <ul className={[styles.stockcard].join(" ")}>
+            <li className={showDeleteButton ? styles.todelete : styles.hide}>
+              <button
+                onClick={() => toDeleteRecord(name)}
+                className={styles.historybtn}
+              >
+                <i className="fas fa-minus-circle"></i>
+              </button>
+            </li>
             <li>
               <button
                 type="button"
@@ -75,15 +91,9 @@ const Stockcard = ({
                 <i className="far fa-clipboard"></i>
               </button>
             </li>
+
             <li>
-              <button
-                onClick={() => toDeleteRecord(name)}
-                className={styles.historybtn}
-              >
-                <i className="far fa-trash-alt"></i>
-              </button>
-            </li>
-            <li>
+              <p>{chinesename}</p>
               <p>{name}</p>
               <Link to={`/kplot/${name}`}>看k線圖</Link>
             </li>

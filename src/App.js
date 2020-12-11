@@ -12,6 +12,7 @@ import Historybox from "./component/Historybox/Historybox";
 import StockIndex from "./component/StockIndex/StockIndex";
 import Loading from "./component/Loading";
 import AddRecord from "./component/Edit/AddRecord";
+import DelRecord from "./component/Edit/DelRecord";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Swal from "sweetalert2";
 import produce from "immer";
@@ -80,7 +81,9 @@ export default function App() {
       apiGetStockprice(str)
         .then((res) => {
           let newState = {};
-          res.data.msgArray.map((item) => (newState[item.c] = item.y));
+          res.data.msgArray.map(
+            (item) => (newState[item.c] = [item.y, item.n])
+          );
 
           setStockprice(newState);
         })
@@ -340,6 +343,17 @@ export default function App() {
                 />
               )}
             ></Route>
+            {/* <Route
+              path="/delrecord"
+              render={(props) => (
+                <DelRecord
+                  {...props}
+                  isAuth={isAuthHandler}
+                  stockprice={stockprice}
+                  toDeleteRecord={toDeleteRecord}
+                />
+              )}
+            ></Route> */}
           </Switch>
         </main>
       </Router>

@@ -19,13 +19,14 @@ const Div = styled.div`
   }
 `;
 
-export default function Edit() {
+export default function Edit({ toShowDeleteButton, showDeleteButton }) {
   return (
     <Div>
       <ul>
         <li>
-          <button>
-            <Link to="/editrecord">編輯</Link>
+          <button onClick={toShowDeleteButton}>
+            {showDeleteButton ? "完成編輯" : "編輯"}
+            {/* <Link to="/delrecord">編輯</Link> */}
           </button>
         </li>
         <li>

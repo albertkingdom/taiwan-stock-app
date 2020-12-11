@@ -18,11 +18,6 @@ import nothingherejpg from "./asset/theres-nothing-here.jpg";
 // styled component
 const RemindLoginHint = styled.div`
   display: ${({ show }) => (show ? "block" : "none")};
-  position: absolute;
-  /* top: 0%; */
-  left: 50%;
-  transform: translateX(-50%);
-
   width: 100%;
   z-index: 200;
 
@@ -48,6 +43,7 @@ const Home = ({
   const [filterStockNo, setFilterStockNo] = useState("");
   const [stocklistDisplay, setStocklistDisplay] = useState([]); //[2330,2880...]
   const [sortMethod, setSortMethod] = useState("");
+  const [showDeleteButton, setShowDeleteButton] = useState(false);
 
   const saveToFirebase = useCallback(() => {
     const token = localStorage.getItem("token");
@@ -115,7 +111,6 @@ const Home = ({
     // console.log("stocklist height", stocklistH);
   }, []);
 
-  // const LazyLoadChart = React.lazy(() => import("./Chart/Chart"));
   return (
     <div className="container-md text-center home">
       <div className="function" ref={upRef}>
@@ -123,8 +118,6 @@ const Home = ({
         <SaveRecord
           saveToFirebase={saveToFirebase}
           readFromFirebase={readFromFirebase}
-          // saveToLocalStorage={saveToLocalStorage}
-          // readFromLocalStorage={readFromLocalStorage}
           isAuth={isAuth}
         />
       </div>
@@ -139,13 +132,15 @@ const Home = ({
               key={item}
               name={item}
               info={stocklist[item]}
-              price={stockprice[item]}
+              price={stockprice[item] && stockprice[item][0]}
+              chinesename={stockprice[item] && stockprice[item][1]}
               show={
                 filterStockNo.length === 0 || item.indexOf(filterStockNo) > -1
               }
               openModal={openModal}
               isAuth={isAuth}
               toDeleteRecord={toDeleteRecord}
+              showDeleteButton={showDeleteButton}
             />
           ))
         )}
@@ -154,7 +149,10 @@ const Home = ({
           <img src={nothingherejpg} alt="nothing here!" />
           <p>Please login and add your first record!</p>
         </RemindLoginHint>
-        <Edit />
+        <Edit
+          toShowDeleteButton={() => setShowDeleteButton(!showDeleteButton)}
+          showDeleteButton={showDeleteButton}
+        />
       </div>
 
       <div className="disclaimer">
