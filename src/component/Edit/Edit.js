@@ -13,9 +13,15 @@ const Div = styled.div`
     width: 120px;
     border: none;
     padding: 5px;
+    background-color: #e5f4f3;
   }
   a {
+    display: block;
     color: #000;
+    width: 100%;
+    &:hover {
+      text-decoration: none;
+    }
   }
 `;
 

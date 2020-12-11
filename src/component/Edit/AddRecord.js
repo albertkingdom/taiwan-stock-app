@@ -2,10 +2,18 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Form, Button } from "react-bootstrap";
 
-const Div = styled.div`
+const StyledButton = styled.button`
   /* top: */
+  width: 200px;
+  background-color: #e5f4f3;
+  border: 0px;
+  padding: 5px 10px;
+  margin: 20px;
+  position: relative;
+  left: 50%;
+  transform: translate(-50%);
 `;
-export default function AddRecord({ addNewIndexFunc }) {
+export default function AddRecord({ addNewIndexFunc, history }) {
   const [newRecord, setNewRecord] = useState({
     stockNo: "",
     newIndexPrice: "",
@@ -29,10 +37,11 @@ export default function AddRecord({ addNewIndexFunc }) {
       date: "",
       buyorsell: "",
     });
+    history.replace("/");
   };
   const handleInput = (e) => {
     // console.log(e.target.name);
-    setNewRecord({ ...newRecord, [e.target.name]: e.target.value });
+    setNewRecord({ ...newRecord, [e.target.name]: e.target.value.toString() });
   };
   return (
     <div className="container-md">
@@ -63,7 +72,7 @@ export default function AddRecord({ addNewIndexFunc }) {
         <Form.Group controlId="formBasicEmail">
           <Form.Label>買/賣股價</Form.Label>
           <Form.Control
-            type="text"
+            type="number"
             placeholder=""
             name="newIndexPrice"
             value={newRecord.newIndexPrice}
@@ -73,7 +82,7 @@ export default function AddRecord({ addNewIndexFunc }) {
         <Form.Group controlId="formBasicEmail">
           <Form.Label>股數</Form.Label>
           <Form.Control
-            type="text"
+            type="number"
             placeholder=""
             name="newIndexAmount"
             value={newRecord.newIndexAmount}
@@ -92,9 +101,13 @@ export default function AddRecord({ addNewIndexFunc }) {
           />
         </Form.Group>
 
-        <Button variant="primary" type="submit">
-          Submit
-        </Button>
+        <StyledButton
+          variant="primary"
+          type="submit"
+          className="submitButton text-center"
+        >
+          新增
+        </StyledButton>
       </Form>
     </div>
   );

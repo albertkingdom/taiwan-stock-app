@@ -54,7 +54,7 @@ export default function App() {
   });
   const [historyRecords, setHistoryRecords] = useState([]); //歷史紀錄for modal
   const [modalShow, setModalShow] = useState(false);
-  const [newStockNo, setNewStockNo] = useState("2330");
+  const [newStockNo, setNewStockNo] = useState([2330]);
   const [isAuth, setIsAuth] = useState(false); //登入狀態
   const [loginEmail, setLoginEmail] = useState(""); //存登入email
   const [stockIndex, setStockIndex] = useState(); //[大盤index, diff]
@@ -84,14 +84,17 @@ export default function App() {
           res.data.msgArray.map(
             (item) => (newState[item.c] = [item.y, item.n])
           );
-
-          setStockprice(newState);
+          return newState;
+          // setStockprice(newState);
+        })
+        .then((state) => {
+          setStockprice(state);
         })
         .then(() => setIsLoading(false))
         .catch((err) => console.log(err));
     };
     //沒有newstockNo就不需要查股價
-    if (newStockNo) {
+    if (newStockNo.length > 0) {
       getStockPrice();
     }
   }, [newStockNo, stocklist]);
@@ -109,7 +112,9 @@ export default function App() {
       }
       //新增一筆股票購買紀錄
       setIsLoading(true);
-      setNewStockNo(newIndexNo); //設定新加入股票代碼
+      if (!stockprice.hasOwnProperty(newIndexNo)) {
+        setNewStockNo([newIndexNo]); //設定新加入股票代碼
+      }
 
       if (!stocklist[newIndexNo]) {
         // console.log("原本沒有這項目");
@@ -141,14 +146,15 @@ export default function App() {
         );
       }
     },
-    [stocklist, isAuth]
+    [stocklist, isAuth, stockprice]
   );
   const toOverWriteStockList = (list) => {
     //從資料庫讀取覆蓋stocklist
     setIsLoading(true);
 
-    setNewStockNo(Object.keys(list)); //觸發抓新增股票代號的股價
     setStocklist(list);
+
+    setNewStockNo(Object.keys(list)); //觸發抓新增股票代號的股價
   };
   const toDeleteRecord = (No) => {
     //刪除某隻股票的所有紀錄
@@ -180,7 +186,7 @@ export default function App() {
   };
   const toEmptyStockList = () => {
     setStocklist({});
-    setNewStockNo("");
+    setNewStockNo([]);
     setIsLoading(false);
   };
   useEffect(() => {
