@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, Suspense } from "react";
 import "./styles.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -9,7 +9,9 @@ import Signup from "./component/LoginSignup/Signup";
 import Logout from "./component/Logout/Logout";
 import Kplot from "./component/kplot/Kplot";
 import Historybox from "./component/Historybox/Historybox";
-
+import StockIndex from "./component/StockIndex/StockIndex";
+import Loading from "./component/Loading";
+import AddRecord from "./component/Edit/AddRecord";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Swal from "sweetalert2";
 import produce from "immer";
@@ -22,20 +24,20 @@ import {
 export default function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [stocklist, setStocklist] = useState({
-    // 2330: [
-    //   {
-    //     date: "2020-05-01",
-    //     price: "300",
-    //     amount: "1000",
-    //     buyorsell: "buy",
-    //   },
-    //   {
-    //     date: "2020-05-01",
-    //     price: "350",
-    //     amount: "1000",
-    //     buyorsell: "buy",
-    //   },
-    // ],
+    2330: [
+      {
+        date: "2020-05-01",
+        price: "300",
+        amount: "1000",
+        buyorsell: "buy",
+      },
+      {
+        date: "2020-05-01",
+        price: "350",
+        amount: "1000",
+        buyorsell: "buy",
+      },
+    ],
     // 2880: [
     //   {
     //     date: "2020-04-10",
@@ -46,12 +48,12 @@ export default function App() {
     // ],
   }); //完整的股票清單
   const [stockprice, setStockprice] = useState({
-    // 2330: "",
+    2330: "",
     // 2880: "",
   });
   const [historyRecords, setHistoryRecords] = useState([]); //歷史紀錄for modal
   const [modalShow, setModalShow] = useState(false);
-  const [newStockNo, setNewStockNo] = useState("");
+  const [newStockNo, setNewStockNo] = useState("2330");
   const [isAuth, setIsAuth] = useState(false); //登入狀態
   const [loginEmail, setLoginEmail] = useState(""); //存登入email
   const [stockIndex, setStockIndex] = useState(); //[大盤index, diff]
@@ -77,7 +79,6 @@ export default function App() {
 
       apiGetStockprice(str)
         .then((res) => {
-          // console.log("api get stock price", res);
           let newState = {};
           res.data.msgArray.map((item) => (newState[item.c] = item.y));
 
@@ -229,81 +230,118 @@ export default function App() {
       readFromFirebase();
     }
   }, [isAuth, readFromFirebase]);
+  const LazyLoadChart = React.lazy(() => import("./component/Chart/Chart"));
+
   return (
     <div className="App">
       <Router>
         <Navbar isAuth={isAuth} />
 
-        <Switch>
-          <Route path="/" exact>
-            <Home
-              stocklist={stocklist}
-              stockprice={stockprice}
-              historyRecords={historyRecords}
-              openModal={setModal}
-              modalShow={modalShow}
-              closeModal={closeModal}
-              addNewIndexFunc={addNewIndexFunc}
-              toOverWriteStockList={toOverWriteStockList}
-              isLoading={isLoading}
-              isAuth={isAuth}
-              loginEmail={loginEmail}
-              stockIndex={stockIndex}
-              readFromFirebase={readFromFirebase}
-              toDeleteRecord={toDeleteRecord}
-            />
-          </Route>
-          <Route
-            path="/login"
-            render={(props) => (
-              <Login
-                {...props}
-                // auth={saveAuthInfo}
-                isAuth={isAuthHandler}
-                saveLoginEmail={saveLoginEmail}
-              />
-            )}
-          />
-          <Route
-            path="/signup"
-            render={(props) => (
-              <Signup
-                {...props}
-                // auth={saveAuthInfo}
-                isAuth={isAuthHandler}
-                saveLoginEmail={saveLoginEmail}
-              />
-            )}
-          />
-          <Route
-            path="/logout"
-            render={(props) => (
-              <Logout
-                {...props}
-                // auth={saveAuthInfo}
-                isAuth={isAuthHandler}
-                saveLoginEmail={saveLoginEmail}
-                toEmptyStockList={toEmptyStockList}
-              />
-            )}
-          ></Route>
-          <Route
-            path="/kplot/:stockNo"
-            render={(props) => (
-              <Kplot {...props} isAuth={isAuthHandler} stocklist={stocklist} />
-            )}
-          ></Route>
-          <Route
-            path="/history/:stockNo"
-            render={(props) => (
-              <Historybox
-                {...props}
-                isAuth={isAuthHandler}
+        <div className="up">
+          <div className="row justify-content-around align-items-center">
+            <div className="col-12 col-md-4">
+              <StockIndex stockIndex={stockIndex} />
+            </div>
+
+            <div className="col-12 col-md-8">
+              <Suspense fallback={<Loading />}>
+                <LazyLoadChart
+                  stocklist={stocklist}
+                  stockprice={stockprice}
+                  isLoading={isLoading}
+                  isAuth={isAuth}
+                />
+              </Suspense>
+            </div>
+          </div>
+        </div>
+        <main className="main">
+          <Switch>
+            <Route path="/" exact>
+              <Home
+                stocklist={stocklist}
+                stockprice={stockprice}
                 historyRecords={historyRecords}
+                openModal={setModal}
+                modalShow={modalShow}
+                closeModal={closeModal}
+                addNewIndexFunc={addNewIndexFunc}
+                toOverWriteStockList={toOverWriteStockList}
+                isLoading={isLoading}
+                isAuth={isAuth}
+                loginEmail={loginEmail}
+                stockIndex={stockIndex}
+                readFromFirebase={readFromFirebase}
+                toDeleteRecord={toDeleteRecord}
               />
-            )}
-          ></Route>
-        </Switch>
+            </Route>
+            <Route
+              path="/login"
+              render={(props) => (
+                <Login
+                  {...props}
+                  // auth={saveAuthInfo}
+                  isAuth={isAuthHandler}
+                  saveLoginEmail={saveLoginEmail}
+                />
+              )}
+            />
+            <Route
+              path="/signup"
+              render={(props) => (
+                <Signup
+                  {...props}
+                  // auth={saveAuthInfo}
+                  isAuth={isAuthHandler}
+                  saveLoginEmail={saveLoginEmail}
+                />
+              )}
+            />
+            <Route
+              path="/logout"
+              render={(props) => (
+                <Logout
+                  {...props}
+                  // auth={saveAuthInfo}
+                  isAuth={isAuthHandler}
+                  saveLoginEmail={saveLoginEmail}
+                  toEmptyStockList={toEmptyStockList}
+                />
+              )}
+            ></Route>
+            <Route
+              path="/kplot/:stockNo"
+              render={(props) => (
+                <Kplot
+                  {...props}
+                  isAuth={isAuthHandler}
+                  stocklist={stocklist}
+                />
+              )}
+            ></Route>
+            <Route
+              path="/history/:stockNo"
+              render={(props) => (
+                <Historybox
+                  {...props}
+                  isAuth={isAuthHandler}
+                  historyRecords={historyRecords}
+                />
+              )}
+            ></Route>
+            <Route
+              path="/addrecord"
+              render={(props) => (
+                <AddRecord
+                  {...props}
+                  isAuth={isAuthHandler}
+                  historyRecords={historyRecords}
+                  addNewIndexFunc={addNewIndexFunc}
+                />
+              )}
+            ></Route>
+          </Switch>
+        </main>
       </Router>
     </div>
   );

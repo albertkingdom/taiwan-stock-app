@@ -16,7 +16,7 @@ const StockIndex = ({ stockIndex }) => {
         className={[
           stockIndex.index[2].includes("red") ? "text-danger" : "text-success",
           "mx-3",
-          "col-md-12 col-5",
+          "col-md-12 col-6 text-center",
         ].join(" ")}
       >
         {stockIndex.index[1]}

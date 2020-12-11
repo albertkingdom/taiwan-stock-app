@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { Link, withRouter } from "react-router-dom";
 import styles from "./stockcard.module.css";
 const Stockcard = ({
@@ -11,18 +11,11 @@ const Stockcard = ({
   toDeleteRecord,
   history,
 }) => {
-  // console.log("stockcard", stocklist);
-  // const name = stocklist.keys
-  // console.log("stockcard name", name);
-  // console.log("stockcard info", info);
-  // console.log("stockcard price", price);
-
-  // console.log("stockcard openModal", openModal);
   const [amount, setAmount] = useState(0);
   const [avgCost, setAvgCost] = useState(0);
   const [revenue, setRevenue] = useState(0);
 
-  const calAvgCost = () => {
+  const calAvgCost = useCallback(() => {
     //計算每支股票平均成本
     let totalprice = 0;
     let totalamount = 0;
@@ -41,14 +34,14 @@ const Stockcard = ({
     // console.log(totalprice,totalamount)
 
     return totalprice / totalamount;
-  };
-  const calReveneue = () => {
+  }, [info]);
+  const calReveneue = useCallback(() => {
     //計算損益
     const result = ((Number(price) - avgCost) / avgCost) * 100;
     return result.toString().substring(0, 5);
-  };
+  }, [avgCost, price]);
 
-  const calAmount = () => {
+  const calAmount = useCallback(() => {
     let totalamount = 0;
     info.forEach((item) =>
       item.buyorsell === "buy"
@@ -56,22 +49,18 @@ const Stockcard = ({
         : (totalamount -= Number(item.amount))
     );
     return totalamount;
-  };
+  }, [info]);
 
   useEffect(() => {
     setAvgCost(calAvgCost());
     setRevenue(calReveneue());
     setAmount(calAmount());
-  }, [avgCost]);
+  }, [avgCost, calAmount, calAvgCost, calReveneue]);
   return (
     <>
       {show ? (
         <>
-          <ul
-            className={[styles.stockcard, isAuth ? null : styles.blur].join(
-              " "
-            )}
-          >
+          <ul className={[styles.stockcard].join(" ")}>
             <li>
               <button
                 type="button"
@@ -98,7 +87,7 @@ const Stockcard = ({
               <p>{name}</p>
               <Link to={`/kplot/${name}`}>看k線圖</Link>
             </li>
-            <li>{price.toString().substring(0, 5)}</li>
+            <li>{price && price.toString().substring(0, 5)}</li>
             <li>{amount.toLocaleString()}</li>
             <li>{avgCost.toString().substring(0, 5)}</li>
             <li>

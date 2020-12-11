@@ -59,7 +59,7 @@ const Chart = ({ stocklist, stockprice, isLoading, isAuth }) => {
       <div className="col-7 col-md-6">
         <Doughnut
           data={data}
-          height={200}
+          height={100}
           options={{
             responsive: true,
             maintainAspectRatio: false,

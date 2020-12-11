@@ -1,14 +1,7 @@
-import React, {
-  useEffect,
-  useState,
-  useCallback,
-  useRef,
-  Suspense,
-} from "react";
+import React, { useEffect, useState, useCallback, useRef } from "react";
 
 import Stockcard from "./Stockcard/stockcard";
-import AddNewStock from "./addNewRecord";
-// import Chart from "./Chart/Chart";
+
 import Loading from "./Loading";
 import "./Home.css";
 import styled from "styled-components";
@@ -16,8 +9,9 @@ import styled from "styled-components";
 import SaveRecord from "./SaveRecord/SaveRecord";
 import Filter from "./Filter/Filter";
 import TitleBar from "./TitleBar/TitleBar";
+import Edit from "./Edit/Edit";
 import Swal from "sweetalert2";
-import StockIndex from "./StockIndex/StockIndex";
+// import StockIndex from "./StockIndex/StockIndex";
 import { apiSaveToFirebase } from "../api/fromApi";
 import nothingherejpg from "./asset/theres-nothing-here.jpg";
 
@@ -28,8 +22,7 @@ const RemindLoginHint = styled.div`
   /* top: 0%; */
   left: 50%;
   transform: translateX(-50%);
-  /* height: 50px; */
-  height: 100%;
+
   width: 100%;
   z-index: 200;
 
@@ -122,26 +115,10 @@ const Home = ({
     // console.log("stocklist height", stocklistH);
   }, []);
 
-  const LazyLoadChart = React.lazy(() => import("./Chart/Chart"));
+  // const LazyLoadChart = React.lazy(() => import("./Chart/Chart"));
   return (
     <div className="container-md text-center home">
-      <div className="up" ref={upRef}>
-        <div className="row justify-content-around align-items-center">
-          <div className="col-12 col-md-4">
-            <StockIndex stockIndex={stockIndex} />
-          </div>
-
-          <div className="col-12 col-md-8">
-            <Suspense fallback={<Loading />}>
-              <LazyLoadChart
-                stocklist={stocklist}
-                stockprice={stockprice}
-                isLoading={isLoading}
-                isAuth={isAuth}
-              />
-            </Suspense>
-          </div>
-        </div>
+      <div className="function" ref={upRef}>
         <Filter filterStockNo={filterStockNo} toFilter={toFilter} />
         <SaveRecord
           saveToFirebase={saveToFirebase}
@@ -150,7 +127,6 @@ const Home = ({
           // readFromLocalStorage={readFromLocalStorage}
           isAuth={isAuth}
         />
-        <AddNewStock stocklist={stocklist} addNewIndexFunc={addNewIndexFunc} />
       </div>
 
       <div className="position-relative stock-list" ref={stocklistRef}>
@@ -174,10 +150,11 @@ const Home = ({
           ))
         )}
 
-        <RemindLoginHint show={!isAuth || !Object.keys(stocklist).length}>
+        <RemindLoginHint show={!Object.keys(stocklist).length}>
           <img src={nothingherejpg} alt="nothing here!" />
           <p>Please login and add your first record!</p>
         </RemindLoginHint>
+        <Edit />
       </div>
 
       <div className="disclaimer">

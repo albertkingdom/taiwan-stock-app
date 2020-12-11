@@ -4,7 +4,23 @@ body {
   height: 100vh;
 }
 .App {
-  background-color: #eee;
+  /* background-color: #eee; */
   height: 100vh;
   box-sizing: border-box;
+}
+.up {
+  position: absolute;
+  top: 50px;
+  overflow: hidden;
+  padding: 0px 20px;
+  width: 100%;
+}
+.main {
+  position: relative;
+  top: 180px;
+}
+@media screen and (max-width: 768px) {
+  .main {
+    top: 220px;
+  }
 }
