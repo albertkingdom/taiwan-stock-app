@@ -13,6 +13,7 @@
     "immer": "^7.0.14",
     "node-sass": "^4.14.1",
     "react": "16.13.1",
+    "react-autosuggest": "^10.0.4",
     "react-bootstrap": "^1.4.0",
     "react-chartjs-2": "2.10.0",
     "react-dom": "16.13.1",

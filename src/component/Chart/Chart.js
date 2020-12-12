@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Doughnut } from "react-chartjs-2";
 
 const Chart = ({ stocklist, stockprice, isLoading, isAuth }) => {
-  console.log("stockprice", stockprice, stocklist);
+  // console.log("stockprice", stockprice, stocklist);
   const [totalCost, setTotalCost] = useState(0);
   const [totalValue, setTotalValue] = useState(100);
 
