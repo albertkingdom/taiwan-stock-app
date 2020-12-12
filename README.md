@@ -8,6 +8,9 @@
 - 登入才能檢視，以保護個人資訊
   - 結合 firebase 提供登入、保存個人資料功能
 - 登入後可以新增股票買、賣紀錄，方便日後回顧檢討
+- 新增一筆股票紀錄
+  - 股票代號自動提示
+  ![auto suggest](https://imgur.com/scGLcfU.jpg)
 - 檢視最近兩個月的 k 線圖，提供基本均線、成交量資訊
   ![kplot-screenshot](https://raw.githubusercontent.com/albertkingdom/taiwan-stock-app/main/public/screencapture-kplot.png)
 
