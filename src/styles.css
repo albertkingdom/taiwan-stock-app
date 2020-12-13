@@ -19,6 +19,7 @@ body {
   position: relative;
   top: 180px;
 }
+
 @media screen and (max-width: 768px) {
   .main {
     top: 220px;

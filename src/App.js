@@ -13,6 +13,7 @@ import StockIndex from "./component/StockIndex/StockIndex";
 import Loading from "./component/Loading";
 import AddRecord from "./component/Edit/AddRecord";
 import DelRecord from "./component/Edit/DelRecord";
+import Hito from "./component/Hito/Hito";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Swal from "sweetalert2";
 import produce from "immer";
@@ -49,7 +50,7 @@ export default function App() {
     // ],
   }); //完整的股票清單
   const [stockprice, setStockprice] = useState({
-    2330: "",
+    2330: [],
     // 2880: "",
   });
   const [historyRecords, setHistoryRecords] = useState([]); //歷史紀錄for modal
@@ -348,6 +349,10 @@ export default function App() {
                   addNewIndexFunc={addNewIndexFunc}
                 />
               )}
+            ></Route>
+            <Route
+              path="/hito"
+              render={(props) => <Hito {...props} isAuth={isAuth} />}
             ></Route>
             {/* <Route
               path="/delrecord"

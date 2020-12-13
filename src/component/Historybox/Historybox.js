@@ -34,7 +34,7 @@ const Historybox = ({ historyRecords, history }) => {
                   <th>買/賣</th>
                 </tr>
                 {historyRecords.map((item) => (
-                  <tr key={item.date}>
+                  <tr key={`${item.date}_${item.price}`}>
                     <td>{item.date}</td>
                     <td>{item.price}</td>
                     <td>{item.amount}</td>
