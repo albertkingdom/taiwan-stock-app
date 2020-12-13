@@ -2,7 +2,7 @@ import React from "react";
 
 function SaveRecord({ saveToFirebase, readFromFirebase, isAuth }) {
   return isAuth ? (
-    <div className="storageFunction">
+    <div className="storageFunction d-flex justify-content-center">
       {/* <button
         className="btn btn-outline-success m-3 px-4"
         title="存入localstorage"
