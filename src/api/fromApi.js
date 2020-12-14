@@ -63,6 +63,12 @@ export const apiHotStock = async () => {
         .toLocaleDateString()
         .replace(/\//g, "");
     }
+    //Monday morning
+    if (new Date().getDay() === 1 && new Date().getHours() < 14) {
+      return new Date(Date.now() - 3 * 864e5)
+        .toLocaleDateString()
+        .replace(/\//g, "");
+    }
     //if today's info is not published,then get yesterday's info instead
     if (new Date().getHours() >= 14) {
       return new Date().toLocaleDateString().replace(/\//g, "");
