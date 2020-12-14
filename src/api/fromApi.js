@@ -15,7 +15,7 @@ export const getStockIndex = async (date) => {
 export const apiGetStockprice = (str) =>
   axios.get(
     process.env.REACT_APP_PROXYURL +
-      `https://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=${str}&json=1&delay=0&_=${Date.now()}`
+      `https://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=${str}&json=1&delay=0`
   );
 
 //read data from firebase

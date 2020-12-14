@@ -1,6 +1,9 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { Link, withRouter } from "react-router-dom";
+import Swal from "sweetalert2";
+import produce from "immer";
 import styles from "./stockcard.module.css";
+
 const Stockcard = ({
   name,
   info,
@@ -8,10 +11,12 @@ const Stockcard = ({
   show,
   openModal,
   isAuth,
-  toDeleteRecord,
+  // toDeleteRecord,
   history,
   chinesename,
   showDeleteButton,
+  toSetNewStockNo,
+  toSetStocklist,
 }) => {
   const [amount, setAmount] = useState(0);
   const [avgCost, setAvgCost] = useState(0);
@@ -51,7 +56,28 @@ const Stockcard = ({
     );
     return totalamount;
   }, [info]);
-
+  const toDeleteRecord = (No) => {
+    //刪除某隻股票的所有紀錄
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire("Deleted!", "Your record has been deleted.", "success");
+        toSetNewStockNo([]);
+        toSetStocklist(
+          produce((draft) => {
+            delete draft[No];
+          })
+        );
+      }
+    });
+  };
   useEffect(() => {
     if (!info) {
       return;

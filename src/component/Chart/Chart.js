@@ -49,12 +49,16 @@ const Chart = ({ stocklist, stockprice, isLoading, isAuth }) => {
 
       setTotalValue(total);
     };
-    if (!isLoading && Object.keys(stocklist).length !== 0) {
-      // console.log("chart", !isLoading && !stocklist && !stockprice);
+    //ensure stockprice and stocklist are match
+    if (
+      Object.keys(stockprice).length === Object.keys(stocklist).length &&
+      Object.values(stockprice)[0].length > 0
+    ) {
+      // console.log("chart", stockprice, stocklist);
       calTotalCost();
       calTotalValue();
     }
-  }, [stocklist, stockprice, isLoading]);
+  }, [stocklist, stockprice]);
   return (
     <div className="row align-items-center">
       <div className="col-7 col-md-6">

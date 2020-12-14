@@ -1,6 +1,27 @@
-import React from "react";
+import React, { useCallback, useEffect } from "react";
+import { apiReadFirebase } from "../../api/fromApi";
 
-function SaveRecord({ saveToFirebase, readFromFirebase, isAuth }) {
+function SaveRecord({ saveToFirebase, isAuth, toOverWriteStockList }) {
+  const readFromFirebase = useCallback(() => {
+    const token = localStorage.getItem("token");
+
+    apiReadFirebase(token)
+      .then((res) => {
+        // console.log("read from firebase", res.data);
+        if (!res.data) {
+          // console.log("沒有資料");
+          return;
+        }
+        toOverWriteStockList(res.data);
+      })
+      .catch((err) => console.log(err));
+  }, [toOverWriteStockList]);
+  useEffect(() => {
+    //登入就從firebase讀資料
+    if (isAuth) {
+      readFromFirebase();
+    }
+  }, [isAuth, readFromFirebase]);
   return isAuth ? (
     <div className="storageFunction d-flex justify-content-center">
       {/* <button

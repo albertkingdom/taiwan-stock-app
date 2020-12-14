@@ -1,8 +1,46 @@
 import React, { useEffect, useState } from "react";
-// import { getStockIndex } from "../../api/fromApi";
+import { getStockIndex } from "../../api/fromApi";
 // import styles from 'StockIndex.module.css'
 
-const StockIndex = ({ stockIndex }) => {
+const StockIndex = () => {
+  const [stockIndex, setStockIndex] = useState(); //[大盤index, diff]
+
+  useEffect(() => {
+    //取得今日大盤指數，after 2pm
+    const getDate = () => {
+      //if Saturday or Sunday, get Friday info instead
+      if (new Date().getDay() === 6) {
+        return new Date(Date.now() - 864e5)
+          .toLocaleDateString()
+          .replace(/\//g, "");
+      } else if (new Date().getDay() === 0) {
+        return new Date(Date.now() - 2 * 864e5)
+          .toLocaleDateString()
+          .replace(/\//g, "");
+      }
+      //Monday morning
+      if (new Date().getDay() === 1 && new Date().getHours() < 14) {
+        return new Date(Date.now() - 3 * 864e5)
+          .toLocaleDateString()
+          .replace(/\//g, "");
+      }
+      //if today's info is not published,then get yesterday's info instead
+      if (new Date().getHours() >= 14) {
+        return new Date().toLocaleDateString().replace(/\//g, "");
+      } else {
+        return new Date(Date.now() - 864e5)
+          .toLocaleDateString()
+          .replace(/\//g, "");
+      }
+    };
+    const stockindex = async () => {
+      const result = await getStockIndex(getDate());
+
+      setStockIndex(result);
+    };
+    stockindex();
+  }, []);
+
   if (!stockIndex) {
     //if stockIndex還沒取得內容就先不render
     return null;

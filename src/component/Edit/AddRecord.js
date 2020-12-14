@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import styled from "styled-components";
+import Swal from "sweetalert2";
+import produce from "immer";
 import { Form, Button } from "react-bootstrap";
 import Autosuggest from "react-autosuggest";
 import { editlist as stockNoAndNameList } from "../asset/stocklist";
@@ -39,7 +41,14 @@ const StyledButton = styled.button`
   left: 50%;
   transform: translate(-50%);
 `;
-export default function AddRecord({ addNewIndexFunc, history }) {
+export default function AddRecord({
+  history,
+  toSetNewStockNo,
+  toSetStocklist,
+  isAuth,
+  stockprice,
+  stocklist,
+}) {
   const [newRecord, setNewRecord] = useState({
     stockNo: "",
     newIndexPrice: "",
@@ -47,6 +56,55 @@ export default function AddRecord({ addNewIndexFunc, history }) {
     date: "",
     buyorsell: "",
   });
+  const addNewIndexFunc = useCallback(
+    (newIndexNo, newIndexPrice, newIndexAmount, buyorsell, buydate) => {
+      if (!isAuth) {
+        //check if not auth, then exit
+        Swal.fire({
+          title: "請登入!",
+          icon: "info",
+          confirmButtonText: "ok",
+        });
+        return;
+      }
+      //新增一筆股票購買紀錄
+      // setIsLoading(true);
+      if (!stockprice.hasOwnProperty(newIndexNo)) {
+        toSetNewStockNo([newIndexNo]); //設定新加入股票代碼
+      }
+
+      if (!stocklist[newIndexNo]) {
+        // console.log("原本沒有這項目");
+
+        toSetStocklist(
+          produce((draft) => {
+            draft[newIndexNo] = [
+              {
+                date: buydate,
+                price: newIndexPrice,
+                amount: newIndexAmount,
+                buyorsell: buyorsell,
+              },
+            ];
+          })
+        );
+      } else {
+        // console.log("原本有這項目");
+
+        toSetStocklist(
+          produce((draft) => {
+            draft[newIndexNo].push({
+              date: buydate,
+              price: newIndexPrice,
+              amount: newIndexAmount,
+              buyorsell: buyorsell,
+            });
+          })
+        );
+      }
+    },
+    [stocklist, isAuth, stockprice, toSetNewStockNo, toSetStocklist]
+  );
   const submitHandler = (e) => {
     e.preventDefault();
     addNewIndexFunc(

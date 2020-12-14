@@ -33,12 +33,13 @@ const Home = ({
   stocklist,
   stockprice,
   openModal,
-  addNewIndexFunc,
   isLoading,
   isAuth,
-  stockIndex,
   readFromFirebase,
   toDeleteRecord,
+  toOverWriteStockList,
+  toSetNewStockNo,
+  toSetStocklist,
 }) => {
   const [filterStockNo, setFilterStockNo] = useState("");
   const [stocklistDisplay, setStocklistDisplay] = useState([]); //[2330,2880...]
@@ -118,6 +119,7 @@ const Home = ({
         <SaveRecord
           saveToFirebase={saveToFirebase}
           readFromFirebase={readFromFirebase}
+          toOverWriteStockList={toOverWriteStockList}
           isAuth={isAuth}
         />
       </div>
@@ -141,6 +143,8 @@ const Home = ({
               isAuth={isAuth}
               toDeleteRecord={toDeleteRecord}
               showDeleteButton={showDeleteButton}
+              toSetNewStockNo={toSetNewStockNo}
+              toSetStocklist={toSetStocklist}
             />
           ))
         )}

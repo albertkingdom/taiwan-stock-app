@@ -108,7 +108,7 @@ function createPlot(data, stockNo, markersData) {
 export default function Kplot(props) {
   const [data, setData] = useState([]); //股票成交價array
   const [modalshow, setModalshow] = useState(true);
-  // console.log(data);
+  console.log("kplot data", data);
   const showModal = () => {
     setModalshow((prevState) => !prevState); //close modal
     props.history.goBack();
@@ -139,6 +139,7 @@ export default function Kplot(props) {
   //整理交易紀錄for anychart
   const outputExchangeHistory = () => {
     const exchangeHistory = props.stocklist[props.match.params.stockNo];
+    console.log("exchange history", exchangeHistory);
     const dataBuy = exchangeHistory
       .filter((item) => item.buyorsell === "buy")
       .map((item) => {
