@@ -105,7 +105,7 @@ const Navbar = ({ isAuth }) => {
     <>
       <Nav>
         <div className="mycontainer">
-          <NavUl open={open}>
+          <NavUl>
             <li>
               <Link to="/">
                 <i className="fas fa-home"></i>
@@ -175,6 +175,11 @@ const Navbar = ({ isAuth }) => {
               </li>
             </>
           )}
+          <li>
+            <Link to="/hito" onClick={() => setOpen(false)} className="">
+              熱門股票＆追蹤清單
+            </Link>
+          </li>
         </ul>
       </RWDNav>
     </>
