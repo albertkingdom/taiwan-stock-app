@@ -10,7 +10,7 @@ import Stockcard from "./Stockcard/stockcard";
 
 import Loading from "./Loading";
 import "./Home.css";
-import styled from "styled-components";
+import { RemindLoginHint } from "./StyledComponents/StyledComponents";
 
 import SaveRecord from "./SaveRecord/SaveRecord";
 import Filter from "./Filter/Filter";
@@ -23,31 +23,13 @@ import nothingherejpg from "./asset/theres-nothing-here.jpg";
 //context api
 import { ContextStore } from "../Context/Context";
 
-// styled component
-const RemindLoginHint = styled.div`
-  display: ${({ show }) => (show ? "block" : "none")};
-  width: 100%;
-  z-index: 200;
-
-  p {
-    font-size: 24px;
-    /* height: 100%; */
-    /* line-height: 200px; */
-    /* background-color: none; */
-    margin: 10px auto;
-  }
-`;
 const Home = ({
-  // stocklist,
   stockprice,
   openModal,
   isLoading,
   isAuth,
   readFromFirebase,
   toDeleteRecord,
-  // toOverWriteStockList,
-  // toSetNewStockNo,
-  // toSetStocklist,
 }) => {
   const { stocklist } = useContext(ContextStore); //context api
   const [filterStockNo, setFilterStockNo] = useState("");

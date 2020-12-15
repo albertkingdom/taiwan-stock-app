@@ -4,21 +4,15 @@ import {
   apiUploadFollowingList,
   apiGetFollowingList,
 } from "../../api/fromApi";
-import styled from "styled-components";
+
+import {
+  StyledFollowingButton,
+  StyledSubmitButton,
+} from "../StyledComponents/StyledComponents";
 import Loading from "../Loading";
 import { editlist as stockNoAndNameList } from "../asset/stocklist";
 import HitoItem from "./HitoItem";
 import Swal from "sweetalert2";
-
-const StyledFollowingButton = styled.button`
-  background-color: #fff;
-  border: none;
-`;
-const StyledSubmitButton = styled(StyledFollowingButton)`
-  &:focus {
-    outline: none;
-  }
-`;
 
 export default function Hito({ isAuth }) {
   const [hitolist, setHitolist] = useState({});

@@ -171,7 +171,7 @@ export default function Kplot(props) {
     props.match.params.stockNo,
     outputExchangeHistory()
   );
-  if (data.length === 0) {
+  if (data && data.length === 0) {
     return (
       <Modal show={modalshow} toClose={showModal}>
         <div className="text-center" style={{ height: "600px" }}>

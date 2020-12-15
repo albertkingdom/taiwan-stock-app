@@ -1,33 +1,10 @@
 import React from "react";
-import styled from "styled-components";
+import { StyledEditDiv } from "../StyledComponents/StyledComponents";
 import { Link } from "react-router-dom";
-const Div = styled.div`
-  ul {
-    list-style: none;
-    display: flex;
-    li {
-      flex-grow: 1;
-    }
-  }
-  button {
-    width: 120px;
-    border: none;
-    padding: 5px;
-    background-color: #e5f4f3;
-  }
-  a {
-    display: block;
-    color: #000;
-    width: 100%;
-    &:hover {
-      text-decoration: none;
-    }
-  }
-`;
 
 export default function Edit({ toShowDeleteButton, showDeleteButton }) {
   return (
-    <Div>
+    <StyledEditDiv>
       <ul>
         <li>
           <button onClick={toShowDeleteButton}>
@@ -41,6 +18,6 @@ export default function Edit({ toShowDeleteButton, showDeleteButton }) {
           </button>
         </li>
       </ul>
-    </Div>
+    </StyledEditDiv>
   );
 }

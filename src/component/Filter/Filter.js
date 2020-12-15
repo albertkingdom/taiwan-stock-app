@@ -1,17 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
 
-const StyledLink = styled.span`
-  padding: 5px;
-  a {
-    color: black;
-    span {
-      display: inline-block;
-      width: 20px;
-    }
-  }
-`;
+import { StyledLink } from "../StyledComponents/StyledComponents";
+
 export default function Filter({ toFilter, filterStockNo }) {
   return (
     <div className="row justify-content-center m-3">

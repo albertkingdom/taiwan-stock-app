@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useContext } from "react";
-import styled from "styled-components";
+import { StyledAddButton } from "../StyledComponents/StyledComponents";
 import Swal from "sweetalert2";
 import produce from "immer";
 import { Form, Button } from "react-bootstrap";
@@ -32,17 +32,6 @@ const renderSuggestion = (suggestion) => (
   </span>
 );
 
-const StyledButton = styled.button`
-  /* top: */
-  width: 200px;
-  background-color: #e5f4f3;
-  border: 0px;
-  padding: 5px 10px;
-  margin: 20px;
-  position: relative;
-  left: 50%;
-  transform: translate(-50%);
-`;
 export default function AddRecord({ history, isAuth }) {
   const { stocklist, dispatch } = useContext(ContextStore); //context api
   const [newRecord, setNewRecord] = useState({
@@ -214,13 +203,13 @@ export default function AddRecord({ history, isAuth }) {
           />
         </Form.Group>
 
-        <StyledButton
+        <StyledAddButton
           variant="primary"
           type="submit"
           className="submitButton text-center"
         >
           新增
-        </StyledButton>
+        </StyledAddButton>
       </Form>
     </div>
   );
