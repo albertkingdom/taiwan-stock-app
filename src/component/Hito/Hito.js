@@ -13,6 +13,7 @@ import Loading from "../Loading";
 import { editlist as stockNoAndNameList } from "../asset/stocklist";
 import HitoItem from "./HitoItem";
 import Swal from "sweetalert2";
+import MyAutoSuggest from "../Autosuggest/MyAutosuggest";
 
 export default function Hito({ isAuth }) {
   const [hitolist, setHitolist] = useState({});
@@ -135,13 +136,11 @@ export default function Hito({ isAuth }) {
           追蹤清單<small style={{ fontSize: "12px" }}>(點擊愛心取消追蹤)</small>
         </h4>
         <form className="d-flex justify-content-center">
-          <input
-            type="text"
-            className="form-control col-10"
+          <MyAutoSuggest
             placeholder="e.g. 2330"
+            onChange={(newValue) => setNewStockNo(newValue)}
             name="stockNo"
-            value={newStockNo}
-            onChange={(e) => setNewStockNo(e.target.value)}
+            className="form-control "
           />
           <StyledSubmitButton
             type="submit"
