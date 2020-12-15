@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 
 import AnyChart from "anychart-react";
 import anychart from "anychart";
@@ -6,7 +6,8 @@ import anychart from "anychart";
 import { GetData } from "./GetData";
 import Modal from "../Modal/Modal";
 import Loading from "../Loading";
-
+//context api
+import { ContextStore } from "../../Context/Context";
 //open, high, low , close
 // const data = [
 //   ["2020-10-10", 23.55, 23.88, 23.38, 23.62],
@@ -106,9 +107,10 @@ function createPlot(data, stockNo, markersData) {
 }
 
 export default function Kplot(props) {
+  const { stocklist } = useContext(ContextStore); //context api
   const [data, setData] = useState([]); //股票成交價array
   const [modalshow, setModalshow] = useState(true);
-  console.log("kplot data", data);
+
   const showModal = () => {
     setModalshow((prevState) => !prevState); //close modal
     props.history.goBack();
@@ -138,8 +140,8 @@ export default function Kplot(props) {
 
   //整理交易紀錄for anychart
   const outputExchangeHistory = () => {
-    const exchangeHistory = props.stocklist[props.match.params.stockNo];
-    console.log("exchange history", exchangeHistory);
+    const exchangeHistory = stocklist[props.match.params.stockNo];
+
     const dataBuy = exchangeHistory
       .filter((item) => item.buyorsell === "buy")
       .map((item) => {

@@ -1,12 +1,13 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, useContext } from "react";
 import { Link, withRouter } from "react-router-dom";
 import Swal from "sweetalert2";
 import produce from "immer";
 import styles from "./stockcard.module.css";
-
+//context api
+import { ContextStore } from "../../Context/Context";
 const Stockcard = ({
   name,
-  info,
+  // info,
   price,
   show,
   openModal,
@@ -15,9 +16,12 @@ const Stockcard = ({
   history,
   chinesename,
   showDeleteButton,
-  toSetNewStockNo,
-  toSetStocklist,
+  // toSetNewStockNo,
+  // toSetStocklist,
 }) => {
+  const { stocklist, dispatch } = useContext(ContextStore); //context api
+  const info = stocklist[name];
+
   const [amount, setAmount] = useState(0);
   const [avgCost, setAvgCost] = useState(0);
   const [revenue, setRevenue] = useState(0);
@@ -58,6 +62,7 @@ const Stockcard = ({
   }, [info]);
   const toDeleteRecord = (No) => {
     //刪除某隻股票的所有紀錄
+    // console.log("stockcard", No);
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -69,12 +74,13 @@ const Stockcard = ({
     }).then((result) => {
       if (result.isConfirmed) {
         Swal.fire("Deleted!", "Your record has been deleted.", "success");
-        toSetNewStockNo([]);
-        toSetStocklist(
-          produce((draft) => {
-            delete draft[No];
-          })
-        );
+        // toSetNewStockNo([]);
+        // toSetStocklist(
+        //   produce((draft) => {
+        //     delete draft[No];
+        //   })
+        // );
+        dispatch({ type: "DELETE", payload: { no: No } });
       }
     });
   };

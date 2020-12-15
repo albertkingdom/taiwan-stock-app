@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Doughnut } from "react-chartjs-2";
+//context api
+import { ContextStore } from "../../Context/Context";
 
-const Chart = ({ stocklist, stockprice, isLoading, isAuth }) => {
+const Chart = ({ stockprice, isLoading, isAuth }) => {
   // console.log("stockprice", stockprice, stocklist);
+  const { stocklist } = useContext(ContextStore); //context api
   const [totalCost, setTotalCost] = useState(0);
   const [totalValue, setTotalValue] = useState(100);
 

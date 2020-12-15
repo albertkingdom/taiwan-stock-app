@@ -1,4 +1,10 @@
-import React, { useEffect, useState, useCallback, useRef } from "react";
+import React, {
+  useEffect,
+  useState,
+  useCallback,
+  useRef,
+  useContext,
+} from "react";
 
 import Stockcard from "./Stockcard/stockcard";
 
@@ -14,6 +20,8 @@ import Swal from "sweetalert2";
 // import StockIndex from "./StockIndex/StockIndex";
 import { apiSaveToFirebase } from "../api/fromApi";
 import nothingherejpg from "./asset/theres-nothing-here.jpg";
+//context api
+import { ContextStore } from "../Context/Context";
 
 // styled component
 const RemindLoginHint = styled.div`
@@ -30,17 +38,18 @@ const RemindLoginHint = styled.div`
   }
 `;
 const Home = ({
-  stocklist,
+  // stocklist,
   stockprice,
   openModal,
   isLoading,
   isAuth,
   readFromFirebase,
   toDeleteRecord,
-  toOverWriteStockList,
-  toSetNewStockNo,
-  toSetStocklist,
+  // toOverWriteStockList,
+  // toSetNewStockNo,
+  // toSetStocklist,
 }) => {
+  const { stocklist } = useContext(ContextStore); //context api
   const [filterStockNo, setFilterStockNo] = useState("");
   const [stocklistDisplay, setStocklistDisplay] = useState([]); //[2330,2880...]
   const [sortMethod, setSortMethod] = useState("");
@@ -119,7 +128,7 @@ const Home = ({
         <SaveRecord
           saveToFirebase={saveToFirebase}
           readFromFirebase={readFromFirebase}
-          toOverWriteStockList={toOverWriteStockList}
+          // toOverWriteStockList={toOverWriteStockList}
           isAuth={isAuth}
         />
       </div>
@@ -133,7 +142,6 @@ const Home = ({
             <Stockcard
               key={item}
               name={item}
-              info={stocklist[item]}
               price={stockprice[item] && stockprice[item][0]}
               chinesename={stockprice[item] && stockprice[item][1]}
               show={
@@ -143,8 +151,7 @@ const Home = ({
               isAuth={isAuth}
               toDeleteRecord={toDeleteRecord}
               showDeleteButton={showDeleteButton}
-              toSetNewStockNo={toSetNewStockNo}
-              toSetStocklist={toSetStocklist}
+              // toSetNewStockNo={toSetNewStockNo}
             />
           ))
         )}
