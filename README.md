@@ -2,6 +2,12 @@
 
 [DEMO](https://taiwan-stock-app.netlify.app/)
 
+## Features
+  
+- Built with React and styled components
+- Apply React builtin **context API** partially to broadcast certain state to deep nested components
+- Apply React builtin **useReducer hook and reducer/dispatch** for certain state and the logic to update the state, and hence reduce the callback functions needed to be passed as props
+
 ## 功能
 
 - 顯示持股資訊、目前股價、計算損益
