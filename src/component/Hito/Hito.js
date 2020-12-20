@@ -21,6 +21,7 @@ export default function Hito({ isAuth }) {
     list: ["0050", "0056"],
   });
   const [newStockNo, setNewStockNo] = useState("");
+
   useEffect(() => {
     async function getHitolist() {
       const list = await apiHotStock();

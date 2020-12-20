@@ -1,22 +1,17 @@
 import axios from "axios";
 
 export const getStockIndex = async (date) => {
-  const url = `https://www.twse.com.tw/exchangeReport/MI_INDEX?response=json&date=${date}&type=IND`;
-  const response = await fetch(`${process.env.REACT_APP_PROXYURL}${url}`);
-  // const response = await fetch(`${url}`)
+  const response = await axios.post(
+    `${process.env.REACT_APP_PROXYURL}stock/stockIndex`,
+    { date: date }
+  );
 
-  const data = await response.json();
-  const indexInfo = { index: data.data1[1], date: data.params.date };
-  // console.log(indexInfo)
-  return indexInfo;
+  return response.data;
 };
 
 //get stock price
 export const apiGetStockprice = (str) =>
-  axios.get(
-    process.env.REACT_APP_PROXYURL +
-      `https://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=${str}&json=1&delay=0`
-  );
+  axios.post(`${process.env.REACT_APP_PROXYURL}stock/stockprice`, { str: str });
 
 //read data from firebase
 export const apiReadFirebase = (token) =>
@@ -51,37 +46,11 @@ export const apiUserSignup = (signupdata) =>
 
 //熱門成交股
 export const apiHotStock = async () => {
-  //取得日期"2020/12/13" -->"20201213",遇假日則找最近平日
-  const getDate = () => {
-    //if Saturday or Sunday, get Friday info instead
-    if (new Date().getDay() === 6) {
-      return new Date(Date.now() - 864e5)
-        .toLocaleDateString()
-        .replace(/\//g, "");
-    } else if (new Date().getDay() === 0) {
-      return new Date(Date.now() - 2 * 864e5)
-        .toLocaleDateString()
-        .replace(/\//g, "");
-    }
-    //Monday morning
-    if (new Date().getDay() === 1 && new Date().getHours() < 14) {
-      return new Date(Date.now() - 3 * 864e5)
-        .toLocaleDateString()
-        .replace(/\//g, "");
-    }
-    //if today's info is not published,then get yesterday's info instead
-    if (new Date().getHours() >= 14) {
-      return new Date().toLocaleDateString().replace(/\//g, "");
-    } else {
-      return new Date(Date.now() - 864e5)
-        .toLocaleDateString()
-        .replace(/\//g, "");
-    }
-  };
-  const url = `https://www.twse.com.tw/exchangeReport/MI_INDEX20?response=json&date=${getDate()}`;
-  const response = await axios.get(`${process.env.REACT_APP_PROXYURL}${url}`);
+  const response = await axios.get(
+    `${process.env.REACT_APP_PROXYURL}stock/hotstock`
+  );
 
-  return { hitoStocklist: response.data.data };
+  return response.data;
 };
 
 //追蹤清單
