@@ -79,3 +79,12 @@ export const apiUploadFollowingList = async (token, list) => {
     console.log(error);
   }
 };
+
+//kplot
+export const getKplotData = async (stockNo, date1, date2) => {
+  const response = await axios.post(
+    `${process.env.REACT_APP_PROXYURL}stock/kplot`,
+    { stockNo, date1, date2 }
+  );
+  return response.data;
+};

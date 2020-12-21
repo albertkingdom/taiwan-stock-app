@@ -3,7 +3,7 @@ import React, { useEffect, useState, useContext } from "react";
 import AnyChart from "anychart-react";
 import anychart from "anychart";
 
-import { GetData } from "./GetData";
+import { getKplotData } from "../../api/fromApi";
 import Modal from "../Modal/Modal";
 import Loading from "../Loading";
 //context api
@@ -117,8 +117,8 @@ export default function Kplot(props) {
   };
   useEffect(() => {
     const getstockdata = async (stockNo, date1, date2) => {
-      const response = await GetData(stockNo, date1, date2);
-      //   console.log(response);
+      const response = await getKplotData(stockNo, date1, date2);
+        // console.log(response);
       setData(response);
     };
     const getDateString = () => {
