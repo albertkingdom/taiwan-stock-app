@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 import produce from "immer";
 import styles from "./stockcard.module.css";
 //context api
-import { ContextStore } from "../../Context/Context";
+import { ContextStore, ThemeContext } from "../../Context/Context";
 const Stockcard = ({
   name,
   // info,
@@ -20,6 +20,7 @@ const Stockcard = ({
   // toSetStocklist,
 }) => {
   const { stocklist, dispatch } = useContext(ContextStore); //context api
+  const { darkTheme } = useContext(ThemeContext);
   const info = stocklist[name];
 
   const [amount, setAmount] = useState(0);
@@ -100,7 +101,11 @@ const Stockcard = ({
     <>
       {show ? (
         <>
-          <ul className={[styles.stockcard].join(" ")}>
+          <ul
+            className={`${styles.stockcard} ${
+              darkTheme ? styles.stockcardDark : ""
+            }`}
+          >
             <li className={showDeleteButton ? styles.todelete : styles.hide}>
               <button
                 onClick={() => toDeleteRecord(name)}

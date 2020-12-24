@@ -42,3 +42,12 @@
   flex-basis: 10%;
   color: red;
 }
+
+.stockcardDark {
+  background-color: #414141;
+  color: #fff;
+}
+
+.stockcardDark button.historybtn {
+  background-color: #414141;
+}

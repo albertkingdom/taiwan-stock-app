@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 
 import {
@@ -7,6 +7,7 @@ import {
   BurgerBtn,
   RWDNav,
 } from "../StyledComponents/StyledComponents";
+import SwitchTheme from "../Button/SwitchTheme";
 
 const Navbar = ({ isAuth }) => {
   const [open, setOpen] = useState(false); //控制side navbar開關
@@ -16,11 +17,13 @@ const Navbar = ({ isAuth }) => {
       <Nav>
         <div className="mycontainer">
           <NavUl>
-            <li>
+            <li className="position-relative">
               <Link to="/">
                 <i className="fas fa-home"></i>
               </Link>
+              <SwitchTheme />
             </li>
+
             <li>
               <h4>My Taiwan Stock</h4>
             </li>

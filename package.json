@@ -19,6 +19,7 @@
     "react-dom": "16.13.1",
     "react-router-dom": "5.2.0",
     "react-scripts": "^4.0.0",
+    "source-map-explorer": "^2.5.1",
     "styled-components": "5.2.0",
     "sweetalert2": "^10.9.0"
   },
@@ -33,9 +34,10 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts --max_old_space_size=4096 build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "analyze": "source-map-explorer 'build/static/js/*.js'"
   },
   "browserslist": [
     ">0.2%",
