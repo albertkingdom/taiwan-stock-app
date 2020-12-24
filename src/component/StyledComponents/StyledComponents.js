@@ -41,12 +41,39 @@ export const StyledAddButton = styled.button`
 
 //Filter.js
 export const StyledLink = styled.span`
+  position: relative;
   padding: 5px;
   a {
     color: black;
     span {
       display: inline-block;
       width: 20px;
+    }
+  }
+  .tip {
+    background-color: gray;
+    padding: 8px;
+    border-radius: 5px;
+    color: #fff;
+    position: absolute;
+    opacity: 0;
+    left: -145%;
+    top: -6px;
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: -10px;
+      margin-left: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: transparent transparent transparent gray;
+    }
+  }
+  &:hover {
+    .tip {
+      opacity: 1;
     }
   }
 `;
@@ -228,3 +255,32 @@ export const StyledEditDiv = styled.div`
     }
   }
 `;
+
+
+export const SwitchButton = styled.div`
+width:70px;
+height:35px;
+background-color: ${props => props.dark ? "gray" : "#fce205"};
+border-radius:20px;
+position: absolute;
+top:5px;
+left:80px;
+span.sun{
+  position: absolute;
+  left:-100%;
+}
+.circle{
+  width:35px;
+  height:35px;
+  border:1px solid lightgray;
+  border-radius:50%;
+  background-color: #fff;
+  position: absolute;
+  transition: left 1s;
+  left:0;
+  
+}
+.circle.dark{
+  left:calc(70px - 50%);
+}
+`

@@ -20,3 +20,10 @@ export const stocklistInitialState = {
 export const ContextStore = React.createContext({
   stocklist: stocklistInitialState,
 });
+
+//context 雛形, 真正的value用provider傳遞的時候才決定
+export const ThemeContext = React.createContext({
+  darkTheme: false,
+  // changetheme: () => {console.log('123')},
+  setDarkTheme:()=>{}
+});

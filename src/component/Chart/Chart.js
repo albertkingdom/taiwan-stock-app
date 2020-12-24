@@ -1,11 +1,13 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Doughnut } from "react-chartjs-2";
 //context api
-import { ContextStore } from "../../Context/Context";
+import { ContextStore, ThemeContext } from "../../Context/Context";
 
 const Chart = ({ stockprice, isLoading, isAuth }) => {
   // console.log("stockprice", stockprice, stocklist);
   const { stocklist } = useContext(ContextStore); //context api
+  const { darkTheme } = useContext(ThemeContext); //context api
+
   const [totalCost, setTotalCost] = useState(0);
   const [totalValue, setTotalValue] = useState(100);
 
@@ -74,7 +76,7 @@ const Chart = ({ stockprice, isLoading, isAuth }) => {
           }}
         />
       </div>
-      <div className="col-5 col-md-6 mt-3">
+      <div className={`col-5 col-md-6 mt-3 ${darkTheme ? "text-white" : ""}`}>
         <p>
           總市值:
           <span>NT${isAuth ? totalValue.toLocaleString() : "XXXXXX"}</span>

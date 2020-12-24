@@ -25,8 +25,8 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import { apiGetStockprice, apiReadFirebase } from "./api/fromApi";
 //context
-import { ContextStore } from "./Context/Context";
-
+import { ContextStore,ThemeContext } from "./Context/Context";
+console.log(ThemeContext)
 const stocklistInitialState = {
   2330: [
     {
@@ -94,6 +94,7 @@ export default function App() {
   // const [newStockNo, setNewStockNo] = useState([2330]);
   const [isAuth, setIsAuth] = useState(false); //登入狀態
   const [loginEmail, setLoginEmail] = useState(""); //存登入email
+  const [darkTheme, setDarkTheme] = useState(false);// change theme
 
   const setModal = (stockNo) => {
     // console.log("setModal Fun", stockNo);
@@ -165,6 +166,7 @@ export default function App() {
       })
       .catch((err) => console.log(err));
   }, [dispatch]);
+  
   useEffect(() => {
     //登入就從firebase讀資料
     if (isAuth) {
@@ -174,102 +176,104 @@ export default function App() {
   const LazyLoadChart = React.lazy(() => import("./component/Chart/Chart"));
 
   return (
-    <ContextStore.Provider value={{ stocklist, dispatch }}>
-      <div className="App">
-        <Router>
-          <Navbar isAuth={isAuth} />
+    <ThemeContext.Provider value={{ darkTheme, setDarkTheme }}>
+      <ContextStore.Provider value={{ stocklist, dispatch }}>
+        <div className={`App ${darkTheme?'AppDark':''}`}>
+          <Router>
+            <Navbar isAuth={isAuth} />
 
-          <div className="up">
-            <div className="row justify-content-around align-items-center">
-              <div className="col-12 col-md-4">
-                <StockIndex />
-              </div>
+            <div className="up">
+              <div className="row justify-content-around align-items-center">
+                <div className="col-12 col-md-4">
+                  <StockIndex />
+                </div>
 
-              <div className="col-12 col-md-8">
-                <Suspense fallback={<Loading />}>
-                  <LazyLoadChart
-                    stockprice={stockprice}
-                    isLoading={isLoading}
-                    isAuth={isAuth}
-                  />
-                </Suspense>
+                <div className="col-12 col-md-8">
+                  <Suspense fallback={<Loading />}>
+                    <LazyLoadChart
+                      stockprice={stockprice}
+                      isLoading={isLoading}
+                      isAuth={isAuth}
+                    />
+                  </Suspense>
+                </div>
               </div>
             </div>
-          </div>
-          <main className="main">
-            <Switch>
-              <Route path="/" exact>
-                <Home
-                  stockprice={stockprice}
-                  historyRecords={historyRecords}
-                  openModal={setModal}
-                  modalShow={modalShow}
-                  closeModal={closeModal}
-                  isLoading={isLoading}
-                  isAuth={isAuth}
-                  loginEmail={loginEmail}
-                />
-              </Route>
-              <Route
-                path="/login"
-                render={(props) => (
-                  <Login
-                    {...props}
-                    isAuth={isAuthHandler}
-                    saveLoginEmail={saveLoginEmail}
-                  />
-                )}
-              />
-              <Route
-                path="/signup"
-                render={(props) => (
-                  <Signup
-                    {...props}
-                    isAuth={isAuthHandler}
-                    saveLoginEmail={saveLoginEmail}
-                  />
-                )}
-              />
-              <Route
-                path="/logout"
-                render={(props) => (
-                  <Logout
-                    {...props}
-                    isAuth={isAuthHandler}
-                    saveLoginEmail={saveLoginEmail}
-                    toEmptyStockList={toEmptyStockList}
-                  />
-                )}
-              ></Route>
-              <Route
-                path="/kplot/:stockNo"
-                render={(props) => <Kplot {...props} />}
-              ></Route>
-              <Route
-                path="/history/:stockNo"
-                render={(props) => (
-                  <Historybox {...props} historyRecords={historyRecords} />
-                )}
-              ></Route>
-              <Route
-                path="/addrecord"
-                render={(props) => (
-                  <AddRecord
-                    {...props}
-                    isAuth={isAuth}
-                    historyRecords={historyRecords}
+            <main className="main">
+              <Switch>
+                <Route path="/" exact>
+                  <Home
                     stockprice={stockprice}
+                    historyRecords={historyRecords}
+                    openModal={setModal}
+                    modalShow={modalShow}
+                    closeModal={closeModal}
+                    isLoading={isLoading}
+                    isAuth={isAuth}
+                    loginEmail={loginEmail}
                   />
-                )}
-              ></Route>
-              <Route
-                path="/hito"
-                render={(props) => <Hito {...props} isAuth={isAuth} />}
-              ></Route>
-            </Switch>
-          </main>
-        </Router>
-      </div>
-    </ContextStore.Provider>
+                </Route>
+                <Route
+                  path="/login"
+                  render={(props) => (
+                    <Login
+                      {...props}
+                      isAuth={isAuthHandler}
+                      saveLoginEmail={saveLoginEmail}
+                    />
+                  )}
+                />
+                <Route
+                  path="/signup"
+                  render={(props) => (
+                    <Signup
+                      {...props}
+                      isAuth={isAuthHandler}
+                      saveLoginEmail={saveLoginEmail}
+                    />
+                  )}
+                />
+                <Route
+                  path="/logout"
+                  render={(props) => (
+                    <Logout
+                      {...props}
+                      isAuth={isAuthHandler}
+                      saveLoginEmail={saveLoginEmail}
+                      toEmptyStockList={toEmptyStockList}
+                    />
+                  )}
+                ></Route>
+                <Route
+                  path="/kplot/:stockNo"
+                  render={(props) => <Kplot {...props} />}
+                ></Route>
+                <Route
+                  path="/history/:stockNo"
+                  render={(props) => (
+                    <Historybox {...props} historyRecords={historyRecords} />
+                  )}
+                ></Route>
+                <Route
+                  path="/addrecord"
+                  render={(props) => (
+                    <AddRecord
+                      {...props}
+                      isAuth={isAuth}
+                      historyRecords={historyRecords}
+                      stockprice={stockprice}
+                    />
+                  )}
+                ></Route>
+                <Route
+                  path="/hito"
+                  render={(props) => <Hito {...props} isAuth={isAuth} />}
+                ></Route>
+              </Switch>
+            </main>
+          </Router>
+        </div>
+      </ContextStore.Provider>
+    </ThemeContext.Provider>
   );
 }

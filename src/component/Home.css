@@ -29,7 +29,7 @@
 .disclaimer {
   position: fixed;
   /* left: -20%; */
-  margin-left: -15%;
+  /* margin-left: -15%; */
   bottom: 10%;
   width: 50px;
   height: 50px;
@@ -70,4 +70,7 @@
 .disclaimer:hover .tooltiptext {
   visibility: visible;
   opacity: 1;
+}
+.HomeDark {
+  background-color: #313131;
 }

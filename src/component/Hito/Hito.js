@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, useContext } from "react";
 import {
   apiHotStock,
   apiUploadFollowingList,
@@ -14,6 +14,8 @@ import { editlist as stockNoAndNameList } from "../asset/stocklist";
 import HitoItem from "./HitoItem";
 import Swal from "sweetalert2";
 import MyAutoSuggest from "../Autosuggest/MyAutosuggest";
+import { ThemeContext } from "../../Context/Context";
+import styles from "./Hito.module.css";
 
 export default function Hito({ isAuth }) {
   const [hitolist, setHitolist] = useState({});
@@ -21,7 +23,7 @@ export default function Hito({ isAuth }) {
     list: ["0050", "0056"],
   });
   const [newStockNo, setNewStockNo] = useState("");
-
+  const { darkTheme } = useContext(ThemeContext);
   useEffect(() => {
     async function getHitolist() {
       const list = await apiHotStock();
@@ -161,7 +163,12 @@ export default function Hito({ isAuth }) {
                 <p>請加入追蹤清單</p>
               ) : (
                 followingList.list.map((stock) => (
-                  <li key={stock} className="list-group-item">
+                  <li
+                    key={stock}
+                    className={`list-group-item ${
+                      darkTheme ? styles.hitoDark : ""
+                    }`}
+                  >
                     <p className="d-flex">
                       {stock} {searchStockName(stock)}
                       <StyledFollowingButton

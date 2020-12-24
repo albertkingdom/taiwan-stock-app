@@ -1,9 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useContext } from "react";
 import styles from "./TitleBar.module.css";
+import { ThemeContext } from "../../Context/Context";
 
 function TitleBar({ sortMethod, toSetSortMethod }) {
+  const { darkTheme } = useContext(ThemeContext); //context api
+
   return (
-    <div className={styles.titleBar}>
+    <div
+      className={`${styles.titleBar} ${darkTheme ? styles.titleBarDark : ""}`}
+    >
       <ul>
         <li></li>
         <li></li>

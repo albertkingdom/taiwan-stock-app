@@ -7,21 +7,18 @@ import React, {
 } from "react";
 
 import Stockcard from "./Stockcard/stockcard";
-
 import Loading from "./Loading";
 import "./Home.css";
 import { RemindLoginHint } from "./StyledComponents/StyledComponents";
-
 import SaveRecord from "./SaveRecord/SaveRecord";
 import Filter from "./Filter/Filter";
 import TitleBar from "./TitleBar/TitleBar";
 import Edit from "./Edit/Edit";
 import Swal from "sweetalert2";
-// import StockIndex from "./StockIndex/StockIndex";
 import { apiSaveToFirebase } from "../api/fromApi";
 import nothingherejpg from "./asset/theres-nothing-here.jpg";
 //context api
-import { ContextStore } from "../Context/Context";
+import { ContextStore, ThemeContext } from "../Context/Context";
 
 const Home = ({
   stockprice,
@@ -31,6 +28,7 @@ const Home = ({
   readFromFirebase,
   toDeleteRecord,
 }) => {
+  const { darkTheme } = useContext(ThemeContext); //context api
   const { stocklist } = useContext(ContextStore); //context api
   const [filterStockNo, setFilterStockNo] = useState("");
   const [stocklistDisplay, setStocklistDisplay] = useState([]); //[2330,2880...]
@@ -104,7 +102,9 @@ const Home = ({
   }, []);
 
   return (
-    <div className="container-md text-center home">
+    <div
+      className={`container-md text-center home ${darkTheme ? "HomeDark" : ""}`}
+    >
       <div className="function" ref={upRef}>
         <Filter filterStockNo={filterStockNo} toFilter={toFilter} />
         <SaveRecord
