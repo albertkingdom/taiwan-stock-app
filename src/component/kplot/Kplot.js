@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 
-import AnyChart from "anychart-react";
-import anychart from "anychart";
+import AnyChart from "anychart-react/dist/anychart-react.min";
 
 import { getKplotData } from "../../api/fromApi";
 import Modal from "../Modal/Modal";
@@ -24,11 +23,11 @@ import { ContextStore } from "../../Context/Context";
 
 function createPlot(data, stockNo, markersData) {
   //define the chart type
-  var chart = anychart.stock();
-  anychart.format.inputLocale("zh-tw");
-  anychart.format.outputLocale("zh-tw");
+  var chart = window.anychart.stock();
+  window.anychart.format.inputLocale("zh-tw");
+  window.anychart.format.outputLocale("zh-tw");
 
-  var msftDataTable = anychart.data.table();
+  var msftDataTable = window.anychart.data.table();
   msftDataTable.addData(data);
 
   //mapping the data
