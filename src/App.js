@@ -13,7 +13,7 @@ import Navbar from "./component/Navbar/Navbar";
 import Login from "./component/LoginSignup/Login";
 import Signup from "./component/LoginSignup/Signup";
 import Logout from "./component/Logout/Logout";
-import Kplot from "./component/kplot/Kplot";
+// import Kplot from "./component/kplot/Kplot";
 import Historybox from "./component/Historybox/Historybox";
 import StockIndex from "./component/StockIndex/StockIndex";
 import Loading from "./component/Loading";
@@ -25,8 +25,8 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import { apiGetStockprice, apiReadFirebase } from "./api/fromApi";
 //context
-import { ContextStore,ThemeContext } from "./Context/Context";
-console.log(ThemeContext)
+import { ContextStore, ThemeContext } from "./Context/Context";
+
 const stocklistInitialState = {
   2330: [
     {
@@ -94,7 +94,7 @@ export default function App() {
   // const [newStockNo, setNewStockNo] = useState([2330]);
   const [isAuth, setIsAuth] = useState(false); //登入狀態
   const [loginEmail, setLoginEmail] = useState(""); //存登入email
-  const [darkTheme, setDarkTheme] = useState(false);// change theme
+  const [darkTheme, setDarkTheme] = useState(false); // change theme
 
   const setModal = (stockNo) => {
     // console.log("setModal Fun", stockNo);
@@ -166,19 +166,20 @@ export default function App() {
       })
       .catch((err) => console.log(err));
   }, [dispatch]);
-  
+
   useEffect(() => {
     //登入就從firebase讀資料
     if (isAuth) {
       readFromFirebase();
     }
   }, [isAuth, readFromFirebase]);
+  //lazy loading
   const LazyLoadChart = React.lazy(() => import("./component/Chart/Chart"));
-
+  const LazyLoadKplot = React.lazy(() => import("./component/kplot/Kplot"));
   return (
     <ThemeContext.Provider value={{ darkTheme, setDarkTheme }}>
       <ContextStore.Provider value={{ stocklist, dispatch }}>
-        <div className={`App ${darkTheme?'AppDark':''}`}>
+        <div className={`App ${darkTheme ? "AppDark" : ""}`}>
           <Router>
             <Navbar isAuth={isAuth} />
 
@@ -246,7 +247,12 @@ export default function App() {
                 ></Route>
                 <Route
                   path="/kplot/:stockNo"
-                  render={(props) => <Kplot {...props} />}
+                  render={(props) => (
+                    <Suspense fallback={<Loading />}>
+                      <LazyLoadKplot {...props} />
+                    </Suspense>
+                  )}
+                  // <Kplot {...props} />}
                 ></Route>
                 <Route
                   path="/history/:stockNo"
