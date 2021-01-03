@@ -7,6 +7,9 @@ import Modal from "../Modal/Modal";
 import Loading from "../Loading";
 //context api
 import { ContextStore } from "../../Context/Context";
+
+import { sub, format } from "date-fns";
+
 //open, high, low , close
 // const data = [
 //   ["2020-10-10", 23.55, 23.88, 23.38, 23.62],
@@ -117,17 +120,19 @@ export default function Kplot(props) {
   useEffect(() => {
     const getstockdata = async (stockNo, date1, date2) => {
       const response = await getKplotData(stockNo, date1, date2);
-        // console.log(response);
+      // console.log(response);
       setData(response);
     };
     const getDateString = () => {
-      const thisYear = new Date().getFullYear();
-      const thisMonth = new Date().getMonth() + 1;
-      const thisDate = new Date().getDate();
+      const lastMonth = format(
+        sub(new Date(), {
+          months: 1,
+        }),
+        "yyyyMMdd"
+      );
 
-      const currentMonth = `${thisYear}${thisMonth}${thisDate}`;
-      const lastMonth = `${thisYear}${thisMonth - 1}${thisDate}`;
-      // console.log(`${thisYear}${thisMonth}${thisDate}`);
+      const currentMonth = format(new Date(), "yyyyMMdd");
+
       return [currentMonth, lastMonth];
     };
     getstockdata(
