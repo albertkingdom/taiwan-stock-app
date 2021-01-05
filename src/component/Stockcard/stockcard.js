@@ -132,7 +132,9 @@ const Stockcard = ({
             <li>
               <p>{chinesename}</p>
               <p>{name}</p>
-              <Link to={`/kplot/${name}`}>看k線圖</Link>
+              <Link to={`/kplot/${name}`} className="text-decoration-none">
+                看k線圖
+              </Link>
             </li>
             <li>{price && price.toString().substring(0, 5)}</li>
             <li>{amount.toLocaleString()}</li>

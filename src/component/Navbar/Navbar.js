@@ -8,15 +8,17 @@ import {
   RWDNav,
 } from "../StyledComponents/StyledComponents";
 import SwitchTheme from "../Button/SwitchTheme";
+import { ThemeContext } from "../../Context/Context";
 
 const Navbar = ({ isAuth }) => {
   const [open, setOpen] = useState(false); //控制side navbar開關
+  const { darkTheme } = useContext(ThemeContext); //context api
 
   return (
     <>
-      <Nav>
+      <Nav dark={darkTheme}>
         <div className="mycontainer">
-          <NavUl>
+          <NavUl dark={darkTheme}>
             <li className="position-relative">
               <Link to="/">
                 <i className="fas fa-home"></i>

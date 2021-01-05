@@ -112,7 +112,7 @@ export default function Hito({ isAuth }) {
   return (
     <div className="container-md">
       <section>
-        <h4>
+        <h4 className={darkTheme ? "text-white" : ""}>
           成交熱門<small style={{ fontSize: "12px" }}>(點擊觸發功能)</small>
         </h4>
         <div className="d-flex flex-wrap justify-content-around">
@@ -135,7 +135,7 @@ export default function Hito({ isAuth }) {
         </div>
       </section>
       <section className="mt-3">
-        <h4>
+        <h4 className={darkTheme ? "text-white" : ""}>
           追蹤清單<small style={{ fontSize: "12px" }}>(點擊愛心取消追蹤)</small>
         </h4>
         <form className="d-flex justify-content-center">

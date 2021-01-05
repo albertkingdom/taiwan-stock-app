@@ -5,16 +5,13 @@ import { StyledLink } from "../StyledComponents/StyledComponents";
 
 export default function Filter({ toFilter, filterStockNo }) {
   return (
-    <div className="row justify-content-center m-3">
-      <div className="filterStock input-group col-10 col-md-5">
+    <div className="row justify-content-center m-3 ">
+      <div className="filterStock input-group col-10">
         <StyledLink>
-          <span className="tip">追蹤、熱門</span>
-          <Link to="/hito" className="mr-3">
+          <Link to="/hito">
+            追蹤、熱門
             <span className="text-danger">
-              <i className="fas fa-fire"></i>{" "}
-            </span>
-            <span>
-              <i className="fas fa-list"></i>
+              <i className="fas fa-fire"></i>
             </span>
           </Link>
         </StyledLink>

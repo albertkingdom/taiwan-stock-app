@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+export const darkNavbarBackgroundColor = "#161b22";
+
 //Hito.js
 export const StyledFollowingButton = styled.button`
   background-color: transparent;
@@ -45,6 +47,7 @@ export const StyledLink = styled.span`
   padding: 5px;
   a {
     color: black;
+    text-decoration: none;
     span {
       display: inline-block;
       width: 20px;
@@ -150,7 +153,7 @@ export const NavUl = styled.ul`
     text-align: center;
   }
   a {
-    color: black;
+    color: ${({ dark }) => (dark ? "#fff" : "#000")};
     text-decoration: none;
     margin-left: 15px;
     padding: 5px 15px;
@@ -189,12 +192,15 @@ export const BurgerBtn = styled.button`
 `;
 export const Nav = styled.nav`
   font-family: "Goldman", cursive;
-  border-bottom: 1px solid silver;
+  border-bottom: 1px solid
+    ${({ dark }) => (dark ? darkNavbarBackgroundColor : "silver")};
   text-align: left;
   position: fixed;
   width: 100vw;
   z-index: 200;
-  background-color: #fff;
+  background-color: ${({ dark }) =>
+    dark ? darkNavbarBackgroundColor : "#fff"};
+  color: ${({ dark }) => (dark ? "#fff" : "#000")};
   h4 {
     margin-bottom: 0;
   }
@@ -256,31 +262,35 @@ export const StyledEditDiv = styled.div`
   }
 `;
 
-
 export const SwitchButton = styled.div`
-width:70px;
-height:35px;
-background-color: ${props => props.dark ? "gray" : "#fce205"};
-border-radius:20px;
-position: absolute;
-top:5px;
-left:80px;
-span.sun{
+  width: 60px;
+  height: 24px;
+  background-color: ${(props) => (props.dark ? "gray" : "#fce205")};
+  border-radius: 20px;
   position: absolute;
-  left:-100%;
-}
-.circle{
-  width:35px;
-  height:35px;
-  border:1px solid lightgray;
-  border-radius:50%;
-  background-color: #fff;
-  position: absolute;
-  transition: left 1s;
-  left:0;
-  
-}
-.circle.dark{
-  left:calc(70px - 50%);
-}
-`
+  top: 50%;
+  left: 80px;
+  transform: translateY(-50%);
+  span.sun {
+    position: absolute;
+    left: -100%;
+  }
+  .circle {
+    width: 35px;
+    height: 35px;
+    border: 1px solid lightgray;
+    border-radius: 50%;
+    background-color: #fff;
+    position: relative;
+    transition: left 1s;
+    left: 0;
+    top: -5px;
+  }
+  .circle.dark {
+    left: calc(60px - 50%);
+  }
+  i {
+    color: orange;
+    line-height: 35px;
+  }
+`;
