@@ -1,9 +1,8 @@
 import axios from "axios";
 
-export const getStockIndex = async (date) => {
-  const response = await axios.post(
-    `${process.env.REACT_APP_PROXYURL}stock/stockIndex`,
-    { date: date }
+export const getStockIndex = async () => {
+  const response = await axios.get(
+    `${process.env.REACT_APP_PROXYURL}stock/stockIndex`
   );
 
   return response.data;
