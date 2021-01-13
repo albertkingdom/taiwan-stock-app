@@ -15,7 +15,7 @@ export default function SwitchTheme() {
       }}
     >
       <div className={`circle ${dark ? "" : "dark"}`}>
-        <i class="fas fa-moon"></i>
+        <i className="fas fa-moon"></i>
       </div>
     </SwitchButton>
   );

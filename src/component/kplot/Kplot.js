@@ -73,7 +73,7 @@ function createPlot(data, stockNo, markersData) {
   mmaplot.stroke("black");
   //成交量
   const volumeMapping = msftDataTable.mapAs({ value: 1 });
-  var volumePlot = chart.plot(1).column(volumeMapping).name("成交股數");
+  chart.plot(1).column(volumeMapping).name("成交股數");
   //調整y軸數字顯示，數字/1000
   chart
     .plot(1)
