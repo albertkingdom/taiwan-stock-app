@@ -200,7 +200,7 @@ export default function App() {
                 </div>
               </div>
             </div>
-            <main className="main">
+            <main className={`main ${darkTheme ? "AppDark" : ""}`}>
               <Switch>
                 <Route path="/" exact>
                   <Home

@@ -2,13 +2,13 @@
   background: #fff;
   /* min-height: 100vh; */
   height: 100%;
-  max-height: calc(100vh - 50px);
+  /* max-height: calc(100vh - 50px); */
   padding-top: 20px;
   /* position: fixed; */
   /* top: 250px; */
   left: 50%;
   /* transform: translateX(-50%); */
-  overflow: auto;
+  /* overflow: auto; */
 }
 @media screen and (max-width: 768px) {
   .home {
@@ -18,7 +18,7 @@
 
 .stock-list {
   overflow: auto;
-  height: 70vh;
+  /* height: 70vh; */
 }
 @media screen and (max-width: 766px) {
   .stock-list {
@@ -27,16 +27,16 @@
 }
 /* info icon */
 .disclaimer {
-  position: fixed;
+  /* position: fixed; */
   /* left: -20%; */
   /* margin-left: -15%; */
-  bottom: 10%;
-  width: 50px;
+  /* bottom: 10%; */
+  width: 100%;
   height: 50px;
   background-color: #fff;
-  border-radius: 50%;
+  /* border-radius: 50%; */
   border: 1px solid #fff;
-  box-shadow: 2px 2px 5px;
+  /* box-shadow: 2px 2px 5px; */
   font-size: 28px;
 }
 

@@ -46,7 +46,7 @@ export const StyledLink = styled.span`
   position: relative;
   padding: 5px;
   a {
-    color: black;
+    color: ${(props) => (props.dark ? "#fff" : "#000")};
     text-decoration: none;
     span {
       display: inline-block;
@@ -293,4 +293,15 @@ export const SwitchButton = styled.div`
     color: orange;
     line-height: 35px;
   }
+`;
+
+// disclaimer
+export const StyledDisclaimer = styled.div`
+  width: 100%;
+  height: 100px;
+  background-color: ${(props) => (props.dark ? "#313131" : "#fff")};
+  font-size: 12px;
+  color: ${(props) => (props.dark ? "#fff" : "#000")};
+  padding: 30px;
+  margin-top: 30px;
 `;

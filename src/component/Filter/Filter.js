@@ -1,13 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 
 import { StyledLink } from "../StyledComponents/StyledComponents";
+//context api
+import { ThemeContext } from "../../Context/Context";
 
 export default function Filter({ toFilter, filterStockNo }) {
+  const { darkTheme } = useContext(ThemeContext); //context api
+
   return (
     <div className="row justify-content-center m-3 ">
-      <div className="filterStock input-group col-10">
-        <StyledLink>
+      <div className="filterStock input-group">
+        <StyledLink dark={darkTheme}>
           <Link to="/hito">
             追蹤、熱門
             <span className="text-danger">

@@ -22,16 +22,16 @@ function SaveRecord({ saveToFirebase, isAuth }) {
         title="存入firebase"
         onClick={saveToFirebase}
       >
-        <i className="fas fa-save"></i> Save to firebase
+        <i className="fas fa-save"></i>
       </button>
-      <button
+      {/* <button
         className="btn btn-outline-success m-3 px-4"
         title="讀取firebase"
         onClick={() => {}}
         disabled
       >
         <i className="far fa-folder-open"></i> Read from firebase
-      </button>
+      </button> */}
     </div>
   ) : null;
 }
