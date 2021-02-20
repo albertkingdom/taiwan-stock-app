@@ -120,8 +120,19 @@ export default function Kplot(props) {
   useEffect(() => {
     const getstockdata = async (stockNo, date1, date2) => {
       const response = await getKplotData(stockNo, date1, date2);
-      // console.log(response);
-      setData(response);
+
+      // 將民國年替換成西元年
+      function replaceDate(data) {
+        // data[0] = data[0].replace("110", "2021");
+        data[0] =
+          (parseInt(data[0].split("-")[0]) + 1911).toString() +
+          "-" +
+          data[0].split("-").splice(1).join("-");
+
+        return data;
+      }
+      const newKplotDate = response.map((item) => replaceDate(item));
+      setData(newKplotDate);
     };
     const getDateString = () => {
       const lastMonth = format(
