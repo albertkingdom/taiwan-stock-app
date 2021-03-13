@@ -305,3 +305,25 @@ export const StyledDisclaimer = styled.div`
   padding: 30px;
   margin-top: 30px;
 `;
+
+// kplot button
+const Button = styled.button`
+  border-radius: 50%;
+  background-color: #fff;
+  width: 50px;
+  height: 50px;
+  border: none;
+  box-shadow: 1px 1px 1px gray;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  :focus {
+    outline: none;
+  }
+`;
+export const PreviousButton = styled(Button)`
+  left: -75px;
+`;
+export const NextButton = styled(Button)`
+  right: -75px;
+`;

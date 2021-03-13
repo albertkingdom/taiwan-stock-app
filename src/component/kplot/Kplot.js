@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-
+import { useHistory } from "react-router-dom";
 import AnyChart from "anychart-react/dist/anychart-react.min";
 
 import { getKplotData } from "../../api/fromApi";
@@ -10,6 +10,10 @@ import { ContextStore } from "../../Context/Context";
 
 import { sub, format } from "date-fns";
 
+import {
+  PreviousButton,
+  NextButton,
+} from "../StyledComponents/StyledComponents";
 //open, high, low , close
 // const data = [
 //   ["2020-10-10", 23.55, 23.88, 23.38, 23.62],
@@ -112,10 +116,13 @@ export default function Kplot(props) {
   const { stocklist } = useContext(ContextStore); //context api
   const [data, setData] = useState([]); //股票成交價array
   const [modalshow, setModalshow] = useState(true);
+  const [stockNoList, setStockNoList] = useState([]); //array of all stock No
+  const [stockNoIndex, setStockNoIndex] = useState(0);
+  let history = useHistory();
 
   const showModal = () => {
     setModalshow((prevState) => !prevState); //close modal
-    props.history.goBack();
+    props.history.replace("/");
   };
   useEffect(() => {
     const getstockdata = async (stockNo, date1, date2) => {
@@ -186,6 +193,32 @@ export default function Kplot(props) {
     props.match.params.stockNo,
     outputExchangeHistory()
   );
+
+  useEffect(() => {
+    // to get an array of stock numbers
+    setStockNoList(Object.keys(stocklist));
+  }, [stocklist]);
+
+  // button
+  useEffect(() => {
+    const index = stockNoList.findIndex(
+      (number) => number === props.match.params.stockNo
+    );
+    setStockNoIndex(index);
+  }, [props.match.params.stockNo, stockNoList]);
+
+  const handleNext = () => {
+    if (stockNoList.length > stockNoIndex + 1) {
+      history.push(`/kplot/${stockNoList[stockNoIndex + 1]}`);
+    }
+  };
+
+  const handlePrevious = () => {
+    if (stockNoIndex !== 0) {
+      history.push(`/kplot/${stockNoList[stockNoIndex - 1]}`);
+    }
+  };
+
   if (data && data.length === 0) {
     return (
       <Modal show={modalshow} toClose={showModal}>
@@ -197,14 +230,25 @@ export default function Kplot(props) {
   }
   return (
     <Modal show={modalshow} toClose={showModal}>
-      <div className="">
-        <AnyChart
-          instance={chart}
-          title="stock candlestick chart"
-          width={"100%"}
-          height="750px"
-          left="30"
-        />
+      <div className="position-relative">
+        <PreviousButton onClick={handlePrevious} disabled={stockNoIndex === 0}>
+          <i className="fas fa-arrow-left"></i>
+        </PreviousButton>
+        <div className="w-100">
+          <AnyChart
+            instance={chart}
+            title="stock candlestick chart"
+            width={"100%"}
+            height="750px"
+            left="30"
+          />
+        </div>
+        <NextButton
+          onClick={handleNext}
+          disabled={stockNoIndex === stockNoList.length - 1}
+        >
+          <i className="fas fa-arrow-right"></i>
+        </NextButton>
       </div>
     </Modal>
   );
